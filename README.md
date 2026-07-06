@@ -35,6 +35,7 @@ Here is an overview of the codebase organization:
 
 ```text
 ├── main.py                          # Game entry point
+├── requirements.txt                 # Project dependencies list
 ├── Pirate Quiz Tower Defense Spec.md # Original Thai design specification
 ├── assets/                          # Game assets and data files
 │   ├── audio/                       # Sound effects and BGM (bgm.wav, hit.wav, shoot.wav, wrong.wav)
@@ -77,10 +78,10 @@ source venv/bin/activate
 ```
 
 ### 2. Install Dependencies
-Install the required library (`pygame`):
+Install the required libraries listed in [requirements.txt](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/requirements.txt):
 
 ```bash
-pip install pygame
+pip install -r requirements.txt
 ```
 
 ### 3. Run the Game
