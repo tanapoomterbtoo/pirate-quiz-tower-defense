@@ -34,6 +34,10 @@ ANIM_FPS = {
 SHUFFLE_QUESTIONS = True
 PLAYER_BASE_DMG = 30  # ดาเมจพื้นฐานที่ผู้เล่นทำได้
 
+# Character Y position (Floor level for player and monsters)
+# A smaller value moves them higher up the screen. Original value was 600.
+FLOOR_Y = 700
+
 # States
 MAIN_MENU = 0
 PLAYING = 1

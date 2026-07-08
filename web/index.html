@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirate Quiz Tower Defense</title>
+    <meta name="description" content="Defend your pirate ship by answering trivia questions correctly in this action-packed tower defense game.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <div id="game-container">
+            <!-- Canvas for Game World (Parallax background, Characters, Particles, Damage text) -->
+            <canvas id="gameCanvas" width="1280" height="720"></canvas>
+
+            <!-- HTML/CSS UI Overlay -->
+            <div id="ui-overlay">
+                
+                <!-- TOP HUD (Active during PLAYING state) -->
+                <div id="top-hud" class="hud-layer hidden">
+                    <div class="inventory">
+                        <button id="item-telescope" class="btn btn-item" onclick="useItem('Telescope')">
+                            <div class="item-icon-wrapper">
+                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18.5 5.5L13.5 10.5M10.5 7.5L5.5 12.5M15.5 2.5L21.5 8.5M3 21l3-3M3 17l4 4" />
+                                    <circle cx="17" cy="7" r="3" />
+                                </svg>
+                            </div>
+                            <div class="item-info">
+                                <span class="item-name">Telescope</span>
+                                <span class="item-desc">Remove 2 wrong answers</span>
+                            </div>
+                        </button>
+                        <button id="item-repair" class="btn btn-item" onclick="useItem('Repair Kit')">
+                            <div class="item-icon-wrapper">
+                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#4cd964" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="9" width="18" height="12" rx="2" />
+                                    <path d="M7 9V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" />
+                                    <path d="M12 12v6M9 15h6" />
+                                </svg>
+                            </div>
+                            <div class="item-info">
+                                <span class="item-name">Repair Kit</span>
+                                <span class="item-desc">Heal +30 HP</span>
+                            </div>
+                        </button>
+                        <button id="item-cannonball" class="btn btn-item" onclick="useItem('Cannonball')">
+                            <div class="item-icon-wrapper">
+                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="13" r="7" />
+                                    <path d="M16.5 7.5L19 5M19 5h3M19 5V2" />
+                                    <path d="M9 10a2 2 0 0 1 2 2" />
+                                </svg>
+                            </div>
+                            <div class="item-info">
+                                <span class="item-name">Cannonball</span>
+                                <span class="item-desc">2x Next Damage</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <button id="btn-skip" class="btn btn-skip" onclick="skipQuestion()">
+                        Skip (3)
+                    </button>
+                    <button id="btn-mute" class="btn btn-mute" onclick="toggleMute()">
+                        <svg id="mute-icon" class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                            <path id="sound-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                            <path id="mute-x" class="hidden" d="M23 9l-6 6M17 9l6 6"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- MAIN MENU OVERLAY -->
+                <div id="menu-overlay" class="overlay-panel">
+                    <div class="overlay-content">
+                        <h1 class="game-title">Pirate Quiz<br><span class="highlight">Tower Defense</span></h1>
+                        <p class="game-subtitle">Answer questions correctly to shoot cannonballs and defend your ship!</p>
+                        <button id="btn-start" class="btn btn-primary" onclick="startGame()">Set Sail & Start</button>
+                    </div>
+                </div>
+
+                <!-- PLAYING: QUIZ INTERFACE -->
+                <div id="quiz-panel" class="hud-layer hidden">
+                    <div id="double-damage-badge" class="badge hidden">2X DAMAGE ACTIVE!</div>
+                    <div class="quiz-box">
+                        <h2 id="question-text">Loading question...</h2>
+                    </div>
+                    <div class="choices-grid">
+                        <button id="choice-0" class="btn btn-choice" onclick="selectChoice(0)">Choice A</button>
+                        <button id="choice-1" class="btn btn-choice" onclick="selectChoice(1)">Choice B</button>
+                        <button id="choice-2" class="btn btn-choice" onclick="selectChoice(2)">Choice C</button>
+                        <button id="choice-3" class="btn btn-choice" onclick="selectChoice(3)">Choice D</button>
+                    </div>
+                </div>
+
+                <!-- GAME OVER OVERLAY -->
+                <div id="gameover-overlay" class="overlay-panel hidden">
+                    <div class="overlay-content">
+                        <h1 class="state-title red-glow">GAME OVER</h1>
+                        <p class="state-desc">Your ship was destroyed by the sea monsters!</p>
+                        <button class="btn btn-primary btn-retry" onclick="restartGame()">Try Again</button>
+                    </div>
+                </div>
+
+                <!-- VICTORY OVERLAY -->
+                <div id="victory-overlay" class="overlay-panel hidden">
+                    <div class="overlay-content">
+                        <h1 class="state-title green-glow">VICTORY!</h1>
+                        <p class="state-desc">You successfully defended the ship and cleared all 3 waves!</p>
+                        <button class="btn btn-primary btn-retry" onclick="restartGame()">Play Again</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

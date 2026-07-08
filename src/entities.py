@@ -72,7 +72,7 @@ def load_lpc_animation(char_name, max_size):
     for state in ["idle", "walk", "attack", "hurt"]:
         if not frames[state]:
             surf = pygame.Surface(max_size, pygame.SRCALPHA)
-            color = RED if state == "hurt" else (BLUE if char_name == "player" else GREEN)
+            color = RED if state == "hurt" else (pygame.BLEND_PREMULTIPLIED if char_name == "player" else GREEN)
             pygame.draw.rect(surf, color, (0, 0, max_size[0], max_size[1]), border_radius=10)
             font = pygame.font.Font(None, 24)
             text = font.render(f"LPC:{char_name}", True, WHITE)

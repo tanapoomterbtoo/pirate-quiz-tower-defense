@@ -59,8 +59,8 @@ class Game:
         self.reset_game()
         
     def reset_game(self):
-        # Y position now represents the floor (feet), set to 600 for the deck level
-        self.ship = PiratePlayer(250, 600)
+        # Y position now represents the floor (feet), set to FLOOR_Y for the deck level
+        self.ship = PiratePlayer(250, FLOOR_Y)
         self.ship_hp_bar = HealthBar(175, HEIGHT//2 - 100, 150, 20)
         
         self.current_q_idx = 0
@@ -148,8 +148,8 @@ class Game:
         e_type = self.enemy_sequence[self.current_enemy_idx]
         self.current_enemy_idx += 1
         
-        # Spawn at the exact same floor level (600)
-        self.monster = Monster(1000, 600, e_type)
+        # Spawn at the exact same floor level (FLOOR_Y)
+        self.monster = Monster(1000, FLOOR_Y, e_type)
         self.monster_hp_bar.rect.centerx = self.monster.base_x
         
     def update(self, dt):
@@ -172,17 +172,8 @@ class Game:
             
             # Combat State Machine
             if self.combat_state == "idle":
-                self.question_timer -= dt
-                if self.question_timer <= 0:
-                    self.play_sound("wrong")
-                    self.pending_dmg = {"small": 10, "big": 20, "boss": 30}[self.monster.m_type]
-                    self.monster.trigger_attack()
-                    self.combat_state = "monster_attack"
-                    self.hit_applied = False
-                    self.question_timer = getattr(self, 'max_question_time', 15.0) # Reset เวลาให้ใหม่หลังจากโดนตี
-                else:
-                    for btn in self.choice_buttons + self.item_buttons + [self.skip_btn]:
-                        btn.check_hover(mouse_pos)
+                for btn in self.choice_buttons + self.item_buttons + [self.skip_btn]:
+                    btn.check_hover(mouse_pos)
             
             elif self.combat_state == "player_attack":
                 if self.ship.hit_triggered and not self.hit_applied:
@@ -270,7 +261,6 @@ class Game:
                     self.monster.trigger_attack()
                     self.combat_state = "monster_attack"
                     self.hit_applied = False
-                    self.question_timer = getattr(self, 'max_question_time', 15.0) # Reset เวลาให้ใหม่เมื่อตอบผิดด้วย
                     
         # Skip Question
         if self.skip_btn.is_hovered and not getattr(self.skip_btn, 'disabled', False):
@@ -365,10 +355,6 @@ class Game:
                 self.screen.blit(dmg_txt, (30, 80))
                 
             if self.combat_state == "idle":
-                timer_color = RED if self.question_timer <= 5 else WHITE
-                timer_txt = self.font_medium.render(f"Time: {max(0, int(self.question_timer))}", True, timer_color)
-                self.screen.blit(timer_txt, timer_txt.get_rect(center=(WIDTH//2, HEIGHT - 330)))
-                
                 self.quiz_box.draw(self.screen, self.current_q_text, self.font_medium)
                 for btn in self.choice_buttons:
                     btn.draw(self.screen)
