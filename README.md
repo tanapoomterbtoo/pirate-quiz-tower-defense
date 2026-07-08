@@ -1,6 +1,6 @@
 # 🏴‍☠️ Pirate Quiz Tower Defense Game
 
-A JRPG-style hybrid Trivia and Tower Defense game built using **Python** and **Pygame**. Players take on the role of a pirate ship commander, answering trivia questions to attack waves of enemies and defend their ship from oncoming attacks.
+A JRPG-style hybrid Trivia and Tower Defense game built using **Python/Pygame** and also available as a standalone **Web (HTML5/JS)** version. Players take on the role of a pirate ship commander, answering trivia questions to attack waves of enemies and defend their ship from oncoming attacks.
 
 ---
 
@@ -9,7 +9,7 @@ A JRPG-style hybrid Trivia and Tower Defense game built using **Python** and **P
 - **Theme:** Pirate & Naval Combat ⛵
 - **Core Loop:** 
   - **Correct Answer:** Attacks the current monster.
-  - **Incorrect Answer or Time's Up:** The monster attacks your ship.
+  - **Incorrect Answer:** The monster attacks your ship.
 - **Goal:** Survive 30 questions across **3 increasingly difficult waves**, defeating all small enemies, big enemies, and the Final Boss without your ship's health falling to 0!
 
 ---
@@ -26,6 +26,7 @@ A JRPG-style hybrid Trivia and Tower Defense game built using **Python** and **P
   - **💣 Heavy Cannonball (กระสุนเพลิง):** Causes the next correct answer to deal **double damage** (2x) to the enemy.
 - **Skip System:** Allows skipping up to 3 questions per game.
 - **Audio & Sound System:** Immersive pirate background music (BGM) and custom sound effects (SFX) for hits, gunshots, and wrong answers.
+- **Web Version:** Fully playable in any modern web browser without any installation required!
 
 ---
 
@@ -34,7 +35,7 @@ A JRPG-style hybrid Trivia and Tower Defense game built using **Python** and **P
 Here is an overview of the codebase organization:
 
 ```text
-├── main.py                          # Game entry point
+├── main.py                          # Game entry point (Python/Pygame)
 ├── requirements.txt                 # Project dependencies list
 ├── Pirate Quiz Tower Defense Spec.md # Original Thai design specification
 ├── assets/                          # Game assets and data files
@@ -44,13 +45,17 @@ Here is an overview of the codebase organization:
 │       ├── backgrounds/             # Parallax layers (bg_sky, bg_islands, bg_deck)
 │       ├── characters/              # Player and monster animated frames
 │       └── ui/                      # Customizable UI assets
-├── src/                             # Game source code
+├── src/                             # Game source code (Python)
 │   ├── __init__.py                  # Package initialization
 │   ├── config.py                    # Constants, color palette, dimensions, FPS, and paths
 │   ├── entities.py                  # Character and monster Sprite classes (LPC frame sheet animation loader)
 │   ├── game_loop.py                 # Core Game class controlling state machines, events, and rendering
 │   ├── quiz_data.py                 # Helper to load and shuffle the question dataset
 │   └── ui.py                        # UI rendering elements (Buttons, Health bars, Damage text)
+├── web/                             # Web version of the game (HTML5/JS)
+│   ├── index.html                   # Web application entry point
+│   ├── style.css                    # Web styles and layout
+│   └── js/                          # Javascript logic (config, entities, game, quiz)
 └── venv/                            # Python virtual environment (ignored)
 ```
 
@@ -58,9 +63,20 @@ Here is an overview of the codebase organization:
 
 ## 🛠️ Requirements & Installation
 
-This game requires **Python 3.8+** and **Pygame**.
+This game can be played in two ways:
 
-### 1. Set Up Virtual Environment (Recommended)
+### Option A: Play the Web Version (Recommended & Easy)
+Simply open `web/index.html` in any modern web browser, or serve it using a local server:
+```bash
+# Using Python to start a local server
+python3 -m http.server 8000
+# Then visit http://localhost:8000/web/ in your browser
+```
+
+### Option B: Run the Python/Pygame Version
+This requires **Python 3.8+** and **Pygame**.
+
+#### 1. Set Up Virtual Environment (Recommended)
 Navigate to the root directory and initialize the virtual environment:
 
 ```bash
@@ -77,14 +93,14 @@ source venv/bin/activate
 # .\venv\Scripts\Activate.ps1
 ```
 
-### 2. Install Dependencies
+#### 2. Install Dependencies
 Install the required libraries listed in [requirements.txt](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/requirements.txt):
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the Game
+#### 3. Run the Game
 Execute the main script to start playing:
 
 ```bash
@@ -97,7 +113,6 @@ python main.py
 
 1. **Start Screen:** Click anywhere on the menu overlay to begin.
 2. **Answering Questions:** Click on one of the 4 choice buttons at the bottom.
-   - You have a limited time (indicated by the timer above the question box). If the timer reaches 0, you automatically take damage from the enemy.
 3. **Using Items:** Click on the item buttons (Telescope, Repair Kit, or Cannonball) at the top-left to apply their effects immediately. Each item can be used **once** per game.
 4. **Skipping Questions:** If you're stuck, click the **Skip** button at the top-right (maximum of 3 skips allowed).
 5. **Winning/Losing:**
@@ -106,11 +121,12 @@ python main.py
 
 ---
 
-## 🔧 Game Configuration
+## 🔧 Game Configuration (Python)
 
-You can customize the game settings by editing [src/config.py](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/src/config.py):
+You can customize the Python version settings by editing [src/config.py](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/src/config.py):
 * `WIDTH`, `HEIGHT`: Window resolution (Default: `1280x720`).
 * `FPS`: Refresh rate (Default: `60`).
+* `FLOOR_Y`: Vertical position of the floor/deck level (Default: `700`).
 * `SHUFFLE_QUESTIONS`: Set to `True` or `False` to toggle question scrambling.
 * `PLAYER_BASE_DMG`: Base damage dealt by the player (Default: `30`).
 * `VOL_BGM` / `VOL_SFX`: Adjust audio volumes.
