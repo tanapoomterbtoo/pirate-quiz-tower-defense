@@ -153,23 +153,33 @@ Specifies the subject test and loads the corresponding questions and character s
   * Monster Set: Randomly mixes sprites from `Monster_Set1`, `Monster_Set2`, and `Monster_Set3` for each spawn.
 
 ### 2. Prior Score Parameter (`score`)
-Determines the helper items granted to the player at start based on their performance in the previous system.
-* **Score 80 - 100:** Full inventory:
+
+To pass the score from the previous system to this game, append the `score` parameter to the URL query string using the format `&score=value` or `?score=value`.
+
+#### How to Input the Score (วิธีการใส่คะแนน):
+* **Format:** `[URL_TO_GAME]?score=[คะแนน]` or combined with subject: `[URL_TO_GAME]?subject=[วิชา]&score=[คะแนน]`
+* **Examples (ตัวอย่างการใช้งาน):**
+  * `http://localhost:8000/web/?subject=math&score=95` (Passes score 95 for Math)
+  * `http://localhost:8000/web/?subject=วิทยาศาสตร์&score=75` (Passes score 75 for Science)
+  * `http://localhost:8000/web/?score=65` (Passes score 65 with default Math subject)
+
+#### Items allocation based on score (เกณฑ์การแจกไอเทมจากคะแนน):
+* **Score 80 - 100:** Full inventory (ได้ครบทุกอย่าง):
   * 🔭 Telescope (ตัดช้อย) x2
   * 🔧 Repair Kit (เพิ่มเลือด) x2
   * 💣 Heavy Cannonball (เพิ่มพลังโจมตี) x1
   * ✨ Revive (ชุบชีวิตเมื่อ HP = 0) x1
-* **Score 70 - 79:** Reduced inventory (No Revive):
+* **Score 70 - 79:** Reduced inventory (ได้ทุกอย่างอย่างละ 1 แต่ไม่ได้ชุบชีวิต):
   * 🔭 Telescope x1
   * 🔧 Repair Kit x1
   * 💣 Heavy Cannonball x1
   * ✨ Revive x0
-* **Score 61 - 69:** Minimal inventory (No Cannonball, No Revive):
+* **Score 61 - 69:** Minimal inventory (ได้แค่ตัดช้อย 1 ครั้งกับเพิ่มเลือด 1 ครั้ง):
   * 🔭 Telescope x1
   * 🔧 Repair Kit x1
   * 💣 Heavy Cannonball x0
   * ✨ Revive x0
-* **Score 60 or below:** No inventory items:
+* **Score 60 or below:** No inventory items (ไม่ได้ไอเทมช่วยเหลือเลย):
   * All items set to 0. Buttons are disabled and grayed out.
 
 *Default fallback: If no `score` is provided in the URL, it defaults to `100` (full items).*
