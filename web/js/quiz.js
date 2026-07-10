@@ -1,49 +1,967 @@
-// Quiz data loader with a solid local fallback in case of CORS (file:// protocol)
+// Quiz data loader with solid local fallbacks in case of CORS (file:// protocol)
 let QUESTIONS = [];
 
-// Fallback questions copied exactly from assets/data/questions.json
-const FALLBACK_QUESTIONS = [
-    {"q": "What is 2 + 2?", "c": ["3", "4", "5", "6"], "a": 1, "time": 5},
-    {"q": "What is the capital of France?", "c": ["London", "Berlin", "Paris", "Madrid"], "a": 2},
-    {"q": "Which is the largest planet?", "c": ["Earth", "Mars", "Saturn", "Jupiter"], "a": 3},
-    {"q": "What color is a banana?", "c": ["Red", "Blue", "Yellow", "Green"], "a": 2},
-    {"q": "How many legs does a spider have?", "c": ["6", "8", "10", "12"], "a": 1},
-    {"q": "Which ocean is the largest?", "c": ["Atlantic", "Indian", "Arctic", "Pacific"], "a": 3},
-    {"q": "What is the square root of 81?", "c": ["7", "8", "9", "10"], "a": 2},
-    {"q": "What do bees produce?", "c": ["Milk", "Honey", "Silk", "Wax"], "a": 1},
-    {"q": "How many continents are there?", "c": ["5", "6", "7", "8"], "a": 2},
-    {"q": "Which direction does the sun rise?", "c": ["North", "South", "East", "West"], "a": 2},
-    {"q": "What is the capital of Japan?", "c": ["Tokyo", "Seoul", "Beijing", "Bangkok"], "a": 0},
-    {"q": "Which element has the symbol 'O'?", "c": ["Gold", "Oxygen", "Osmium", "Iron"], "a": 1},
-    {"q": "Who wrote 'Hamlet'?", "c": ["Dickens", "Hemingway", "Shakespeare", "Tolkien"], "a": 2},
-    {"q": "What is H2O commonly known as?", "c": ["Salt", "Sugar", "Air", "Water"], "a": 3},
-    {"q": "Which planet is the Red Planet?", "c": ["Venus", "Mars", "Jupiter", "Uranus"], "a": 1},
-    {"q": "What is 15 x 3?", "c": ["35", "40", "45", "50"], "a": 2},
-    {"q": "What is the hardest natural substance?", "c": ["Gold", "Iron", "Quartz", "Diamond"], "a": 3},
-    {"q": "How many states are in the USA?", "c": ["48", "49", "50", "51"], "a": 2},
-    {"q": "Which animal is the king of the jungle?", "c": ["Tiger", "Lion", "Elephant", "Gorilla"], "a": 1},
-    {"q": "What is the chemical symbol for Gold?", "c": ["Au", "Ag", "Fe", "Cu"], "a": 0},
-    {"q": "Who painted the Mona Lisa?", "c": ["Van Gogh", "Da Vinci", "Picasso", "Rembrandt"], "a": 1},
-    {"q": "What is the capital of Australia?", "c": ["Sydney", "Melbourne", "Brisbane", "Canberra"], "a": 3},
-    {"q": "What is the speed of light? (approx)", "c": ["300,000 km/s", "150,000 km/s", "100,000 km/s", "50,000 km/s"], "a": 0},
-    {"q": "Who developed the theory of relativity?", "c": ["Newton", "Galileo", "Einstein", "Tesla"], "a": 2},
-    {"q": "What is the smallest country?", "c": ["Monaco", "Vatican City", "Nauru", "San Marino"], "a": 1},
-    {"q": "Which element keeps bones strong?", "c": ["Iron", "Calcium", "Zinc", "Potassium"], "a": 1},
-    {"q": "What is the largest desert?", "c": ["Gobi", "Arabian", "Sahara", "Antarctic"], "a": 3},
-    {"q": "Who was the first person on the Moon?", "c": ["Gagarin", "Armstrong", "Aldrin", "Collins"], "a": 1},
-    {"q": "What is 100 divided by 4?", "c": ["20", "25", "30", "35"], "a": 1},
-    {"q": "How many days are in a leap year?", "c": ["364", "365", "366", "367"], "a": 2}
+// Fallback questions for Math (คณิตศาสตร์)
+const FALLBACK_MATH = [
+    {
+        "q": "Mock Math Question 1?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 2?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 3?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 4?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 5?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 6?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 7?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 8?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 9?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 10?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 11?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 12?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 13?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 14?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 15?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 16?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 17?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 18?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 19?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 20?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 21?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 22?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 23?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 24?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 25?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 26?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 27?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 28?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 29?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Math Question 30?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    }
 ];
+
+// Fallback questions for Science (วิทยาศาสตร์)
+const FALLBACK_SCIENCE = [
+    {
+        "q": "Mock Science Question 1?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 2?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 3?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 4?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 5?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 6?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 7?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 8?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 9?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 10?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 11?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 12?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 13?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 14?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 15?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 16?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 17?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 18?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 19?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 20?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 21?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 22?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 23?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 24?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 25?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 26?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 27?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 28?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 29?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Science Question 30?",
+        "c": [
+            "Choice A",
+            "Choice B",
+            "Choice C",
+            "Choice D"
+        ],
+        "a": 0
+    }
+];
+
+// Fallback questions for Thai (ภาษาไทย)
+const FALLBACK_THAI = [
+    {
+        "q": "Mock Thai Question 1?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 2?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 3?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 4?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 5?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 6?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 7?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 8?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 9?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 10?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 11?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 12?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 13?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 14?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 15?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 16?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 17?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 18?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 19?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 20?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 21?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 22?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 23?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 24?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 25?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 26?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 27?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 28?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 29?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    },
+    {
+        "q": "Mock Thai Question 30?",
+        "c": [
+            "Choice ก",
+            "Choice ข",
+            "Choice ค",
+            "Choice ง"
+        ],
+        "a": 0
+    }
+];
+
+// Fallback questions for Exam (สอบรวม) - dynamically mixed from the other three sets
+const FALLBACK_EXAM = [
+    ...FALLBACK_MATH.slice(0, 10),
+    ...FALLBACK_SCIENCE.slice(0, 10),
+    ...FALLBACK_THAI.slice(0, 10)
+];
+
+// Helper to determine active subject config via URL params
+function getSubjectConfig() {
+    const params = new URLSearchParams(window.location.search);
+    const sub = params.get("subject") || "math";
+    const norm = sub.trim().toLowerCase();
+    
+    if (norm === "science" || norm === "วิทยาศาสตร์") {
+        return { file: "science.json", set: "Monster_Set2", name: "วิทยาศาสตร์", fallback: FALLBACK_SCIENCE };
+    } else if (norm === "thai" || norm === "ภาษาไทย") {
+        return { file: "thai.json", set: "Monster_Set3", name: "ภาษาไทย", fallback: FALLBACK_THAI };
+    } else if (norm === "exam" || norm === "สอบรวม" || norm === "รวมวิชา") {
+        return { file: "exam.json", set: "mixed", name: "สอบรวม", fallback: FALLBACK_EXAM };
+    } else {
+        return { file: "math.json", set: "Monster_Set1", name: "คณิตศาสตร์", fallback: FALLBACK_MATH };
+    }
+}
+
+const subjectConfig = getSubjectConfig();
+window.MONSTER_SET = subjectConfig.set;
+window.SUBJECT_NAME = subjectConfig.name;
 
 // Asynchronously load questions from JSON, falling back to local list on failure/CORS
 async function initQuestions() {
     try {
-        const response = await fetch(`${ASSETS_PATH}/data/questions.json`);
+        const response = await fetch(`${ASSETS_PATH}/data/${subjectConfig.file}`);
         if (!response.ok) throw new Error("Network status not OK");
         QUESTIONS = await response.json();
-        console.log("Successfully loaded questions from JSON.");
+        console.log(`Successfully loaded questions for ${subjectConfig.name} from ${subjectConfig.file}.`);
     } catch (e) {
-        console.warn("Could not fetch questions.json (CORS or missing file), using fallback data:", e);
-        QUESTIONS = [...FALLBACK_QUESTIONS];
+        console.warn(`Could not fetch ${subjectConfig.file} (CORS or missing file), using fallback data:`, e);
+        QUESTIONS = [...subjectConfig.fallback];
     }
 }
+
+// Helper to determine score from previous system via URL parameter or external API
+function getScoreFromAPI() {
+    const params = new URLSearchParams(window.location.search);
+    const scoreVal = params.get("score");
+    if (scoreVal !== null) {
+        const parsed = parseInt(scoreVal, 10);
+        return isNaN(parsed) ? 100 : parsed;
+    }
+    return 100; // Default to 100 if not specified
+}
+window.USER_SCORE = getScoreFromAPI();

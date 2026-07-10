@@ -482,10 +482,10 @@ canvas {
 }
 
 /* Apply specific letters based on choice IDs */
-#choice-0::before { content: "A"; }
-#choice-1::before { content: "B"; }
-#choice-2::before { content: "C"; }
-#choice-3::before { content: "D"; }
+#choice-0::before { content: "ก"; }
+#choice-1::before { content: "ข"; }
+#choice-2::before { content: "ค"; }
+#choice-3::before { content: "ง"; }
 
 /* Choice hovers (Gold Highlight Effect) */
 .btn-choice:hover:not(:disabled) {
@@ -575,3 +575,31 @@ canvas {
     90% { transform: translate(2px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+/* Premium Secondary Button for Revive Option */
+.btn-secondary {
+    background: linear-gradient(135deg, #4b526d 0%, #2e3440 100%);
+    color: #ffffff;
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    padding: 0.95rem 2.2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    pointer-events: auto;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #5e6685 0%, #3b4252 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+.btn-secondary:active {
+    transform: translateY(-1px) scale(1.0);
+}
+

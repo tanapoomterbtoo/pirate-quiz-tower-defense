@@ -18,7 +18,6 @@ const ANIM_FPS = {
 };
 
 // Game Settings
-const SHUFFLE_QUESTIONS = true;
 const PLAYER_BASE_DMG = 30;
 
 // Character Floor level (Y coordinate for feet)

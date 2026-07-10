@@ -1,0 +1,446 @@
+{
+  "version": 2,
+  "bodyType": "male",
+  "selections": {
+    "body": {
+      "itemId": "body",
+      "subId": null,
+      "variant": "",
+      "recolor": "lpcr.tan",
+      "name": "Body Color (lpcr tan)"
+    },
+    "head": {
+      "itemId": "heads_human_male",
+      "subId": null,
+      "variant": "",
+      "recolor": "lpcr.tan",
+      "name": "Human Male (lpcr tan)"
+    },
+    "expression": {
+      "itemId": "face_neutral",
+      "subId": null,
+      "variant": "",
+      "recolor": "lpcr.tan",
+      "name": "Neutral (lpcr tan)"
+    },
+    "armour": {
+      "itemId": "torso_armour_leather",
+      "subId": null,
+      "variant": "",
+      "recolor": "leather",
+      "name": "Leather (leather)"
+    },
+    "legs": {
+      "itemId": "legs_formal",
+      "subId": null,
+      "variant": "",
+      "recolor": "gray",
+      "name": "Formal Pants (gray)"
+    },
+    "weapon": {
+      "itemId": "tool_smash",
+      "subId": null,
+      "variant": "axe",
+      "recolor": "",
+      "name": "Smash (axe)"
+    },
+    "hair": {
+      "itemId": "hair_buzzcut",
+      "subId": null,
+      "variant": "",
+      "recolor": "gray",
+      "name": "Buzzcut (gray)"
+    }
+  },
+  "selectedAnimation": "walk",
+  "showTransparencyGrid": true,
+  "applyTransparencyMask": false,
+  "matchBodyColorEnabled": true,
+  "compactDisplay": false,
+  "enabledLicenses": {
+    "CC0": true,
+    "CC-BY-SA": true,
+    "CC-BY": true,
+    "OGA-BY": true,
+    "GPL": true
+  },
+  "enabledAnimations": {
+    "spellcast": false,
+    "thrust": false,
+    "walk": false,
+    "slash": false,
+    "shoot": false,
+    "hurt": false,
+    "climb": false,
+    "idle": false,
+    "jump": false,
+    "sit": false,
+    "emote": false,
+    "run": false,
+    "watering": false,
+    "combat": false,
+    "1h_slash": false,
+    "1h_backslash": false,
+    "1h_halfslash": false
+  },
+  "url": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=male&body=Body_Color_lpcr.tan&head=Human_Male_lpcr.tan&expression=Neutral_lpcr.tan&armour=Leather_leather&legs=Formal_Pants_gray&weapon=Smash_axe&hair=Buzzcut_gray",
+  "layers": [
+    {
+      "itemId": "body",
+      "name": "Body Color (lpcr tan)",
+      "variant": "",
+      "recolors": {
+        "body": "lpcr.tan"
+      },
+      "zPos": 10,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "body/bodies/male/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "legs_formal",
+      "name": "Formal Pants (gray)",
+      "variant": "",
+      "recolors": {
+        "legs": "gray"
+      },
+      "zPos": 20,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "legs/formal/male/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "torso_armour_leather",
+      "name": "Leather (leather)",
+      "variant": "",
+      "recolors": {
+        "armour": "leather"
+      },
+      "zPos": 60,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "torso/armour/leather/male/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run"
+      ]
+    },
+    {
+      "itemId": "heads_human_male",
+      "name": "Human Male (lpcr tan)",
+      "variant": "",
+      "recolors": {
+        "head": "lpcr.tan"
+      },
+      "zPos": 100,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "head/heads/human/male/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "face_neutral",
+      "name": "Neutral (lpcr tan)",
+      "variant": "",
+      "recolors": {
+        "expression": "lpcr.tan"
+      },
+      "zPos": 101,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "head/faces/male/neutral/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "hair_buzzcut",
+      "name": "Buzzcut (gray)",
+      "variant": "",
+      "recolors": {
+        "hair": "gray"
+      },
+      "zPos": 120,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "hair/buzzcut/adult/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "tool_smash",
+      "name": "Smash (axe)",
+      "variant": "axe",
+      "recolors": null,
+      "zPos": 140,
+      "layerNum": 1,
+      "yPos": 512,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "tools/smash/universal/male/walk/axe.png"
+      },
+      "supportedAnimations": [
+        "walk"
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "fileName": "body/bodies/male/walk.png",
+      "file": "body/bodies/male",
+      "notes": "see details at https://opengameart.org/content/lpc-character-bases; 'Thick' Male Revised Run/Climb by JaidynReiman (based on ElizaWy's LPC Revised)",
+      "authors": [
+        "bluecarrot16",
+        "JaidynReiman",
+        "Benjamin K. Smith (BenCreating)",
+        "Evert",
+        "Eliza Wyatt (ElizaWy)",
+        "TheraHedwig",
+        "MuffinElZangano",
+        "Durrani",
+        "Johannes Sjölund (wulax)",
+        "Stephen Challener (Redshrike)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0",
+        "CC-BY-SA 3.0",
+        "GPL 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+        "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani",
+        "https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle",
+        "https://opengameart.org/content/lpc-revised-character-basics",
+        "https://opengameart.org/content/lpc-be-seated",
+        "https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads",
+        "https://opengameart.org/content/lpc-jump-expanded",
+        "https://opengameart.org/content/lpc-character-bases"
+      ]
+    },
+    {
+      "fileName": "head/heads/human/male/walk.png",
+      "file": "head/heads/human/male",
+      "notes": "original head by Redshrike, tweaks by BenCreating, modular version by bluecarrot16",
+      "authors": [
+        "bluecarrot16",
+        "Benjamin K. Smith (BenCreating)",
+        "Stephen Challener (Redshrike)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0",
+        "CC-BY-SA 3.0",
+        "GPL 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+        "https://opengameart.org/content/lpc-character-bases"
+      ]
+    },
+    {
+      "fileName": "head/faces/male/neutral/walk.png",
+      "file": "head/faces",
+      "notes": "Original by Redshrike, Expressions by ElizaWy, mapped to all frames by JaidynReiman",
+      "authors": [
+        "JaidynReiman",
+        "ElizaWy",
+        "Stephen Challener (Redshrike)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0"
+      ],
+      "urls": [
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Head",
+        "https://opengameart.org/content/ulpc-expanded-expressions"
+      ]
+    },
+    {
+      "fileName": "torso/armour/leather/male/walk.png",
+      "file": "torso/armour/leather",
+      "notes": "adapted to v3 bases by bluecarrot16, reduced colors and climb/emote/jump by JaidynReiman",
+      "authors": [
+        "Johannes Sjölund (wulax)",
+        "bluecarrot16",
+        "JaidynReiman"
+      ],
+      "licenses": [
+        "OGA-BY 3.0",
+        "CC-BY-SA 3.0",
+        "GPL 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+        "https://opengameart.org/content/lpc-clothing-updates",
+        "https://opengameart.org/content/lpc-expanded-armor"
+      ]
+    },
+    {
+      "fileName": "legs/formal/male/walk.png",
+      "file": "legs/formal",
+      "notes": "Original pants by Stephen Challener (Redshrike), thrust/shoot bases by Wulax, Formal Pants by Bluecarrot16, climb/jump/run/sit/emotes/revised combat by JaidynReiman",
+      "authors": [
+        "bluecarrot16",
+        "JaidynReiman",
+        "ElizaWy",
+        "Johannes Sjölund (wulax)",
+        "Stephen Challener (Redshrike)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0",
+        "CC-BY-SA 3.0",
+        "GPL 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+        "https://opengameart.org/content/lpc-2-characters",
+        "https://opengameart.org/content/lpc-gentleman",
+        "https://opengameart.org/content/lpc-expanded-pants"
+      ]
+    },
+    {
+      "fileName": "tools/smash/universal/male/walk/axe.png",
+      "file": "tools/smash",
+      "notes": "",
+      "authors": [
+        "bluecarrot16",
+        "Pierre Vigier (pvigier)",
+        "Tuomo Untinen (reemax)",
+        "Johannes Sjölund (wulax)",
+        "and Inboxninja"
+      ],
+      "licenses": [
+        "CC-BY-SA 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/lpc-hand-tools"
+      ]
+    },
+    {
+      "fileName": "hair/buzzcut/adult/walk.png",
+      "file": "hair/buzzcut",
+      "notes": "",
+      "authors": [
+        "ElizaWy"
+      ],
+      "licenses": [
+        "OGA-BY 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/lpc-hair"
+      ]
+    }
+  ]
+}

@@ -32,16 +32,8 @@ class Game {
             this.sounds[key].volume = VOL_SFX;
         }
 
-        // Enemy Sequence pattern matching Python's
-        const rawSeq = [
-            "small", "small", "big", "small", "small", "big", "boss",
-            "small", "big", "small", "boss",
-            "big", "big", "boss", "boss"
-        ];
+        // Enemy Sequence will be dynamically generated in resetGame
         this.enemySequence = [];
-        for (let k = 0; k < 3; k++) {
-            this.enemySequence.push(...rawSeq);
-        }
 
         // DOM elements cache
         this.menuOverlay = document.getElementById("menu-overlay");
@@ -50,7 +42,6 @@ class Game {
         this.topHud = document.getElementById("top-hud");
         this.quizPanel = document.getElementById("quiz-panel");
         this.questionText = document.getElementById("question-text");
-        this.btnSkip = document.getElementById("btn-skip");
         this.btnMute = document.getElementById("btn-mute");
         this.muteWaves = document.getElementById("sound-waves");
         this.muteX = document.getElementById("mute-x");
@@ -58,12 +49,22 @@ class Game {
         this.gameContainer = document.getElementById("game-container");
         this.isMuted = false;
         
+        // Revive DOM elements cache
+        this.reviveOverlay = document.getElementById("revive-overlay");
+        this.btnUseRevive = document.getElementById("btn-use-revive");
+        
         // Set up DOM references for inventory buttons
         this.itemButtons = {
             "Telescope": document.getElementById("item-telescope"),
             "Repair Kit": document.getElementById("item-repair"),
             "Cannonball": document.getElementById("item-cannonball")
         };
+
+        // Display user score on the main menu
+        const scoreDisplay = document.getElementById("user-score-display");
+        if (scoreDisplay) {
+            scoreDisplay.innerText = window.USER_SCORE !== undefined ? window.USER_SCORE : 100;
+        }
 
         this.resetGame();
         
@@ -102,19 +103,55 @@ class Game {
         this.wave = 1;
         
         this.questionPool = [...QUESTIONS];
-        if (SHUFFLE_QUESTIONS) {
-            this.shuffleArray(this.questionPool);
-        }
         
+        // Generate dynamic enemy sequence: 5 Easy and 5 Middle shuffled, with Boss at the end
+        const activeTiers = [];
+        for (let i = 0; i < 5; i++) {
+            activeTiers.push("Easy");
+            activeTiers.push("Middle");
+        }
+        this.shuffleArray(activeTiers);
+        activeTiers.push("Boss");
+        
+        this.enemySequence = activeTiers;
         this.currentEnemyIdx = 0;
         
+        // Allocate items based on USER_SCORE from previous system
+        const score = window.USER_SCORE !== undefined ? window.USER_SCORE : 100;
+        let telescopeCount = 0;
+        let repairCount = 0;
+        let cannonballCount = 0;
+        let reviveCount = 0;
+        
+        if (score >= 80 && score <= 100) {
+            telescopeCount = 2;
+            repairCount = 2;
+            cannonballCount = 1;
+            reviveCount = 1;
+        } else if (score >= 70) {
+            telescopeCount = 1;
+            repairCount = 1;
+            cannonballCount = 1;
+            reviveCount = 0;
+        } else if (score > 60) {
+            telescopeCount = 1;
+            repairCount = 1;
+            cannonballCount = 0;
+            reviveCount = 0;
+        } else {
+            telescopeCount = 0;
+            repairCount = 0;
+            cannonballCount = 0;
+            reviveCount = 0;
+        }
+
         this.items = {
-            "Telescope": { used: false },
-            "Repair Kit": { used: false },
-            "Cannonball": { used: false }
+            "Telescope": { count: telescopeCount },
+            "Repair Kit": { count: repairCount },
+            "Cannonball": { count: cannonballCount },
+            "Revive": { count: reviveCount }
         };
         this.doubleDamage = false;
-        this.skipCount = 3;
         
         this.monster = null;
         this.monsterHpBar = new HealthBar(0, 0, 150, 20);
@@ -127,16 +164,13 @@ class Game {
         this.dmgTexts = [];
         this.screenShake = 0.0;
         
-        // Reset inventory UI states
-        for (let name in this.itemButtons) {
-            const btn = this.itemButtons[name];
-            btn.disabled = false;
-            btn.classList.remove("hidden");
+        // Hide revive overlay if showing
+        if (this.reviveOverlay) {
+            this.reviveOverlay.classList.add("hidden");
         }
-
-        // Reset Skip Button
-        this.btnSkip.disabled = false;
-        this.btnSkip.innerText = `Skip (${this.skipCount})`;
+        
+        // Reset inventory UI states
+        this.updateItemUI();
         
         this.spawnEnemy();
     }
@@ -172,12 +206,33 @@ class Game {
         this.loadQuestion();
     }
 
+    getMonsterSet() {
+        let mSet = window.MONSTER_SET || "Monster_Set1";
+        if (mSet === "mixed") {
+            const sets = ["Monster_Set1", "Monster_Set2", "Monster_Set3"];
+            mSet = sets[Math.floor(Math.random() * sets.length)];
+        }
+        return mSet;
+    }
+
     spawnEnemy() {
-        const eType = this.enemySequence[this.currentEnemyIdx];
-        this.currentEnemyIdx = (this.currentEnemyIdx + 1) % this.enemySequence.length;
+        if (this.currentQIdx >= 25) {
+            this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), "Boss");
+            this.monsterHpBar.currentHp = null;
+            return;
+        }
+
+        if (this.currentEnemyIdx >= this.enemySequence.length) {
+            this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), "Easy");
+            this.monsterHpBar.currentHp = null;
+            return;
+        }
         
-        this.monster = new Monster(1000, FLOOR_Y, eType);
-        this.monsterHpBar.currentHp = null; // Reset interpolation
+        const tier = this.enemySequence[this.currentEnemyIdx];
+        this.currentEnemyIdx += 1;
+        
+        this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), tier);
+        this.monsterHpBar.currentHp = null;
     }
 
     loadQuestion() {
@@ -187,6 +242,12 @@ class Game {
             this.topHud.classList.add("hidden");
             this.quizPanel.classList.add("hidden");
             return;
+        }
+
+        // Force spawn the boss for the final 5 questions!
+        if (this.currentQIdx >= 25 && this.monster && this.monster.tier !== "Boss") {
+            this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), "Boss");
+            this.monsterHpBar.currentHp = null;
         }
 
         this.wave = Math.floor(this.currentQIdx / 10) + 1;
@@ -219,28 +280,52 @@ class Game {
         }
     }
 
+    updateItemUI() {
+        if (!this.items) return;
+        
+        const telescopeNameEl = this.itemButtons["Telescope"].querySelector(".item-name");
+        const repairNameEl = this.itemButtons["Repair Kit"].querySelector(".item-name");
+        const cannonballNameEl = this.itemButtons["Cannonball"].querySelector(".item-name");
+        
+        if (telescopeNameEl) telescopeNameEl.innerText = `Telescope (${this.items["Telescope"].count})`;
+        if (repairNameEl) repairNameEl.innerText = `Repair Kit (${this.items["Repair Kit"].count})`;
+        if (cannonballNameEl) cannonballNameEl.innerText = `Cannonball (${this.items["Cannonball"].count})`;
+        
+        this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
+        this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
+        this.itemButtons["Cannonball"].disabled = (this.items["Cannonball"].count <= 0);
+        
+        if (this.btnUseRevive) {
+            this.btnUseRevive.innerText = `Revive (${this.items["Revive"].count} Left)`;
+            this.btnUseRevive.disabled = (this.items["Revive"].count <= 0);
+        }
+    }
+
     useItem(name) {
         if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
-        if (this.items[name].used) return;
+        if (this.items[name].count <= 0) return;
 
         const btn = this.itemButtons[name];
         
         if (name === "Telescope") {
-            // Find two wrong answers to disable
             const choices = [0, 1, 2, 3];
             const qData = this.questionPool[this.currentQIdx];
             const wrongIndices = choices.filter(idx => qData.c[idx] !== this.correctAns);
             
-            // Randomly select 2 wrong options to disable
-            this.shuffleArray(wrongIndices);
-            const toDisable = wrongIndices.slice(0, 2);
-            toDisable.forEach(idx => {
+            const activeWrongIndices = wrongIndices.filter(idx => {
                 const choiceBtn = document.getElementById(`choice-${idx}`);
-                choiceBtn.disabled = true;
+                return choiceBtn && !choiceBtn.disabled;
             });
             
-            this.items["Telescope"].used = true;
-            btn.disabled = true;
+            this.shuffleArray(activeWrongIndices);
+            const toDisable = activeWrongIndices.slice(0, 2);
+            toDisable.forEach(idx => {
+                const choiceBtn = document.getElementById(`choice-${idx}`);
+                if (choiceBtn) choiceBtn.disabled = true;
+            });
+            
+            this.items["Telescope"].count -= 1;
+            this.updateItemUI();
         } 
         else if (name === "Repair Kit") {
             const healAmount = 30;
@@ -253,31 +338,45 @@ class Game {
                 this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat }, 30, "#4cd964");
             }
             
-            this.items["Repair Kit"].used = true;
-            btn.disabled = true;
+            this.items["Repair Kit"].count -= 1;
+            this.updateItemUI();
         } 
         else if (name === "Cannonball") {
             this.doubleDamage = true;
             this.badgeDoubleDamage.classList.remove("hidden");
-            this.items["Cannonball"].used = true;
-            btn.disabled = true;
+            this.items["Cannonball"].count -= 1;
+            this.updateItemUI();
         }
     }
 
-    skipQuestion() {
-        if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
-        if (this.skipCount <= 0) return;
-
-        this.playSound("shoot");
-        this.currentQIdx += 1;
-        this.skipCount -= 1;
-        this.btnSkip.innerText = `Skip (${this.skipCount})`;
+    useRevive() {
+        if (this.items["Revive"].count <= 0) return;
         
-        if (this.skipCount <= 0) {
-            this.btnSkip.disabled = true;
-        }
+        this.items["Revive"].count -= 1;
+        this.player.hp = this.player.maxHp;
+        
+        this.dmgTexts.push(new DamageText(this.player.xFloat, this.player.yFloat - 80, -this.player.maxHp, "#4cd964"));
+        this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat }, 50, "#4cd964");
+        this.playSound("hit");
+        
+        this.reviveOverlay.classList.add("hidden");
+        this.topHud.classList.remove("hidden");
+        this.quizPanel.classList.remove("hidden");
+        
+        this.currentQIdx += 1;
+        this.combatState = "idle";
         this.loadQuestion();
     }
+
+    declineRevive() {
+        this.reviveOverlay.classList.add("hidden");
+        this.state = STATE_GAME_OVER;
+        this.gameoverOverlay.classList.remove("hidden");
+        this.topHud.classList.add("hidden");
+        this.quizPanel.classList.add("hidden");
+    }
+
+
 
     selectChoice(choiceIdx) {
         if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
@@ -303,9 +402,8 @@ class Game {
             this.combatState = "player_attack";
             this.hitApplied = false;
             
-            // Hide UI panel, skip button and mute button during player attack
+            // Hide UI panel and mute button during player attack
             this.quizPanel.classList.add("hidden");
-            this.btnSkip.classList.add("hidden");
             this.btnMute.classList.add("hidden");
         } else {
             selectedBtn.classList.add("wrong");
@@ -326,9 +424,8 @@ class Game {
             this.combatState = "monster_attack";
             this.hitApplied = false;
             
-            // Hide UI panel, skip button and mute button during monster attack
+            // Hide UI panel and mute button during monster attack
             this.quizPanel.classList.add("hidden");
-            this.btnSkip.classList.add("hidden");
             this.btnMute.classList.add("hidden");
         }
     }
@@ -399,9 +496,8 @@ class Game {
                 this.loadQuestion();
                 this.combatState = "idle";
                 
-                // Restore UI panel, skip button and mute button
+                // Restore UI panel and mute button
                 this.quizPanel.classList.remove("hidden");
-                this.btnSkip.classList.remove("hidden");
                 this.btnMute.classList.remove("hidden");
             }
         } 
@@ -423,18 +519,24 @@ class Game {
             // End monster attack phase
             if (this.monster.actionFinished) {
                 if (this.player.hp <= 0) {
-                    this.state = STATE_GAME_OVER;
-                    this.gameoverOverlay.classList.remove("hidden");
-                    this.topHud.classList.add("hidden");
-                    this.quizPanel.classList.add("hidden");
+                    if (this.items["Revive"] && this.items["Revive"].count > 0) {
+                        this.reviveOverlay.classList.remove("hidden");
+                        this.topHud.classList.add("hidden");
+                        this.quizPanel.classList.add("hidden");
+                    } else {
+                        this.state = STATE_GAME_OVER;
+                        this.gameoverOverlay.classList.remove("hidden");
+                        this.topHud.classList.add("hidden");
+                        this.quizPanel.classList.add("hidden");
+                    }
                 } else {
-                    // Allow user to answer again, but do not progress question
+                    // Progress to the next question (skip the wrong one)
+                    this.currentQIdx += 1;
                     this.combatState = "idle";
-                    this.loadQuestion(); // Reload question elements to reactivate choices
+                    this.loadQuestion();
                     
-                    // Restore UI panel, skip button and mute button
+                    // Restore UI panel and mute button
                     this.quizPanel.classList.remove("hidden");
-                    this.btnSkip.classList.remove("hidden");
                     this.btnMute.classList.remove("hidden");
                 }
             }
@@ -488,7 +590,8 @@ class Game {
             this.ctx.shadowBlur = 4;
             this.ctx.shadowOffsetX = 2;
             this.ctx.shadowOffsetY = 2;
-            this.ctx.fillText(`Wave: ${this.wave}   Question: ${this.currentQIdx + 1}/30`, WIDTH / 2, 45);
+            const subjName = window.SUBJECT_NAME || "คณิตศาสตร์";
+            this.ctx.fillText(`วิชา: ${subjName}   Question: ${this.currentQIdx + 1}/30`, WIDTH / 2, 45);
             this.ctx.restore();
 
             // 2. Draw Characters
@@ -549,12 +652,18 @@ function useItem(name) {
     if (gameInstance) gameInstance.useItem(name);
 }
 
-function skipQuestion() {
-    if (gameInstance) gameInstance.skipQuestion();
-}
+
 
 function toggleMute() {
     if (gameInstance) gameInstance.toggleMute();
+}
+
+function useRevive() {
+    if (gameInstance) gameInstance.useRevive();
+}
+
+function declineRevive() {
+    if (gameInstance) gameInstance.declineRevive();
 }
 
 // Run initializer on window load

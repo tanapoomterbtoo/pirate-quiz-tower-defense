@@ -63,9 +63,7 @@
                         </button>
                     </div>
 
-                    <button id="btn-skip" class="btn btn-skip" onclick="skipQuestion()">
-                        Skip (3)
-                    </button>
+
                     <button id="btn-mute" class="btn btn-mute" onclick="toggleMute()">
                         <svg id="mute-icon" class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
@@ -80,6 +78,10 @@
                     <div class="overlay-content">
                         <h1 class="game-title">Pirate Quiz<br><span class="highlight">Tower Defense</span></h1>
                         <p class="game-subtitle">Answer questions correctly to shoot cannonballs and defend your ship!</p>
+                        <div id="score-info-box" style="margin-bottom: 2.2rem; font-size: 1.15rem; color: #ffd700; background: rgba(255, 215, 0, 0.05); padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px dashed rgba(255, 215, 0, 0.25); display: inline-block;">
+                            คะแนนจากระบบก่อนหน้า: <span id="user-score-display" style="font-weight: bold; font-size: 1.3rem;">100</span>
+                        </div>
+                        <br>
                         <button id="btn-start" class="btn btn-primary" onclick="startGame()">Set Sail & Start</button>
                     </div>
                 </div>
@@ -91,10 +93,22 @@
                         <h2 id="question-text">Loading question...</h2>
                     </div>
                     <div class="choices-grid">
-                        <button id="choice-0" class="btn btn-choice" onclick="selectChoice(0)">Choice A</button>
-                        <button id="choice-1" class="btn btn-choice" onclick="selectChoice(1)">Choice B</button>
-                        <button id="choice-2" class="btn btn-choice" onclick="selectChoice(2)">Choice C</button>
-                        <button id="choice-3" class="btn btn-choice" onclick="selectChoice(3)">Choice D</button>
+                        <button id="choice-0" class="btn btn-choice" onclick="selectChoice(0)">ตัวเลือก ก</button>
+                        <button id="choice-1" class="btn btn-choice" onclick="selectChoice(1)">ตัวเลือก ข</button>
+                        <button id="choice-2" class="btn btn-choice" onclick="selectChoice(2)">ตัวเลือก ค</button>
+                        <button id="choice-3" class="btn btn-choice" onclick="selectChoice(3)">ตัวเลือก ง</button>
+                    </div>
+                </div>
+
+                <!-- REVIVE OVERLAY -->
+                <div id="revive-overlay" class="overlay-panel hidden">
+                    <div class="overlay-content">
+                        <h1 class="state-title gold-glow" style="color: #ffd700; filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.55));">REVIVE AVAILABLE</h1>
+                        <p class="state-desc">Your ship has been destroyed! Do you want to use your Revive item to restore full HP and continue?</p>
+                        <div style="display: flex; gap: 20px; justify-content: center;">
+                            <button id="btn-use-revive" class="btn btn-primary" onclick="useRevive()">Revive (1 Left)</button>
+                            <button class="btn btn-secondary" onclick="declineRevive()">Give Up</button>
+                        </div>
                     </div>
                 </div>
 

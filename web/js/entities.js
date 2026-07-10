@@ -245,13 +245,53 @@ class AnimatedEntity {
         if (isPlayer) {
             this.frames["attack"] = loadFrameImages("player", "custom", "tool_whip", "right", 8);
         } else {
-            if (this.charName === "small") {
-                this.frames["attack"] = loadFrameImages("small", "custom", "slash_128", "left", 6);
-            } else if (this.charName === "big") {
-                this.frames["attack"] = loadFrameImages("big", "custom", "slash_128", "left", 6);
-            } else if (this.charName === "boss") {
-                this.frames["attack"] = loadFrameImages("boss", "custom", "slash_oversize", "left", 6);
+            // charName is in format: "Monster_SetX/easy" or "Monster_SetX/Middle" etc.
+            const parts = this.charName.split('/');
+            const monsterSet = parts[0];
+            const tier = (parts[1] || "").toLowerCase();
+            
+            let animFolder = "standard";
+            let animAction = "slash";
+            let frameCount = 6;
+            
+            if (monsterSet === "Monster_Set1") {
+                if (tier === "middle" || tier === "middle") {
+                    animFolder = "custom";
+                    animAction = "slash_128";
+                    frameCount = 6;
+                } else {
+                    // Easy and Boss in Set1 use standard slash
+                    animFolder = "standard";
+                    animAction = "slash";
+                    frameCount = 6;
+                }
+            } else if (monsterSet === "Monster_Set2") {
+                if (tier === "easy" || tier === "easy") {
+                    animFolder = "custom";
+                    animAction = "tool_whip";
+                    frameCount = 8;
+                } else if (tier === "middle") {
+                    animFolder = "custom";
+                    animAction = "slash_oversize";
+                    frameCount = 6;
+                } else if (tier === "boss") {
+                    animFolder = "custom";
+                    animAction = "slash_128";
+                    frameCount = 6;
+                }
+            } else if (monsterSet === "Monster_Set3") {
+                if (tier === "easy" || tier === "middle") {
+                    animFolder = "custom";
+                    animAction = "slash_128";
+                    frameCount = 6;
+                } else if (tier === "boss") {
+                    animFolder = "custom";
+                    animAction = "slash_oversize";
+                    frameCount = 6;
+                }
             }
+            
+            this.frames["attack"] = loadFrameImages(this.charName, animFolder, animAction, "left", frameCount);
         }
     }
 
@@ -417,21 +457,45 @@ class PiratePlayer extends AnimatedEntity {
 
 // Monster character class
 class Monster extends AnimatedEntity {
-    constructor(x, y, mType) {
+    constructor(x, y, arg1, arg2) {
+        let monsterSet = window.MONSTER_SET || "Monster_Set1";
+        let tier = "Easy";
+        
+        if (arg2 !== undefined) {
+            monsterSet = arg1;
+            tier = arg2;
+        } else {
+            // backward compatibility
+            const mType = arg1;
+            tier = (mType === "boss") ? "Boss" : ((mType === "big" || mType === "Middle") ? "Middle" : "Easy");
+        }
+        
         let size = SIZE_MONSTER_SMALL;
-        if (mType === "big") size = SIZE_MONSTER_BIG;
-        if (mType === "boss") size = SIZE_MONSTER_BOSS;
+        if (tier === "Middle") size = SIZE_MONSTER_BIG;
+        if (tier === "Boss") size = SIZE_MONSTER_BOSS;
 
-        super(x, y, mType, size);
+        // Casing adjustment for folder paths: Set2 and Set3 use lowercase "easy"
+        let folderName = tier;
+        if (tier === "Easy") {
+            if (monsterSet === "Monster_Set2" || monsterSet === "Monster_Set3") {
+                folderName = "easy";
+            } else {
+                folderName = "Easy";
+            }
+        }
+
+        super(x, y, `${monsterSet}/${folderName}`, size);
         this.isPlayer = false;
-        this.mType = mType;
+        this.monsterSet = monsterSet;
+        this.tier = tier;
+        this.mType = (tier === "Easy") ? "small" : ((tier === "Middle") ? "big" : "boss");
 
-        if (mType === "small") {
-            this.maxHp = 30;
-        } else if (mType === "big") {
-            this.maxHp = 90;
-        } else { // boss
-            this.maxHp = 150;
+        if (tier === "Easy") {
+            this.maxHp = 60; // 2 hits
+        } else if (tier === "Middle") {
+            this.maxHp = 90; // 3 hits
+        } else { // Boss
+            this.maxHp = 150; // 5 hits
         }
         this.hp = this.maxHp;
     }

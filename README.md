@@ -130,3 +130,58 @@ You can customize the Python version settings by editing [src/config.py](file://
 * `SHUFFLE_QUESTIONS`: Set to `True` or `False` to toggle question scrambling.
 * `PLAYER_BASE_DMG`: Base damage dealt by the player (Default: `30`).
 * `VOL_BGM` / `VOL_SFX`: Adjust audio volumes.
+
+---
+
+## ⚙️ Web Version Configuration & API Parameters
+
+The Web version (`web/index.html`) can be customized and integrated with external systems using **URL parameters**. These parameters control the subject being tested, the monster set used, and the starting helper items given to the player.
+
+### 1. Subject Parameter (`subject`)
+Specifies the subject test and loads the corresponding questions and character sprites.
+* **Math (คณิตศาสตร์):** `?subject=math` or `?subject=คณิตศาสตร์`
+  * Loads: `math.json`
+  * Monster Set: `Monster_Set1`
+* **Science (วิทยาศาสตร์):** `?subject=science` or `?subject=วิทยาศาสตร์`
+  * Loads: `science.json`
+  * Monster Set: `Monster_Set2`
+* **Thai Language (ภาษาไทย):** `?subject=thai` or `?subject=ภาษาไทย`
+  * Loads: `thai.json`
+  * Monster Set: `Monster_Set3`
+* **Comprehensive Exam (สอบรวม):** `?subject=exam` or `?subject=สอบรวม` or `?subject=รวมวิชา`
+  * Loads: `exam.json` (Mixed questions)
+  * Monster Set: Randomly mixes sprites from `Monster_Set1`, `Monster_Set2`, and `Monster_Set3` for each spawn.
+
+### 2. Prior Score Parameter (`score`)
+Determines the helper items granted to the player at start based on their performance in the previous system.
+* **Score 80 - 100:** Full inventory:
+  * 🔭 Telescope (ตัดช้อย) x2
+  * 🔧 Repair Kit (เพิ่มเลือด) x2
+  * 💣 Heavy Cannonball (เพิ่มพลังโจมตี) x1
+  * ✨ Revive (ชุบชีวิตเมื่อ HP = 0) x1
+* **Score 70 - 79:** Reduced inventory (No Revive):
+  * 🔭 Telescope x1
+  * 🔧 Repair Kit x1
+  * 💣 Heavy Cannonball x1
+  * ✨ Revive x0
+* **Score 61 - 69:** Minimal inventory (No Cannonball, No Revive):
+  * 🔭 Telescope x1
+  * 🔧 Repair Kit x1
+  * 💣 Heavy Cannonball x0
+  * ✨ Revive x0
+* **Score 60 or below:** No inventory items:
+  * All items set to 0. Buttons are disabled and grayed out.
+
+*Default fallback: If no `score` is provided in the URL, it defaults to `100` (full items).*
+
+---
+
+## 👾 Custom Combat Mechanics (Web)
+
+* **Wrong Answer Penalty:** Answering a question incorrectly results in taking damage and immediately skipping that question to load the next one.
+* **Monster Hit Points:**
+  * **Easy (Small):** 60 HP (takes 2 hits of 30 damage to die)
+  * **Middle (Big):** 90 HP (takes 3 hits of 30 damage to die)
+  * **Boss:** 150 HP (takes 5 hits of 30 damage to die). Appears automatically for the final 5 questions (questions 26 - 30).
+* **Monster Spawning:** 5 Easy and 5 Middle monsters are shuffled and spawned randomly during the first 25 questions. The Boss always spawns for the final 5 questions.
+
