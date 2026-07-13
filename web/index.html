@@ -31,8 +31,8 @@
                                 </svg>
                             </div>
                             <div class="item-info">
-                                <span class="item-name">Telescope</span>
-                                <span class="item-desc">Remove 2 wrong answers</span>
+                                <span class="item-name">กล้องส่องทางไกล</span>
+                                <span class="item-desc">ตัดตัวเลือกที่ผิด 2 ข้อ</span>
                             </div>
                         </button>
                         <button id="item-repair" class="btn btn-item" onclick="useItem('Repair Kit')">
@@ -44,8 +44,8 @@
                                 </svg>
                             </div>
                             <div class="item-info">
-                                <span class="item-name">Repair Kit</span>
-                                <span class="item-desc">Heal +30 HP</span>
+                                <span class="item-name">กล่องพยาบาล</span>
+                                <span class="item-desc">ฟื้นฟูพลังชีวิต +30 HP</span>
                             </div>
                         </button>
                         <button id="item-cannonball" class="btn btn-item" onclick="useItem('Cannonball')">
@@ -57,8 +57,8 @@
                                 </svg>
                             </div>
                             <div class="item-info">
-                                <span class="item-name">Cannonball</span>
-                                <span class="item-desc">2x Next Damage</span>
+                                <span class="item-name">กระสุนปืนใหญ่</span>
+                                <span class="item-desc">ความเสียหาย 2 เท่าในเทิร์นถัดไป</span>
                             </div>
                         </button>
                     </div>
@@ -76,21 +76,21 @@
                 <!-- MAIN MENU OVERLAY -->
                 <div id="menu-overlay" class="overlay-panel">
                     <div class="overlay-content">
-                        <h1 class="game-title">Pirate Quiz<br><span class="highlight">Tower Defense</span></h1>
-                        <p class="game-subtitle">Answer questions correctly to shoot cannonballs and defend your ship!</p>
+                        <h1 class="game-title">โจรสลัดประลองปัญญา<br><span class="highlight">ป้องกันหอคอย</span></h1>
+                        <p class="game-subtitle">ตอบคำถามให้ถูกต้องเพื่อยิงปืนใหญ่และปกป้องเรือของคุณ!</p>
                         <div id="score-info-box" style="margin-bottom: 2.2rem; font-size: 1.15rem; color: #ffd700; background: rgba(255, 215, 0, 0.05); padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px dashed rgba(255, 215, 0, 0.25); display: inline-block;">
-                            คะแนนจากระบบก่อนหน้า: <span id="user-score-display" style="font-weight: bold; font-size: 1.3rem;">100</span>
+                            คะแนนที่ได้รับ: <span id="user-score-display" style="font-weight: bold; font-size: 1.3rem;">100</span>
                         </div>
                         <br>
-                        <button id="btn-start" class="btn btn-primary" onclick="startGame()">Set Sail & Start</button>
+                        <button id="btn-start" class="btn btn-primary" onclick="startGame()">ออกเรือ & เริ่มเล่น</button>
                     </div>
                 </div>
 
                 <!-- PLAYING: QUIZ INTERFACE -->
                 <div id="quiz-panel" class="hud-layer hidden">
-                    <div id="double-damage-badge" class="badge hidden">2X DAMAGE ACTIVE!</div>
+                    <div id="double-damage-badge" class="badge hidden">ใช้งานความเสียหาย 2 เท่า!</div>
                     <div class="quiz-box">
-                        <h2 id="question-text">Loading question...</h2>
+                        <h2 id="question-text">กำลังโหลดคำถาม...</h2>
                     </div>
                     <div class="choices-grid">
                         <button id="choice-0" class="btn btn-choice" onclick="selectChoice(0)">ตัวเลือก ก</button>
@@ -103,11 +103,11 @@
                 <!-- REVIVE OVERLAY -->
                 <div id="revive-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
-                        <h1 class="state-title gold-glow" style="color: #ffd700; filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.55));">REVIVE AVAILABLE</h1>
-                        <p class="state-desc">Your ship has been destroyed! Do you want to use your Revive item to restore full HP and continue?</p>
+                        <h1 class="state-title gold-glow" style="color: #ffd700; filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.55));">ชุบชีวิตที่สามารถใช้งานได้</h1>
+                        <p class="state-desc">เรือของคุณถูกทำลาย! คุณต้องการใช้สิทธิ์ชุบชีวิตเพื่อฟื้นฟู HP เต็มและเล่นต่อหรือไม่?</p>
                         <div style="display: flex; gap: 20px; justify-content: center;">
-                            <button id="btn-use-revive" class="btn btn-primary" onclick="useRevive()">Revive (1 Left)</button>
-                            <button class="btn btn-secondary" onclick="declineRevive()">Give Up</button>
+                            <button id="btn-use-revive" class="btn btn-primary" onclick="useRevive()">ชุบชีวิต (เหลืออีก 1)</button>
+                            <button class="btn btn-secondary" onclick="declineRevive()">ยอมแพ้</button>
                         </div>
                     </div>
                 </div>
@@ -115,18 +115,34 @@
                 <!-- GAME OVER OVERLAY -->
                 <div id="gameover-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
-                        <h1 class="state-title red-glow">GAME OVER</h1>
-                        <p class="state-desc">Your ship was destroyed by the sea monsters!</p>
-                        <button class="btn btn-primary btn-retry" onclick="restartGame()">Try Again</button>
+                        <h1 class="state-title red-glow">เกมจบแล้ว</h1>
+                        <p class="state-desc">เรือของคุณถูกทำลายโดยสัตว์ประหลาดแห่งท้องทะเล!</p>
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button id="btn-submit-gameover" class="btn btn-primary hidden" onclick="submitExamResults()">ส่งผลสอบ</button>
+                            <button class="btn btn-secondary btn-retry" onclick="restartGame()">ลองอีกครั้ง</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- VICTORY OVERLAY -->
                 <div id="victory-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
-                        <h1 class="state-title green-glow">VICTORY!</h1>
-                        <p class="state-desc">You successfully defended the ship and cleared all 3 waves!</p>
-                        <button class="btn btn-primary btn-retry" onclick="restartGame()">Play Again</button>
+                        <h1 class="state-title green-glow">ชัยชนะ!</h1>
+                        <p class="state-desc">คุณปกป้องเรือสำเร็จและผ่านการป้องกันทั้ง 3 ระลอกแล้ว!</p>
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button id="btn-submit-victory" class="btn btn-primary hidden" onclick="submitExamResults()">ส่งผลสอบและรับเกียรติบัตร</button>
+                            <button class="btn btn-secondary btn-retry" onclick="restartGame()">เล่นอีกครั้ง</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOSS WARNING OVERLAY -->
+                <div id="boss-warning-overlay" class="hidden">
+                    <div class="warning-flasher"></div>
+                    <div class="warning-content">
+                        <div class="warning-skull">💀</div>
+                        <h1 class="warning-title">บอสปรากฏตัว</h1>
+                        <p class="warning-subtitle">บอสใหญ่กำลังเข้ามา</p>
                     </div>
                 </div>
 

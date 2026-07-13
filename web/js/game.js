@@ -163,6 +163,8 @@ class Game {
         this.particles = [];
         this.dmgTexts = [];
         this.screenShake = 0.0;
+        this.bossWarningTriggered = false;
+        this.answersLog = [];
         
         // Hide revive overlay if showing
         if (this.reviveOverlay) {
@@ -215,6 +217,29 @@ class Game {
         return mSet;
     }
 
+    triggerBossWarning() {
+        const warningEl = document.getElementById("boss-warning-overlay");
+        if (warningEl) {
+            warningEl.classList.remove("hidden");
+            this.playSound("wrong");
+            this.screenShake = 15.0;
+            this.spawnParticles({ x: WIDTH / 2, y: HEIGHT / 2 }, 40, "#ff3b30");
+            
+            // Play pulsing siren sounds
+            let flashCount = 0;
+            const flashInterval = setInterval(() => {
+                this.screenShake = 8.0;
+                this.playSound("shoot");
+                flashCount++;
+                if (flashCount >= 4) clearInterval(flashInterval);
+            }, 600);
+
+            setTimeout(() => {
+                warningEl.classList.add("hidden");
+            }, 3000);
+        }
+    }
+
     spawnEnemy() {
         if (this.currentQIdx >= 25) {
             this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), "Boss");
@@ -241,6 +266,12 @@ class Game {
             this.victoryOverlay.classList.remove("hidden");
             this.topHud.classList.add("hidden");
             this.quizPanel.classList.add("hidden");
+            
+            // Show submit/redirect button if callback_url is set
+            const btnSubmit = document.getElementById("btn-submit-victory");
+            if (btnSubmit && window.CALLBACK_URL) {
+                btnSubmit.classList.remove("hidden");
+            }
             return;
         }
 
@@ -248,6 +279,11 @@ class Game {
         if (this.currentQIdx >= 25 && this.monster && this.monster.tier !== "Boss") {
             this.monster = new Monster(1000, FLOOR_Y, this.getMonsterSet(), "Boss");
             this.monsterHpBar.currentHp = null;
+        }
+
+        if (this.currentQIdx >= 25 && !this.bossWarningTriggered) {
+            this.bossWarningTriggered = true;
+            this.triggerBossWarning();
         }
 
         this.wave = Math.floor(this.currentQIdx / 10) + 1;
@@ -287,16 +323,16 @@ class Game {
         const repairNameEl = this.itemButtons["Repair Kit"].querySelector(".item-name");
         const cannonballNameEl = this.itemButtons["Cannonball"].querySelector(".item-name");
         
-        if (telescopeNameEl) telescopeNameEl.innerText = `Telescope (${this.items["Telescope"].count})`;
-        if (repairNameEl) repairNameEl.innerText = `Repair Kit (${this.items["Repair Kit"].count})`;
-        if (cannonballNameEl) cannonballNameEl.innerText = `Cannonball (${this.items["Cannonball"].count})`;
+        if (telescopeNameEl) telescopeNameEl.innerText = `กล้องส่องทางไกล (${this.items["Telescope"].count})`;
+        if (repairNameEl) repairNameEl.innerText = `กล่องพยาบาล (${this.items["Repair Kit"].count})`;
+        if (cannonballNameEl) cannonballNameEl.innerText = `กระสุนปืนใหญ่ (${this.items["Cannonball"].count})`;
         
         this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
         this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
         this.itemButtons["Cannonball"].disabled = (this.items["Cannonball"].count <= 0);
         
         if (this.btnUseRevive) {
-            this.btnUseRevive.innerText = `Revive (${this.items["Revive"].count} Left)`;
+            this.btnUseRevive.innerText = `ชุบชีวิต (เหลืออีก ${this.items["Revive"].count})`;
             this.btnUseRevive.disabled = (this.items["Revive"].count <= 0);
         }
     }
@@ -380,6 +416,11 @@ class Game {
 
     selectChoice(choiceIdx) {
         if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+
+        // Log the answer choice index selected by the student
+        if (this.answersLog) {
+            this.answersLog.push(choiceIdx);
+        }
 
         const qData = this.questionPool[this.currentQIdx];
         const selectedText = qData.c[choiceIdx];
@@ -528,6 +569,12 @@ class Game {
                         this.gameoverOverlay.classList.remove("hidden");
                         this.topHud.classList.add("hidden");
                         this.quizPanel.classList.add("hidden");
+                        
+                        // Show submit/redirect button if callback_url is set
+                        const btnSubmit = document.getElementById("btn-submit-gameover");
+                        if (btnSubmit && window.CALLBACK_URL) {
+                            btnSubmit.classList.remove("hidden");
+                        }
                     }
                 } else {
                     // Progress to the next question (skip the wrong one)
@@ -591,7 +638,7 @@ class Game {
             this.ctx.shadowOffsetX = 2;
             this.ctx.shadowOffsetY = 2;
             const subjName = window.SUBJECT_NAME || "คณิตศาสตร์";
-            this.ctx.fillText(`วิชา: ${subjName}   Question: ${this.currentQIdx + 1}/30`, WIDTH / 2, 45);
+            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${this.currentQIdx + 1}/30`, WIDTH / 2, 45);
             this.ctx.restore();
 
             // 2. Draw Characters
@@ -625,6 +672,40 @@ class Game {
         this.draw();
         
         requestAnimationFrame((time) => this.gameLoop(time));
+    }
+
+    submitExamResults() {
+        const callbackUrl = window.CALLBACK_URL;
+        if (!callbackUrl) {
+            alert("ไม่พบลิงก์ส่งผลสอบกลับระบบหลัก");
+            return;
+        }
+        
+        // Calculate correct answers count
+        let correctCount = 0;
+        this.answersLog.forEach((ans, idx) => {
+            const qData = this.questionPool[idx];
+            if (qData && ans === qData.a) {
+                correctCount++;
+            }
+        });
+
+        let redirectTarget;
+        try {
+            redirectTarget = new URL(callbackUrl, window.location.origin);
+        } catch(e) {
+            console.error("Invalid callback URL", e);
+            alert("ลิงก์ส่งผลสอบกลับระบบหลักไม่ถูกต้อง");
+            return;
+        }
+
+        redirectTarget.searchParams.set("student_id", window.STUDENT_ID);
+        redirectTarget.searchParams.set("token", window.EXAM_TOKEN);
+        redirectTarget.searchParams.set("score", correctCount);
+        redirectTarget.searchParams.set("answers", JSON.stringify(this.answersLog));
+        redirectTarget.searchParams.set("status", this.state === STATE_VICTORY ? "victory" : "gameover");
+
+        window.location.href = redirectTarget.toString();
     }
 }
 
@@ -664,6 +745,10 @@ function useRevive() {
 
 function declineRevive() {
     if (gameInstance) gameInstance.declineRevive();
+}
+
+function submitExamResults() {
+    if (gameInstance) gameInstance.submitExamResults();
 }
 
 // Run initializer on window load

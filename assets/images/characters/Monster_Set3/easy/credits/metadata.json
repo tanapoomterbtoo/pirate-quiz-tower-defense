@@ -1,6 +1,6 @@
 {
-  "exportTimestamp": "2026-07-05T06-59-30",
-  "bodyType": "male",
+  "exportTimestamp": "2026-07-10T15-09-25",
+  "bodyType": "teen",
   "frameSize": 64,
   "structure": {
     "standard": {
@@ -26,11 +26,7 @@
       "failed": []
     },
     "custom": {
-      "exported": [
-        "slash_128",
-        "backslash_128",
-        "halfslash_128"
-      ],
+      "exported": [],
       "failed": []
     }
   },
@@ -283,27 +279,25 @@
   "note": "Individual animation frames organized by standard/custom > animation > direction > frame number",
   "performance": {
     "exportKind": "individualFrames",
-    "totalMs": 195,
+    "totalMs": 557.1,
     "phasesMs": {
-      "render_composite_extractAnimationFromCanvas": 0,
-      "render_composite_extractFramesFromAnimation": 70,
-      "render_composite_sliceCanvasForCustomAnim": 5,
-      "render_composite_extractFramesFromCustomAnimation": 13,
-      "pngEncode": 88,
-      "zipFile": 14,
-      "staticFiles": 1
+      "render_composite_extractAnimationFromCanvas": 0.6,
+      "render_composite_extractFramesFromAnimation": 145.4,
+      "pngEncode": 387.5,
+      "zipFile": 5.3,
+      "staticFiles": 2.3
     },
     "counters": {
-      "pngEncodeCount": 536,
-      "totalPngBytes": 1098512,
+      "pngEncodeCount": 436,
+      "totalPngBytes": 786040,
       "drawAndSliceCount": 0,
-      "zipFileEntryCount": 536,
+      "zipFileEntryCount": 436,
       "renderExtractAnimationFromCanvasCalls": 17,
       "renderSingleItemCalls": 0,
       "renderSingleItemAnimationCalls": 0,
       "extractFramesFromAnimationBatchCount": 17,
-      "renderSliceCanvasForCustomAnimCalls": 3
+      "renderSliceCanvasForCustomAnimCalls": 0
     },
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0"
   }
 }

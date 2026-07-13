@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "bodyType": "female",
+  "bodyType": "teen",
   "selections": {
     "body": {
       "itemId": "body",
@@ -9,13 +9,6 @@
       "recolor": "light",
       "name": "Body Color (light)"
     },
-    "head": {
-      "itemId": "heads_human_female",
-      "subId": null,
-      "variant": "",
-      "recolor": "light",
-      "name": "Human Female (light)"
-    },
     "expression": {
       "itemId": "face_neutral",
       "subId": null,
@@ -23,82 +16,68 @@
       "recolor": "light",
       "name": "Neutral (light)"
     },
-    "wings": {
-      "itemId": "wings_lizard_alt",
+    "head": {
+      "itemId": "heads_human_male_gaunt",
       "subId": null,
-      "variant": "orange",
-      "recolor": "",
-      "name": "Lizard Wings (Alt Colors) (orange)"
-    },
-    "tail": {
-      "itemId": "tail_lizard_alt",
-      "subId": null,
-      "variant": "red",
-      "recolor": "",
-      "name": "Lizard Tail (Alt Colors) (red)"
-    },
-    "shadow": {
-      "itemId": "shadow",
-      "subId": null,
-      "variant": "shadow",
-      "recolor": "",
-      "name": "Shadow (shadow)"
+      "variant": "",
+      "recolor": "light",
+      "name": "Human Male Gaunt (light)"
     },
     "eyebrows": {
       "itemId": "eyebrows_thick",
       "subId": null,
       "variant": "",
-      "recolor": "orange",
-      "name": "Thick Eyebrows (orange)"
-    },
-    "nose": {
-      "itemId": "head_nose_straight",
-      "subId": null,
-      "variant": "",
-      "recolor": "light",
-      "name": "Straight nose (light)"
-    },
-    "horns": {
-      "itemId": "head_horns_backwards",
-      "subId": null,
-      "variant": "red",
-      "recolor": "",
-      "name": "Backwards Horns (red)"
+      "recolor": "navy",
+      "name": "Thick Eyebrows (navy)"
     },
     "hair": {
-      "itemId": "hair_braid",
+      "itemId": "hair_curly_long",
       "subId": null,
       "variant": "",
-      "recolor": "orange",
-      "name": "Braid (orange)"
+      "recolor": "navy",
+      "name": "Curly long (navy)"
     },
-    "bracers": {
-      "itemId": "arms_bracers",
+    "bandana": {
+      "itemId": "hat_bandana_pirate",
       "subId": null,
       "variant": "",
-      "recolor": "gold",
-      "name": "Bracers (gold)"
+      "recolor": "yellow",
+      "name": "Pirate Bandana (yellow)"
     },
-    "weapon": {
-      "itemId": "weapon_sword_longsword",
+    "bandana_overlay": {
+      "itemId": "hat_bandana_pirate_skull",
       "subId": null,
-      "variant": "longsword",
+      "variant": "",
+      "recolor": "navy",
+      "name": "Skull Bandana Overlay (navy)"
+    },
+    "facial_eyes": {
+      "itemId": "facial_eyepatch2_left",
+      "subId": null,
+      "variant": "navy",
       "recolor": "",
-      "name": "Longsword (longsword)"
+      "name": "Eyepatch 2 Left (navy)"
     },
-    "legs": {
-      "itemId": "legs_leggings2",
+    "clothes": {
+      "itemId": "torso_clothes_tshirt",
       "subId": null,
       "variant": "",
       "recolor": "red",
-      "name": "Leggings 2 (red)"
+      "name": "TShirt (red)"
     },
-    "clothes": {
-      "itemId": "torso_clothes_sleeveless1",
+    "legs": {
+      "itemId": "legs_shorts",
       "subId": null,
       "variant": "",
-      "recolor": "white",
-      "name": "Original Sleeveless (white)"
+      "recolor": "black",
+      "name": "Shorts (black)"
+    },
+    "shoes": {
+      "itemId": "feet_boots_fold",
+      "subId": null,
+      "variant": "",
+      "recolor": "walnut",
+      "name": "Folded Rim Boots (walnut)"
     }
   },
   "selectedAnimation": "walk",
@@ -132,174 +111,8 @@
     "1h_backslash": false,
     "1h_halfslash": false
   },
-  "url": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=female&body=Body_Color_light&head=Human_Female_light&expression=Neutral_light&wings=Lizard_Wings_(Alt_Colors)_orange&tail=Lizard_Tail_(Alt_Colors)_red&shadow=Shadow_shadow&eyebrows=Thick_Eyebrows_orange&nose=Straight_nose_light&horns=Backwards_Horns_red&hair=Braid_orange&bracers=Bracers_gold&weapon=Longsword_longsword&legs=Leggings_2_red&clothes=Original_Sleeveless_white",
+  "url": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=teen&body=Body_Color_light&expression=Neutral_light&head=Human_Male_Gaunt_light&eyebrows=Thick_Eyebrows_navy&hair=Curly_long_navy&bandana=Pirate_Bandana_yellow&bandana_overlay=Skull_Bandana_Overlay_navy&facial_eyes=Eyepatch_2_Left_navy&clothes=TShirt_red&legs=Shorts_black&shoes=Folded_Rim_Boots_walnut",
   "layers": [
-    {
-      "itemId": "shadow",
-      "name": "Shadow (shadow)",
-      "variant": "shadow",
-      "recolors": null,
-      "zPos": 0,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "shadow/adult/spellcast/shadow.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt"
-      ]
-    },
-    {
-      "itemId": "wings_lizard_alt",
-      "name": "Lizard Wings (Alt Colors) (orange)",
-      "variant": "orange",
-      "recolors": null,
-      "zPos": 5,
-      "layerNum": 2,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "body/wings/lizard/alt/adult/bg/spellcast/orange.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "tail_lizard_alt",
-      "name": "Lizard Tail (Alt Colors) (red)",
-      "variant": "red",
-      "recolors": null,
-      "zPos": 5,
-      "layerNum": 2,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "body/tail/lizard/alt/adult/bg/spellcast/red.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "head_horns_backwards",
-      "name": "Backwards Horns (red)",
-      "variant": "red",
-      "recolors": null,
-      "zPos": 7,
-      "layerNum": 2,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "head/horns/backwards/adult/bg/spellcast/red.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "hair_braid",
-      "name": "Braid (orange)",
-      "variant": "",
-      "recolors": {
-        "hair": "orange"
-      },
-      "zPos": 9,
-      "layerNum": 2,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "hair/braid/adult/bg/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "weapon_sword_longsword",
-      "name": "Longsword (longsword)",
-      "variant": "longsword",
-      "recolors": null,
-      "zPos": 9,
-      "layerNum": 2,
-      "yPos": 512,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "weapon/sword/longsword/universal_behind/walk/longsword.png"
-      },
-      "supportedAnimations": [
-        "walk",
-        "hurt"
-      ]
-    },
     {
       "itemId": "body",
       "name": "Body Color (light)",
@@ -313,7 +126,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "body/bodies/female/spellcast.png"
+        "spritePath": "body/bodies/teen/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -334,11 +147,11 @@
       ]
     },
     {
-      "itemId": "legs_leggings2",
-      "name": "Leggings 2 (red)",
+      "itemId": "legs_shorts",
+      "name": "Shorts (black)",
       "variant": "",
       "recolors": {
-        "legs": "red"
+        "legs": "black"
       },
       "zPos": 20,
       "layerNum": 1,
@@ -346,7 +159,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "legs/leggings2/thin/spellcast.png"
+        "spritePath": "legs/shorts/shorts/thin/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -367,11 +180,44 @@
       ]
     },
     {
-      "itemId": "torso_clothes_sleeveless1",
-      "name": "Original Sleeveless (white)",
+      "itemId": "feet_boots_fold",
+      "name": "Folded Rim Boots (walnut)",
       "variant": "",
       "recolors": {
-        "clothes": "white"
+        "shoes": "walnut"
+      },
+      "zPos": 25,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "feet/boots/fold/thin/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "torso_clothes_tshirt",
+      "name": "TShirt (red)",
+      "variant": "",
+      "recolors": {
+        "clothes": "red"
       },
       "zPos": 35,
       "layerNum": 1,
@@ -379,7 +225,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "torso/clothes/sleeveless/sleeveless1/female/spellcast.png"
+        "spritePath": "torso/clothes/shortsleeve/tshirt/teen/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -400,69 +246,8 @@
       ]
     },
     {
-      "itemId": "arms_bracers",
-      "name": "Bracers (gold)",
-      "variant": "",
-      "recolors": {
-        "bracers": "gold"
-      },
-      "zPos": 70,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "arms/bracers/thin/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run"
-      ]
-    },
-    {
-      "itemId": "tail_lizard_alt",
-      "name": "Lizard Tail (Alt Colors) (red)",
-      "variant": "red",
-      "recolors": null,
-      "zPos": 85,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "body/tail/lizard/alt/adult/fg/spellcast/red.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "heads_human_female",
-      "name": "Human Female (light)",
+      "itemId": "heads_human_male_gaunt",
+      "name": "Human Male Gaunt (light)",
       "variant": "",
       "recolors": {
         "head": "light"
@@ -473,7 +258,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "head/heads/human/female/spellcast.png"
+        "spritePath": "head/heads/human/male_gaunt/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -506,7 +291,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "head/faces/female/neutral/spellcast.png"
+        "spritePath": "head/faces/male/neutral/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -514,70 +299,6 @@
         "walk",
         "slash",
         "shoot",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "wings_lizard_alt",
-      "name": "Lizard Wings (Alt Colors) (orange)",
-      "variant": "orange",
-      "recolors": null,
-      "zPos": 105,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "body/wings/lizard/alt/adult/fg/spellcast/orange.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "head_nose_straight",
-      "name": "Straight nose (light)",
-      "variant": "",
-      "recolors": {
-        "nose": "light"
-      },
-      "zPos": 105,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "head/nose/straight/adult/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
         "idle",
         "jump",
         "sit",
@@ -590,10 +311,10 @@
     },
     {
       "itemId": "eyebrows_thick",
-      "name": "Thick Eyebrows (orange)",
+      "name": "Thick Eyebrows (navy)",
       "variant": "",
       "recolors": {
-        "eyebrows": "orange"
+        "eyebrows": "navy"
       },
       "zPos": 106,
       "layerNum": 1,
@@ -622,11 +343,42 @@
       ]
     },
     {
-      "itemId": "hair_braid",
-      "name": "Braid (orange)",
+      "itemId": "facial_eyepatch2_left",
+      "name": "Eyepatch 2 Left (navy)",
+      "variant": "navy",
+      "recolors": null,
+      "zPos": 115,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "facial/patches/eyepatch2/left/adult/spellcast/navy.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "hair_curly_long",
+      "name": "Curly long (navy)",
       "variant": "",
       "recolors": {
-        "hair": "orange"
+        "hair": "navy"
       },
       "zPos": 120,
       "layerNum": 1,
@@ -634,7 +386,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "hair/braid/adult/fg/spellcast.png"
+        "spritePath": "hair/curly_long/adult/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -655,17 +407,19 @@
       ]
     },
     {
-      "itemId": "head_horns_backwards",
-      "name": "Backwards Horns (red)",
-      "variant": "red",
-      "recolors": null,
-      "zPos": 126,
+      "itemId": "hat_bandana_pirate",
+      "name": "Pirate Bandana (yellow)",
+      "variant": "",
+      "recolors": {
+        "bandana": "yellow"
+      },
+      "zPos": 120,
       "layerNum": 1,
       "yPos": 0,
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "head/horns/backwards/adult/fg/spellcast/red.png"
+        "spritePath": "hat/pirate/bandana/adult/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -686,38 +440,53 @@
       ]
     },
     {
-      "itemId": "weapon_sword_longsword",
-      "name": "Longsword (longsword)",
-      "variant": "longsword",
-      "recolors": null,
-      "zPos": 140,
+      "itemId": "hat_bandana_pirate_skull",
+      "name": "Skull Bandana Overlay (navy)",
+      "variant": "",
+      "recolors": {
+        "bandana_overlay": "navy"
+      },
+      "zPos": 121,
       "layerNum": 1,
-      "yPos": 512,
+      "yPos": 0,
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "weapon/sword/longsword/walk/longsword.png"
+        "spritePath": "hat/pirate/bandana/skull/adult/spellcast.png"
       },
       "supportedAnimations": [
+        "spellcast",
+        "thrust",
         "walk",
-        "hurt"
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
       ]
     }
   ],
   "credits": [
     {
-      "fileName": "body/bodies/female/walk.png",
-      "file": "body/bodies/female",
-      "notes": "see details at https://opengameart.org/content/lpc-character-bases",
+      "fileName": "body/bodies/teen/walk.png",
+      "file": "body/bodies/teen",
+      "notes": "",
       "authors": [
-        "Benjamin K. Smith (BenCreating)",
         "bluecarrot16",
-        "TheraHedwig",
         "Evert",
+        "TheraHedwig",
+        "Benjamin K. Smith (BenCreating)",
         "MuffinElZangano",
         "Durrani",
         "Pierre Vigier (pvigier)",
-        "ElizaWy",
+        "Eliza Wyatt (ElizaWy)",
         "Matthew Krohn (makrohn)",
         "Johannes Sjölund (wulax)",
         "Stephen Challener (Redshrike)"
@@ -731,36 +500,17 @@
         "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
         "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
         "https://opengameart.org/content/lpc-ladies",
-        "https://opengameart.org/content/lpc-7-womens-shirts",
+        "https://opengameart.org/content/lpc-teen-unisex-base-clothes",
         "https://opengameart.org/content/lpc-jump-expanded",
-        "https://opengameart.org/content/lpc-be-seated",
         "https://opengameart.org/content/lpc-revised-character-basics",
+        "https://opengameart.org/content/lpc-be-seated",
         "https://gitlab.com/vagabondgame/lpc-characters",
         "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani",
-        "https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle"
+        "https://opengameart.org/content/lpc-jump-expanded"
       ]
     },
     {
-      "fileName": "head/heads/human/female/walk.png",
-      "file": "head/heads/human/female",
-      "notes": "original head by Redshrike, tweaks by BenCreating, modular version by bluecarrot16",
-      "authors": [
-        "bluecarrot16",
-        "Benjamin K. Smith (BenCreating)",
-        "Stephen Challener (Redshrike)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/",
-        "https://opengameart.org/content/lpc-character-bases"
-      ]
-    },
-    {
-      "fileName": "head/faces/female/neutral/walk.png",
+      "fileName": "head/faces/male/neutral/walk.png",
       "file": "head/faces",
       "notes": "Original by Redshrike, Expressions by ElizaWy, mapped to all frames by JaidynReiman",
       "authors": [
@@ -777,12 +527,11 @@
       ]
     },
     {
-      "fileName": "body/wings/lizard/alt/adult/fg/walk/orange.png",
-      "file": "body/wings/lizard",
-      "notes": "edited for v3 bases and recolored by bluecarrot16, sit/jump/run/emote/revised combat by JaidynReiman",
+      "fileName": "head/heads/human/male_gaunt/walk.png",
+      "file": "head/heads/human/male_gaunt",
+      "notes": "original head by Redshrike, gaunt version by bluecarrot16",
       "authors": [
-        "JaidynReiman",
-        "Nila122",
+        "Stephen Challener (Redshrike)",
         "bluecarrot16"
       ],
       "licenses": [
@@ -791,40 +540,8 @@
         "GPL 3.0"
       ],
       "urls": [
-        "https://opengameart.org/content/drakes-and-lizardfolk",
-        "https://opengameart.org/content/lpc-wings-new-animations"
-      ]
-    },
-    {
-      "fileName": "body/tail/lizard/alt/adult/fg/walk/red.png",
-      "file": "body/tail/lizard",
-      "notes": "edited for v3 bases and recolored by bluecarrot16, additional animations added by JaidynReiman",
-      "authors": [
-        "Nila122",
-        "bluecarrot16",
-        "JaidynReiman"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/drakes-and-lizardfolk"
-      ]
-    },
-    {
-      "fileName": "shadow/adult/walk/shadow.png",
-      "file": "shadow",
-      "notes": "",
-      "authors": [
-        "drjamgo@hotmail.com"
-      ],
-      "licenses": [
-        "CC0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/shadow-for-lpc-sprite"
+        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
+        "https://opengameart.org/content/lpc-folk"
       ]
     },
     {
@@ -843,96 +560,92 @@
       ]
     },
     {
-      "fileName": "head/nose/straight/adult/walk.png",
-      "file": "head/nose/straight",
+      "fileName": "hair/curly_long/adult/walk.png",
+      "file": "hair/curly_long",
       "notes": "",
       "authors": [
-        "Thane Brimhall (pennomi)",
-        "laetissima",
-        "Matthew Krohn (makrohn)"
-      ],
-      "licenses": [
-        "GPL 3.0",
-        "CC-BY-SA 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/lpc-base-character-expressions"
-      ]
-    },
-    {
-      "fileName": "head/horns/backwards/adult/fg/walk/red.png",
-      "file": "head/horns/backwards",
-      "notes": "",
-      "authors": [
-        "Nila122"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "GPL 3.0",
-        "CC-BY-SA 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/lpc-lizard-headgear"
-      ]
-    },
-    {
-      "fileName": "hair/braid/adult/fg/walk.png",
-      "file": "hair/braid",
-      "notes": "",
-      "authors": [
-        "Nila122",
         "ElizaWy"
       ],
       "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0",
-        "GPL 2.0"
+        "OGA-BY 3.0"
       ],
       "urls": [
-        "https://opengameart.org/content/3-hairs-for-lpc",
         "https://opengameart.org/content/lpc-hair"
       ]
     },
     {
-      "fileName": "arms/bracers/thin/walk.png",
-      "file": "arms/bracers",
-      "notes": "original by wulax, adjustments by Makrohn, climb/emote/jump/sit/run by JaidynReiman",
+      "fileName": "hat/pirate/bandana/adult/walk.png",
+      "file": "hat/pirate/bandana",
+      "notes": "Original Bandana by Fabzy, Pirate Version by Bluecarrot16, layers and added animations by JaidynReiman",
       "authors": [
-        "Matthew Krohn (makrohn)",
-        "Johannes Sjölund (wulax)",
-        "JaidynReiman"
+        "bluecarrot16",
+        "Fabzy"
       ],
       "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites"
-      ]
-    },
-    {
-      "fileName": "weapon/sword/longsword/walk/longsword.png",
-      "file": "weapon/sword/longsword",
-      "notes": "",
-      "authors": [
-        "Johannes Sjölund (wulax)",
-        "bluecarrot16"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
         "CC-BY-SA 3.0"
       ],
       "urls": [
-        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
-        "https://opengameart.org/content/lpc-extended-weapon-animations"
+        "https://opengameart.org/content/the-revolution-hair",
+        "https://opengameart.org/content/lpc-pirates",
+        "https://opengameart.org/content/lpc-expanded-hats-facial-helmets"
       ]
     },
     {
-      "fileName": "legs/leggings2/thin/walk.png",
-      "file": "legs/leggings2",
-      "notes": "original by ElizaWy, remaining frames",
+      "fileName": "hat/pirate/bandana/skull/adult/walk.png",
+      "file": "hat/pirate/bandana",
+      "notes": "Original Bandana by Fabzy, Pirate Version by Bluecarrot16, layers and added animations by JaidynReiman",
+      "authors": [
+        "bluecarrot16",
+        "Fabzy"
+      ],
+      "licenses": [
+        "CC-BY-SA 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/the-revolution-hair",
+        "https://opengameart.org/content/lpc-pirates",
+        "https://opengameart.org/content/lpc-expanded-hats-facial-helmets"
+      ]
+    },
+    {
+      "fileName": "facial/patches/eyepatch2/left/adult/walk/navy.png",
+      "file": "facial/patches/eyepatch2",
+      "notes": "",
+      "authors": [
+        "ElizaWy"
+      ],
+      "licenses": [
+        "OGA-BY 3.0"
+      ],
+      "urls": [
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Head%20Accessories",
+        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more"
+      ]
+    },
+    {
+      "fileName": "torso/clothes/shortsleeve/tshirt/teen/walk.png",
+      "file": "torso/clothes/shortsleeve/tshirt",
+      "notes": "original by ElizaWy; spellcast/thrust/shoot/hurt/male adapted from original by JaidynReiman",
+      "authors": [
+        "ElizaWy",
+        "JaidynReiman",
+        "Stephen Challener (Redshrike)",
+        "Johannes Sjölund (wulax)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/lpc-revised-character-basics",
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+        "https://opengameart.org/content/lpc-expanded-simple-shirts"
+      ]
+    },
+    {
+      "fileName": "legs/shorts/shorts/thin/walk.png",
+      "file": "legs/shorts/shorts",
+      "notes": "Original bases by Redshrike, thrust/shoot bases by Wulax, original shorts by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman",
       "authors": [
         "ElizaWy",
         "JaidynReiman",
@@ -949,28 +662,20 @@
       ]
     },
     {
-      "fileName": "torso/clothes/sleeveless/sleeveless1/female/walk.png",
-      "file": "torso/clothes/sleeveless/sleeveless1/female",
-      "notes": "original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman",
+      "fileName": "feet/boots/fold/thin/walk.png",
+      "file": "feet/boots/fold",
+      "notes": "",
       "authors": [
-        "bluecarrot16",
-        "ElizaWy",
-        "JaidynReiman",
-        "Stephen Challener (Redshrike)"
+        "JaidynReiman"
       ],
       "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
+        "OGA-BY 3.0+",
+        "CC-BY 3.0+",
         "GPL 3.0"
       ],
       "urls": [
-        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
-        "https://opengameart.org/content/lpc-7-womens-shirts",
-        "http://opengameart.org/content/lpc-revised-character-basics",
-        "http://opengameart.org/content/lpc-clothing-updates",
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
-        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
-        "https://opengameart.org/content/lpc-expanded-simple-shirts"
+        "https://opengameart.org/content/lpc-kimono-relm",
+        "https://opengameart.org/content/lpc-expanded-socks-shoes"
       ]
     }
   ]

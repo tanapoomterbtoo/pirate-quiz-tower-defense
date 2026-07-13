@@ -952,6 +952,33 @@ async function initQuestions() {
         console.warn(`Could not fetch ${subjectConfig.file} (CORS or missing file), using fallback data:`, e);
         QUESTIONS = [...subjectConfig.fallback];
     }
+    
+    // Translate mock questions and choices to Thai at runtime
+    QUESTIONS = QUESTIONS.map((q) => {
+        let newQ = q.q;
+        if (newQ.includes("Mock")) {
+            newQ = newQ.replace("Mock Math Question", "คำถามคณิตศาสตร์จำลองที่")
+                       .replace("Mock Science Question", "คำถามวิทยาศาสตร์จำลองที่")
+                       .replace("Mock Thai Question", "คำถามภาษาไทยจำลองที่")
+                       .replace("Mock Question", "คำถามจำลองที่");
+        }
+        
+        const newC = q.c.map(choice => {
+            if (choice.includes("Choice")) {
+                return choice.replace("Choice A", "ตัวเลือก ก")
+                             .replace("Choice B", "ตัวเลือก ข")
+                             .replace("Choice C", "ตัวเลือก ค")
+                             .replace("Choice D", "ตัวเลือก ง")
+                             .replace("Choice ก", "ตัวเลือก ก")
+                             .replace("Choice ข", "ตัวเลือก ข")
+                             .replace("Choice ค", "ตัวเลือก ค")
+                             .replace("Choice ง", "ตัวเลือก ง");
+            }
+            return choice;
+        });
+        
+        return { ...q, q: newQ, c: newC };
+    });
 }
 
 // Helper to determine score from previous system via URL parameter or external API
@@ -965,3 +992,11 @@ function getScoreFromAPI() {
     return 100; // Default to 100 if not specified
 }
 window.USER_SCORE = getScoreFromAPI();
+
+function getURLParameter(name, defaultValue = "") {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name) || defaultValue;
+}
+window.STUDENT_ID = getURLParameter("student_id", "unknown");
+window.EXAM_TOKEN = getURLParameter("token") || getURLParameter("session_token") || "none";
+window.CALLBACK_URL = getURLParameter("callback_url", "");

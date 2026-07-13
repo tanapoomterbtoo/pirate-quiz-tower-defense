@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "bodyType": "male",
+  "bodyType": "teen",
   "selections": {
     "body": {
       "itemId": "body",
@@ -9,85 +9,71 @@
       "recolor": "light",
       "name": "Body Color (light)"
     },
-    "head": {
-      "itemId": "heads_human_male",
-      "subId": null,
-      "variant": "",
-      "recolor": "light",
-      "name": "Human Male (light)"
-    },
     "expression": {
-      "itemId": "face_angry",
+      "itemId": "face_neutral",
       "subId": null,
       "variant": "",
       "recolor": "light",
-      "name": "Angry (light)"
+      "name": "Neutral (light)"
     },
-    "weapon": {
-      "itemId": "weapon_sword_arming",
-      "subId": null,
-      "variant": "iron",
-      "recolor": "",
-      "name": "Arming Sword (iron)"
-    },
-    "sleeves": {
-      "itemId": "torso_clothes_shortsleeves2",
+    "head": {
+      "itemId": "heads_human_male_plump",
       "subId": null,
       "variant": "",
-      "recolor": "brown",
-      "name": "Shortsleeves 2 Overlay (brown)"
+      "recolor": "light",
+      "name": "Human Male Plump (light)"
+    },
+    "hair": {
+      "itemId": "hair_lob",
+      "subId": null,
+      "variant": "",
+      "recolor": "violet",
+      "name": "Lob (violet)"
     },
     "clothes": {
-      "itemId": "torso_clothes_sleeveless1",
+      "itemId": "torso_clothes_tshirt",
       "subId": null,
       "variant": "",
-      "recolor": "brown",
-      "name": "Original Sleeveless (brown)"
+      "recolor": "white",
+      "name": "TShirt (white)"
     },
-    "belt": {
-      "itemId": "belt_leather",
+    "overalls": {
+      "itemId": "torso_aprons_suspenders",
       "subId": null,
-      "variant": "slate",
+      "variant": "navy",
       "recolor": "",
-      "name": "Leather Belt (slate)"
+      "name": "Suspenders (navy)"
     },
     "legs": {
       "itemId": "legs_pants2",
       "subId": null,
       "variant": "",
-      "recolor": "blue",
-      "name": "Long Pants (blue)"
+      "recolor": "brown",
+      "name": "Long Pants (brown)"
+    },
+    "bandana": {
+      "itemId": "hat_bandana_pirate",
+      "subId": null,
+      "variant": "",
+      "recolor": "leather",
+      "name": "Pirate Bandana (leather)"
+    },
+    "bandana_overlay": {
+      "itemId": "hat_bandana_pirate_skull",
+      "subId": null,
+      "variant": "",
+      "recolor": "tan",
+      "name": "Skull Bandana Overlay (tan)"
     },
     "shoes": {
-      "itemId": "feet_boots_revised",
-      "subId": null,
-      "variant": "leather",
-      "recolor": "",
-      "name": "Revised Boots (leather)"
-    },
-    "hair": {
-      "itemId": "hair_afro",
+      "itemId": "feet_shoes_basic",
       "subId": null,
       "variant": "",
-      "recolor": "blonde",
-      "name": "Afro (blonde)"
-    },
-    "nose": {
-      "itemId": "head_nose_large",
-      "subId": null,
-      "variant": "",
-      "recolor": "light",
-      "name": "Large nose (light)"
-    },
-    "wrinkles": {
-      "itemId": "head_wrinkles",
-      "subId": null,
-      "variant": "",
-      "recolor": "light",
-      "name": "Wrinkles (light)"
+      "recolor": "black",
+      "name": "Basic Shoes (black)"
     }
   },
-  "selectedAnimation": "idle",
+  "selectedAnimation": "walk",
   "showTransparencyGrid": true,
   "applyTransparencyMask": false,
   "matchBodyColorEnabled": true,
@@ -118,28 +104,8 @@
     "1h_backslash": false,
     "1h_halfslash": false
   },
-  "url": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=male&body=Body_Color_light&head=Human_Male_light&expression=Angry_light&weapon=Arming_Sword_iron&sleeves=Shortsleeves_2_Overlay_brown&clothes=Original_Sleeveless_brown&belt=Leather_Belt_slate&legs=Long_Pants_blue&shoes=Revised_Boots_leather&hair=Afro_blonde&nose=Large_nose_light&wrinkles=Wrinkles_light",
+  "url": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/#sex=teen&body=Body_Color_light&expression=Neutral_light&head=Human_Male_Plump_light&hair=Lob_violet&clothes=TShirt_white&overalls=Suspenders_navy&legs=Long_Pants_brown&bandana=Pirate_Bandana_leather&bandana_overlay=Skull_Bandana_Overlay_tan&shoes=Basic_Shoes_black",
   "layers": [
-    {
-      "itemId": "weapon_sword_arming",
-      "name": "Arming Sword (iron)",
-      "variant": "iron",
-      "recolors": null,
-      "zPos": 9,
-      "layerNum": 2,
-      "yPos": 512,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "weapon/sword/arming/universal/bg/walk/iron.png"
-      },
-      "supportedAnimations": [
-        "walk",
-        "hurt",
-        "idle",
-        "combat_idle"
-      ]
-    },
     {
       "itemId": "body",
       "name": "Body Color (light)",
@@ -153,7 +119,40 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "body/bodies/male/spellcast.png"
+        "spritePath": "body/bodies/teen/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "feet_shoes_basic",
+      "name": "Basic Shoes (black)",
+      "variant": "",
+      "recolors": {
+        "shoes": "black"
+      },
+      "zPos": 15,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "feet/shoes/basic/thin/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -175,10 +174,10 @@
     },
     {
       "itemId": "legs_pants2",
-      "name": "Long Pants (blue)",
+      "name": "Long Pants (brown)",
       "variant": "",
       "recolors": {
-        "legs": "blue"
+        "legs": "brown"
       },
       "zPos": 20,
       "layerNum": 1,
@@ -186,7 +185,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "legs/pants2/male/spellcast.png"
+        "spritePath": "legs/pants2/thin/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -207,42 +206,11 @@
       ]
     },
     {
-      "itemId": "feet_boots_revised",
-      "name": "Revised Boots (leather)",
-      "variant": "leather",
-      "recolors": null,
-      "zPos": 25,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "feet/boots/revised/male/spellcast/leather.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "torso_clothes_sleeveless1",
-      "name": "Original Sleeveless (brown)",
+      "itemId": "torso_clothes_tshirt",
+      "name": "TShirt (white)",
       "variant": "",
       "recolors": {
-        "clothes": "brown"
+        "clothes": "white"
       },
       "zPos": 35,
       "layerNum": 1,
@@ -250,7 +218,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "torso/clothes/sleeveless/sleeveless1/male/spellcast.png"
+        "spritePath": "torso/clothes/shortsleeve/tshirt/teen/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -271,50 +239,17 @@
       ]
     },
     {
-      "itemId": "torso_clothes_shortsleeves2",
-      "name": "Shortsleeves 2 Overlay (brown)",
-      "variant": "",
-      "recolors": {
-        "sleeves": "brown"
-      },
-      "zPos": 36,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "torso/clothes/shortsleeve/shortsleeves2/male/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "belt_leather",
-      "name": "Leather Belt (slate)",
-      "variant": "slate",
+      "itemId": "torso_aprons_suspenders",
+      "name": "Suspenders (navy)",
+      "variant": "navy",
       "recolors": null,
-      "zPos": 70,
+      "zPos": 38,
       "layerNum": 1,
       "yPos": 0,
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "torso/waist/belt_leather/male/spellcast/slate.png"
+        "spritePath": "torso/aprons/suspenders/teen/spellcast/navy.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -322,12 +257,21 @@
         "walk",
         "slash",
         "shoot",
-        "hurt"
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
       ]
     },
     {
-      "itemId": "heads_human_male",
-      "name": "Human Male (light)",
+      "itemId": "heads_human_male_plump",
+      "name": "Human Male Plump (light)",
       "variant": "",
       "recolors": {
         "head": "light"
@@ -338,7 +282,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "head/heads/human/male/spellcast.png"
+        "spritePath": "head/heads/human/male_plump/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -359,8 +303,8 @@
       ]
     },
     {
-      "itemId": "face_angry",
-      "name": "Angry (light)",
+      "itemId": "face_neutral",
+      "name": "Neutral (light)",
       "variant": "",
       "recolors": {
         "expression": "light"
@@ -371,7 +315,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "head/faces/male/anger/spellcast.png"
+        "spritePath": "head/faces/male/neutral/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -390,77 +334,11 @@
       ]
     },
     {
-      "itemId": "head_wrinkles",
-      "name": "Wrinkles (light)",
+      "itemId": "hair_lob",
+      "name": "Lob (violet)",
       "variant": "",
       "recolors": {
-        "wrinkles": "light"
-      },
-      "zPos": 102,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "head/wrinkles/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "head_nose_large",
-      "name": "Large nose (light)",
-      "variant": "",
-      "recolors": {
-        "nose": "light"
-      },
-      "zPos": 105,
-      "layerNum": 1,
-      "yPos": 0,
-      "needsRecolor": false,
-      "source": {
-        "kind": "catalog",
-        "spritePath": "head/nose/large/adult/spellcast.png"
-      },
-      "supportedAnimations": [
-        "spellcast",
-        "thrust",
-        "walk",
-        "slash",
-        "shoot",
-        "hurt",
-        "climb",
-        "idle",
-        "jump",
-        "sit",
-        "emote",
-        "run",
-        "combat_idle",
-        "backslash",
-        "halfslash"
-      ]
-    },
-    {
-      "itemId": "hair_afro",
-      "name": "Afro (blonde)",
-      "variant": "",
-      "recolors": {
-        "hair": "blonde"
+        "hair": "violet"
       },
       "zPos": 120,
       "layerNum": 1,
@@ -468,7 +346,7 @@
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "hair/afro/adult/spellcast.png"
+        "spritePath": "hair/lob/adult/spellcast.png"
       },
       "supportedAnimations": [
         "spellcast",
@@ -489,40 +367,87 @@
       ]
     },
     {
-      "itemId": "weapon_sword_arming",
-      "name": "Arming Sword (iron)",
-      "variant": "iron",
-      "recolors": null,
-      "zPos": 140,
+      "itemId": "hat_bandana_pirate",
+      "name": "Pirate Bandana (leather)",
+      "variant": "",
+      "recolors": {
+        "bandana": "leather"
+      },
+      "zPos": 120,
       "layerNum": 1,
-      "yPos": 512,
+      "yPos": 0,
       "needsRecolor": false,
       "source": {
         "kind": "catalog",
-        "spritePath": "weapon/sword/arming/universal/fg/walk/iron.png"
+        "spritePath": "hat/pirate/bandana/adult/spellcast.png"
       },
       "supportedAnimations": [
+        "spellcast",
+        "thrust",
         "walk",
+        "slash",
+        "shoot",
         "hurt",
+        "climb",
         "idle",
-        "combat_idle"
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
+      ]
+    },
+    {
+      "itemId": "hat_bandana_pirate_skull",
+      "name": "Skull Bandana Overlay (tan)",
+      "variant": "",
+      "recolors": {
+        "bandana_overlay": "tan"
+      },
+      "zPos": 121,
+      "layerNum": 1,
+      "yPos": 0,
+      "needsRecolor": false,
+      "source": {
+        "kind": "catalog",
+        "spritePath": "hat/pirate/bandana/skull/adult/spellcast.png"
+      },
+      "supportedAnimations": [
+        "spellcast",
+        "thrust",
+        "walk",
+        "slash",
+        "shoot",
+        "hurt",
+        "climb",
+        "idle",
+        "jump",
+        "sit",
+        "emote",
+        "run",
+        "combat_idle",
+        "backslash",
+        "halfslash"
       ]
     }
   ],
   "credits": [
     {
-      "fileName": "body/bodies/male/idle.png",
-      "file": "body/bodies/male",
-      "notes": "see details at https://opengameart.org/content/lpc-character-bases; 'Thick' Male Revised Run/Climb by JaidynReiman (based on ElizaWy's LPC Revised)",
+      "fileName": "body/bodies/teen/walk.png",
+      "file": "body/bodies/teen",
+      "notes": "",
       "authors": [
         "bluecarrot16",
-        "JaidynReiman",
-        "Benjamin K. Smith (BenCreating)",
         "Evert",
-        "Eliza Wyatt (ElizaWy)",
         "TheraHedwig",
+        "Benjamin K. Smith (BenCreating)",
         "MuffinElZangano",
         "Durrani",
+        "Pierre Vigier (pvigier)",
+        "Eliza Wyatt (ElizaWy)",
+        "Matthew Krohn (makrohn)",
         "Johannes Sjölund (wulax)",
         "Stephen Challener (Redshrike)"
       ],
@@ -534,36 +459,18 @@
       "urls": [
         "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
         "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
-        "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani",
-        "https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle",
+        "https://opengameart.org/content/lpc-ladies",
+        "https://opengameart.org/content/lpc-teen-unisex-base-clothes",
+        "https://opengameart.org/content/lpc-jump-expanded",
         "https://opengameart.org/content/lpc-revised-character-basics",
         "https://opengameart.org/content/lpc-be-seated",
-        "https://opengameart.org/content/lpc-runcycle-for-male-muscular-and-pregnant-character-bases-with-modular-heads",
-        "https://opengameart.org/content/lpc-jump-expanded",
-        "https://opengameart.org/content/lpc-character-bases"
+        "https://gitlab.com/vagabondgame/lpc-characters",
+        "https://opengameart.org/content/lpc-male-jumping-animation-by-durrani",
+        "https://opengameart.org/content/lpc-jump-expanded"
       ]
     },
     {
-      "fileName": "head/heads/human/male/idle.png",
-      "file": "head/heads/human/male",
-      "notes": "original head by Redshrike, tweaks by BenCreating, modular version by bluecarrot16",
-      "authors": [
-        "bluecarrot16",
-        "Benjamin K. Smith (BenCreating)",
-        "Stephen Challener (Redshrike)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
-        "https://opengameart.org/content/lpc-character-bases"
-      ]
-    },
-    {
-      "fileName": "head/faces/male/anger/idle.png",
+      "fileName": "head/faces/male/neutral/walk.png",
       "file": "head/faces",
       "notes": "Original by Redshrike, Expressions by ElizaWy, mapped to all frames by JaidynReiman",
       "authors": [
@@ -580,127 +487,25 @@
       ]
     },
     {
-      "fileName": "weapon/sword/arming/universal/fg/idle/iron.png",
-      "file": "weapon/sword/arming",
-      "notes": "",
+      "fileName": "head/heads/human/male_plump/walk.png",
+      "file": "head/heads/human/male_plump",
+      "notes": "original head by Redshrike, plump version by ??",
       "authors": [
-        "ElizaWy; walk and down by JaidynReiman"
-      ],
-      "licenses": [
-        "OGA-BY 3.0"
-      ],
-      "urls": [
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Props/Sword%2001%20-%20Arming%20Sword",
-        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more"
-      ]
-    },
-    {
-      "fileName": "torso/clothes/shortsleeve/shortsleeves2/male/idle.png",
-      "file": "torso/clothes/shortsleeve/shortsleeves2",
-      "notes": "original by ElizaWy; spellcast/thrust/shoot/hurt/male/standalone sleeves adapted from original by JaidynReiman",
-      "authors": [
-        "ElizaWy",
-        "JaidynReiman",
         "Stephen Challener (Redshrike)",
-        "Johannes Sjölund (wulax)"
+        "??"
       ],
       "licenses": [
-        "OGA-BY 3.0"
-      ],
-      "urls": [
-        "http://opengameart.org/content/lpc-revised-character-basics",
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
-        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
-        "https://opengameart.org/content/lpc-expanded-simple-shirts"
-      ]
-    },
-    {
-      "fileName": "torso/clothes/sleeveless/sleeveless1/male/idle.png",
-      "file": "torso/clothes/sleeveless/sleeveless1/male",
-      "notes": "original by ElizaWy walkcycle only; extended to all animations by adapting from longsleeve, edited to v3 bases by bluecarrot16; sleeveless variant by JaidynReiman",
-      "authors": [
-        "bluecarrot16",
-        "ElizaWy",
-        "JaidynReiman",
-        "Stephen Challener (Redshrike)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
         "CC-BY-SA 3.0",
         "GPL 3.0"
       ],
       "urls": [
         "https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles",
-        "http://opengameart.org/content/lpc-revised-character-basics",
-        "http://opengameart.org/content/lpc-clothing-updates",
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
-        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
-        "https://opengameart.org/content/lpc-expanded-simple-shirts"
+        "https://opengameart.org/content/lpc-folk"
       ]
     },
     {
-      "fileName": "torso/waist/belt_leather/male/idle/slate.png",
-      "file": "torso/waist/belt_leather",
-      "notes": "",
-      "authors": [
-        "bluecarrot16",
-        "Johannes Sjölund (wulax)",
-        "Matthew Krohn (makrohn)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "CC-BY-SA 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://opengameart.org/content/lpc-combat-armor-for-women",
-        "https://opengameart.org/content/lpc-pirates"
-      ]
-    },
-    {
-      "fileName": "legs/pants2/male/idle.png",
-      "file": "legs/pants2/male",
-      "notes": "original overalls by ElizaWy, base animations adapted from v3 overalls by bluecarrot16, pants by JaidynReiman",
-      "authors": [
-        "JaidynReiman",
-        "ElizaWy",
-        "Bluecarrot16",
-        "Johannes Sjölund (wulax)",
-        "Stephen Challener (Redshrike)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
-        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
-        "https://opengameart.org/content/lpc-expanded-pants"
-      ]
-    },
-    {
-      "fileName": "feet/boots/revised/male/idle/leather.png",
-      "file": "feet/boots/revised/male",
-      "notes": "original overalls and boots by ElizaWy, base animations adapted from v3 overalls by bluecarrot16, boots by JaidynReiman",
-      "authors": [
-        "JaidynReiman",
-        "ElizaWy",
-        "Bluecarrot16",
-        "Stephen Challener (Redshrike)",
-        "Johannes Sjölund (wulax)"
-      ],
-      "licenses": [
-        "OGA-BY 3.0",
-        "GPL 3.0"
-      ],
-      "urls": [
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
-        "https://opengameart.org/content/lpc-expanded-socks-shoes"
-      ]
-    },
-    {
-      "fileName": "hair/afro/adult/idle.png",
-      "file": "hair/afro",
+      "fileName": "hair/lob/adult/walk.png",
+      "file": "hair/lob",
       "notes": "",
       "authors": [
         "bluecarrot16"
@@ -713,31 +518,113 @@
       ]
     },
     {
-      "fileName": "head/nose/large/adult/idle.png",
-      "file": "head/nose/large",
-      "notes": "",
+      "fileName": "torso/clothes/shortsleeve/tshirt/teen/walk.png",
+      "file": "torso/clothes/shortsleeve/tshirt",
+      "notes": "original by ElizaWy; spellcast/thrust/shoot/hurt/male adapted from original by JaidynReiman",
       "authors": [
-        "ElizaWy"
+        "ElizaWy",
+        "JaidynReiman",
+        "Stephen Challener (Redshrike)",
+        "Johannes Sjölund (wulax)"
       ],
       "licenses": [
         "OGA-BY 3.0"
       ],
       "urls": [
-        "https://github.com/ElizaWy/LPC/tree/main/Characters/Head/Head%20Overlay%2001%20-%20Large%20Nose",
+        "https://opengameart.org/content/lpc-revised-character-basics",
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+        "https://opengameart.org/content/lpc-expanded-simple-shirts"
+      ]
+    },
+    {
+      "fileName": "torso/aprons/suspenders/teen/walk/navy.png",
+      "file": "torso/aprons/suspenders",
+      "notes": "original by ElizaWy; spellcast/thrust/shoot/hurt/combat adapted from original by JaidynReiman",
+      "authors": [
+        "ElizaWy",
+        "JaidynReiman"
+      ],
+      "licenses": [
+        "OGA-BY 3.0"
+      ],
+      "urls": [
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
         "https://opengameart.org/content/lpc-expanded-sit-run-jump-more"
       ]
     },
     {
-      "fileName": "head/wrinkles/idle.png",
-      "file": "head/wrinkles",
-      "notes": "",
+      "fileName": "legs/pants2/thin/walk.png",
+      "file": "legs/pants2",
+      "notes": "Original bases by Redshrike, thrust/shoot bases by Wulax, original pants by ElizaWy, climb/jump/run/sit/emotes/revised combat by JaidynReiman",
       "authors": [
-        "bluecarrot16"
+        "ElizaWy",
+        "JaidynReiman",
+        "Johannes Sjölund (wulax)",
+        "Stephen Challener (Redshrike)"
       ],
       "licenses": [
-        "CC0"
+        "OGA-BY 3.0"
       ],
-      "urls": []
+      "urls": [
+        "https://github.com/ElizaWy/LPC/tree/main/Characters/Clothing",
+        "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+        "https://opengameart.org/content/lpc-expanded-pants"
+      ]
+    },
+    {
+      "fileName": "hat/pirate/bandana/adult/walk.png",
+      "file": "hat/pirate/bandana",
+      "notes": "Original Bandana by Fabzy, Pirate Version by Bluecarrot16, layers and added animations by JaidynReiman",
+      "authors": [
+        "bluecarrot16",
+        "Fabzy"
+      ],
+      "licenses": [
+        "CC-BY-SA 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/the-revolution-hair",
+        "https://opengameart.org/content/lpc-pirates",
+        "https://opengameart.org/content/lpc-expanded-hats-facial-helmets"
+      ]
+    },
+    {
+      "fileName": "hat/pirate/bandana/skull/adult/walk.png",
+      "file": "hat/pirate/bandana",
+      "notes": "Original Bandana by Fabzy, Pirate Version by Bluecarrot16, layers and added animations by JaidynReiman",
+      "authors": [
+        "bluecarrot16",
+        "Fabzy"
+      ],
+      "licenses": [
+        "CC-BY-SA 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/the-revolution-hair",
+        "https://opengameart.org/content/lpc-pirates",
+        "https://opengameart.org/content/lpc-expanded-hats-facial-helmets"
+      ]
+    },
+    {
+      "fileName": "feet/shoes/basic/thin/walk.png",
+      "file": "feet/shoes",
+      "notes": "original by wulax, edited for v3 base by bluecarrot16, Jump/Sit/Emote/Run/Revised Combat by JaidynReiman",
+      "authors": [
+        "JaidynReiman",
+        "bluecarrot16",
+        "Johannes Sjölund (wulax)"
+      ],
+      "licenses": [
+        "OGA-BY 3.0",
+        "CC-BY-SA 3.0",
+        "GPL 3.0"
+      ],
+      "urls": [
+        "https://opengameart.org/content/lpc-medieval-fantasy-character-sprites",
+        "http://opengameart.org/content/lpc-clothing-updates",
+        "https://opengameart.org/content/lpc-expanded-socks-shoes"
+      ]
     }
   ]
 }

@@ -1,197 +1,146 @@
-# 🏴‍☠️ Pirate Quiz Tower Defense Game
+# 🏴‍☠️ เกมตอบคำถามโจรสลัดป้องกันเรือ (Pirate Quiz Tower Defense Game)
 
-A JRPG-style hybrid Trivia and Tower Defense game built using **Python/Pygame** and also available as a standalone **Web (HTML5/JS)** version. Players take on the role of a pirate ship commander, answering trivia questions to attack waves of enemies and defend their ship from oncoming attacks.
-
----
-
-## 🎮 Game Overview
-
-- **Theme:** Pirate & Naval Combat ⛵
-- **Core Loop:** 
-  - **Correct Answer:** Attacks the current monster.
-  - **Incorrect Answer:** The monster attacks your ship.
-- **Goal:** Survive 30 questions across **3 increasingly difficult waves**, defeating all small enemies, big enemies, and the Final Boss without your ship's health falling to 0!
+เกมแนวไฮบริด JRPG ผสมผสานระหว่างเกมตอบคำถาม (Trivia) และเกมป้องกันฐาน (Tower Defense) ที่พัฒนาขึ้นโดยใช้เทคโนโลยี **Web (HTML5/JS)** แบบทำงานได้ด้วยตัวเอง (Standalone) โดยผู้เล่นจะสวมบทบาทเป็นผู้บัญชาการเรือโจรสลัดที่ต้องตอบคำถามวิชาการต่าง ๆ เพื่อยิงปืนใหญ่เข้าโจมตีฝูงสัตว์ประหลาดแห่งท้องทะเลที่เข้ามารุกรานเรือ
 
 ---
 
-## ✨ Features
+## 🎮 ภาพรวมของเกม (Game Overview)
 
-- **Trivia Engine:** Loads 30 questions dynamically from [questions.json](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/assets/data/questions.json).
-- **Parallax Backgrounds:** Multi-layered horizontal parallax background (Sky, Islands, and Ship Deck) that reacts with JRPG-style screen shakes upon taking heavy damage.
-- **Turn-based Combat State Machine:** Features full animated actions for attacks, hit/hurt states, JRPG knockback, and custom particle explosions.
-- **Dynamic Damage Popups:** JRPG-style floating damage text with smooth scaling, outline, and fading.
-- **Helper Items:**
-  - **🔭 Telescope (ตัดตัวเลือก):** Removes 2 incorrect options from the current question.
-  - **🔧 Repair Kit (ซ่อมแซมเรือ):** Instantly heals your ship's HP by +30 (up to a max of 100).
-  - **💣 Heavy Cannonball (กระสุนเพลิง):** Causes the next correct answer to deal **double damage** (2x) to the enemy.
-- **Skip System:** Allows skipping up to 3 questions per game.
-- **Audio & Sound System:** Immersive pirate background music (BGM) and custom sound effects (SFX) for hits, gunshots, and wrong answers.
-- **Web Version:** Fully playable in any modern web browser without any installation required!
+- **ธีมของเกม:** โจรสลัดและการรบทางเรือ ⛵
+- **วงจรการเล่นหลัก (Core Loop):**
+  - **ตอบถูก:** เรือโจรสลัดจะยิงปืนใหญ่โจมตีมอนสเตอร์
+  - **ตอบผิด:** มอนสเตอร์จะเข้ามาโจมตีและหักพลังชีวิตเรือของคุณ
+- **เป้าหมาย:** เอาชีวิตรอดจากคำถามทั้งหมด 30 ข้อ โดยแบ่งความยากออกเป็น **3 ระลอก (Waves)** เอาชนะมอนสเตอร์ขนาดเล็ก ขนาดกลาง และบอสใหญ่ (Final Boss) ให้ได้โดยที่พลังชีวิตของเรือไม่หมดเป็น 0!
 
 ---
 
-## 📁 Project Structure
+## ✨ ฟีเจอร์เด่น (Features)
 
-Here is an overview of the codebase organization:
+- **ระบบสุ่มคำถาม:** โหลดคำถามจำนวน 30 ข้อแบบไดนามิกจากไฟล์ข้อสอบประจำรายวิชา (เช่น `math.json`, `science.json`, `thai.json` หรือ `exam.json`)
+- **ฉากหลังพาราแลกซ์ (Parallax Backgrounds):** ฉากหลังเคลื่อนไหวแบบมีมิติ 3 ชั้น (ท้องฟ้า, เกาะแก่ง, และดาดฟ้าเรือ) พร้อมเอฟเฟกต์หน้าจอเสั่นสะเทือนสไตล์ JRPG เมื่อได้รับความเสียหายหนัก
+- **ระบบสเตตัสการต่อสู้ (Combat State Machine):** อนิเมชันแสดงการต่อสู้อย่างสมบูรณ์แบบ ทั้งการเดินเรือเข้าชาร์จ การฟัน การโดนโจมตี ตัวกระพริบสีแดงเมื่อบาดเจ็บ การกระเด้งถอยหลัง และการระเบิดของเอฟเฟกต์สะเก็ดกระสุน
+- **ข้อความตัวเลขความเสียหายลอยฟ้า:** แสดงตัวเลขความเสียหาย (Damage Text) แบบ JRPG ที่ขยายใหญ่ตอนปรากฏและค่อย ๆ เล็กพร้อมจางหายไปอย่างสมจริง
+- **ไอเทมช่วยเหลือพิเศษ:**
+  - **🔭 กล้องส่องทางไกล (Telescope):** ช่วยตัดตัวเลือกที่ผิดออกไปทันที 2 ข้อ
+  - **🔧 กล่องพยาบาล (Repair Kit):** ฟื้นฟูพลังชีวิตของเรือทันที +30 HP (ฟื้นฟูได้สูงสุด 100 HP)
+  - **💣 กระสุนปืนใหญ่ (Cannonball):** บัฟการโจมตีครั้งถัดไปเมื่อตอบถูกให้ทำดาเมจเป็น **2 เท่า (Double Damage)**
+- **ระบบเสียงและดนตรีประกอบ:** ดนตรีประกอบแนวผจญภัยโจรสลัด (BGM) และเสียงเอฟเฟกต์ (SFX) ต่าง ๆ ตอนยิงปืนใหญ่ ตอนฟัน และตอนตอบผิด
+- **เวอร์ชันเว็บแบบ Standalone:** เล่นได้ทันทีผ่านเว็บเบราว์เซอร์ทุกชนิดโดยไม่ต้องติดตั้งโปรแกรมใด ๆ เพิ่มเติม!
+
+---
+
+## 📁 โครงสร้างโปรเจกต์ (Project Structure)
+
+ภาพรวมของโครงสร้างโฟลเดอร์และสคริปต์ในโปรเจกต์:
 
 ```text
-├── main.py                          # Game entry point (Python/Pygame)
-├── requirements.txt                 # Project dependencies list
-├── Pirate Quiz Tower Defense Spec.md # Original Thai design specification
-├── assets/                          # Game assets and data files
-│   ├── audio/                       # Sound effects and BGM (bgm.wav, hit.wav, shoot.wav, wrong.wav)
-│   ├── data/                        # Trivia database (questions.json)
-│   └── images/                      # Character, background, and UI images
-│       ├── backgrounds/             # Parallax layers (bg_sky, bg_islands, bg_deck)
-│       ├── characters/              # Player and monster animated frames
-│       └── ui/                      # Customizable UI assets
-├── src/                             # Game source code (Python)
-│   ├── __init__.py                  # Package initialization
-│   ├── config.py                    # Constants, color palette, dimensions, FPS, and paths
-│   ├── entities.py                  # Character and monster Sprite classes (LPC frame sheet animation loader)
-│   ├── game_loop.py                 # Core Game class controlling state machines, events, and rendering
-│   ├── quiz_data.py                 # Helper to load and shuffle the question dataset
-│   └── ui.py                        # UI rendering elements (Buttons, Health bars, Damage text)
-├── web/                             # Web version of the game (HTML5/JS)
-│   ├── index.html                   # Web application entry point
-│   ├── style.css                    # Web styles and layout
-│   └── js/                          # Javascript logic (config, entities, game, quiz)
-└── venv/                            # Python virtual environment (ignored)
+├── assets/                          # แหล่งเก็บภาพ เสียง และข้อมูลของเกม
+│   ├── audio/                       # ไฟล์เสียงเอฟเฟกต์และดนตรีประกอบ (bgm.wav, hit.wav, shoot.wav, wrong.wav)
+│   ├── data/                        # ฐานข้อมูลคำถาม (math.json, science.json, thai.json, exam.json)
+│   └── images/                      # ไฟล์สไปรต์ตัวละคร ฉากหลัง และ UI ของเกม
+│       ├── backgrounds/             # ภาพฉากหลังขยับได้ (bg_sky, bg_islands, bg_deck)
+│       ├── characters/              # ภาพอนิเมชันของตัวละครผู้เล่นและมอนสเตอร์
+│       └── ui/                      # รูปภาพตกแต่งปุ่มและกล่องข้อความ UI
+└── web/                             # ซอร์สโค้ดของเกมเวอร์ชันเว็บ (HTML5/JS)
+    ├── index.html                   # ไฟล์หน้าเว็บหลักและโครงสร้างหน้าต่างเมนู
+    ├── style.css                    # ไฟล์สไตล์และการจัดตำแหน่ง Responsive คอนเทนเนอร์
+    └── js/                          # สคริปต์ควบคุมการทำงานของเกม
+        ├── config.js                # ไฟล์ตั้งค่าขนาดตัวละคร พิกัด เฟรมเรต และโปรไฟล์สกินผู้เล่น
+        ├── entities.js              # คลาสสำหรับควบคุมอนิเมชันตัวละครและการวาดภาพเอฟเฟกต์บน Canvas
+        ├── game.js                  # ระบบลูปของเกม การเล่นเสียง และสเตตัสการควบคุมหลัก
+        └── quiz.js                  # ระบบดึงข้อมูลคำถามและประมวลผลพารามิเตอร์ส่งตัวผู้เรียน
 ```
 
 ---
 
-## 🛠️ Requirements & Installation
+## 🛠️ วิธีการเปิดเล่นเกม (Installation & Running)
 
-This game can be played in two ways:
-
-### Option A: Play the Web Version (Recommended & Easy)
-Simply open `web/index.html` in any modern web browser, or serve it using a local server:
+คุณสามารถเปิดเล่นเกมนี้ได้ง่าย ๆ ผ่านเว็บเบราว์เซอร์ทั่วไป หรือเปิดใช้งานผ่าน Local Web Server ดังนี้:
 ```bash
-# Using Python to start a local server
+# เปิดใช้ Local Server ด้วย Python (แนะนำ)
 python3 -m http.server 8000
-# Then visit http://localhost:8000/web/ in your browser
-```
-
-### Option B: Run the Python/Pygame Version
-This requires **Python 3.8+** and **Pygame**.
-
-#### 1. Set Up Virtual Environment (Recommended)
-Navigate to the root directory and initialize the virtual environment:
-
-```bash
-# Create a virtual environment
-python3 -m venv venv
-
-# Activate on macOS/Linux
-source venv/bin/activate
-
-# Activate on Windows (CMD)
-# venv\Scripts\activate.bat
-
-# Activate on Windows (PowerShell)
-# .\venv\Scripts\Activate.ps1
-```
-
-#### 2. Install Dependencies
-Install the required libraries listed in [requirements.txt](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/requirements.txt):
-
-```bash
-pip install -r requirements.txt
-```
-
-#### 3. Run the Game
-Execute the main script to start playing:
-
-```bash
-python main.py
+# จากนั้นเปิดบราวเซอร์ไปที่ URL: http://localhost:8000/web/
 ```
 
 ---
 
-## 🕹️ How to Play
+## 🕹️ วิธีการเล่น (How to Play)
 
-1. **Start Screen:** Click anywhere on the menu overlay to begin.
-2. **Answering Questions:** Click on one of the 4 choice buttons at the bottom.
-3. **Using Items:** Click on the item buttons (Telescope, Repair Kit, or Cannonball) at the top-left to apply their effects immediately. Each item can be used **once** per game.
-4. **Skipping Questions:** If you're stuck, click the **Skip** button at the top-right (maximum of 3 skips allowed).
-5. **Winning/Losing:**
-   - **Victory 🏆:** Defeat all waves and clear all questions.
-   - **Game Over 💥:** Your ship HP drops to 0. Click anywhere to restart.
-
----
-
-## 🔧 Game Configuration (Python)
-
-You can customize the Python version settings by editing [src/config.py](file:///Users/tanapoomrueangphaisan/Documents/game_kaow/src/config.py):
-* `WIDTH`, `HEIGHT`: Window resolution (Default: `1280x720`).
-* `FPS`: Refresh rate (Default: `60`).
-* `FLOOR_Y`: Vertical position of the floor/deck level (Default: `700`).
-* `SHUFFLE_QUESTIONS`: Set to `True` or `False` to toggle question scrambling.
-* `PLAYER_BASE_DMG`: Base damage dealt by the player (Default: `30`).
-* `VOL_BGM` / `VOL_SFX`: Adjust audio volumes.
+1. **หน้าจอเริ่มต้น:** คลิกที่หน้าจอหรือปุ่ม **"ออกเรือ & เริ่มเล่น"** เพื่อเริ่มเกม
+2. **การตอบคำถาม:** คลิกปุ่มตัวเลือก 4 ตัวเลือกที่ปรากฏด้านล่างหน้าจอ
+3. **การใช้ไอเทมช่วยเหลือ:** คลิกปุ่มไอเทม (กล้องส่องทางไกล, กล่องพยาบาล, หรือกระสุนปืนใหญ่) ด้านบนซ้ายเพื่อใช้งานทันที (จำนวนครั้งที่ใช้ได้จะถูกกำหนดมาจากคะแนนการเรียนรู้ก่อนหน้า)
+4. **การแพ้/ชนะเกม:**
+   - **ชัยชนะ 🏆:** ตอบคำถามและเอาชนะมอนสเตอร์ได้ครบทั้ง 3 ระลอก (30 ข้อ)
+   - **เกมจบแล้ว 💥:** พลังชีวิตของเรือหมดเหลือ 0 คลิกเพื่อเริ่มใหม่อีกครั้ง
 
 ---
 
-## ⚙️ Web Version Configuration & API Parameters
+## ⚙️ พารามิเตอร์การตั้งค่าผ่าน URL (Web API Parameters)
 
-The Web version (`web/index.html`) can be customized and integrated with external systems using **URL parameters**. These parameters control the subject being tested, the monster set used, and the starting helper items given to the player.
+ตัวเกมเวอร์ชันเว็บรองรับการรับส่งค่าจากระบบอื่น ๆ ผ่าน URL Query Parameters เพื่อกำหนดวิชาสอบ, มอบไอเทมตามคะแนนเก่า, สกินตัวละคร และลิงก์ขากลับเพื่อออกใบรับรอง:
 
-### 1. Subject Parameter (`subject`)
-Specifies the subject test and loads the corresponding questions and character sprites.
-* **Math (คณิตศาสตร์):** `?subject=math` or `?subject=คณิตศาสตร์`
-  * Loads: `math.json`
-  * Monster Set: `Monster_Set1`
-* **Science (วิทยาศาสตร์):** `?subject=science` or `?subject=วิทยาศาสตร์`
-  * Loads: `science.json`
-  * Monster Set: `Monster_Set2`
-* **Thai Language (ภาษาไทย):** `?subject=thai` or `?subject=ภาษาไทย`
-  * Loads: `thai.json`
-  * Monster Set: `Monster_Set3`
-* **Comprehensive Exam (สอบรวม):** `?subject=exam` or `?subject=สอบรวม` or `?subject=รวมวิชา`
-  * Loads: `exam.json` (Mixed questions)
-  * Monster Set: Randomly mixes sprites from `Monster_Set1`, `Monster_Set2`, and `Monster_Set3` for each spawn.
+### 1. พารามิเตอร์วิชาสอบ (`subject`)
+กำหนดไฟล์คำถามและกลุ่มศัตรูที่จะใช้ทดสอบ:
+* **คณิตศาสตร์:** `?subject=math` หรือ `?subject=คณิตศาสตร์`
+  * โหลดไฟล์: `math.json` / มอนสเตอร์กลุ่ม: `Monster_Set1`
+* **วิทยาศาสตร์:** `?subject=science` หรือ `?subject=วิทยาศาสตร์`
+  * โหลดไฟล์: `science.json` / มอนสเตอร์กลุ่ม: `Monster_Set2`
+* **ภาษาไทย:** `?subject=thai` หรือ `?subject=ภาษาไทย`
+  * โหลดไฟล์: `thai.json` / มอนสเตอร์กลุ่ม: `Monster_Set3`
+* **สอบรวม:** `?subject=exam` หรือ `?subject=สอบรวม` หรือ `?subject=รวมวิชา`
+  * โหลดไฟล์: `exam.json` (ผสมวิชา) / มอนสเตอร์กลุ่ม: สุ่มมอนสเตอร์คละชุดสับเปลี่ยนกันออกมา
 
-### 2. Prior Score Parameter (`score`)
+### 2. พารามิเตอร์คะแนนสะสมเดิม (`score`)
+คะแนนการเรียนรู้ที่นักเรียนทำได้ก่อนหน้านี้ จะถูกใช้เพื่อกำหนดจำนวนไอเทมช่วยเหลือที่จะได้รับในหน้าจอเกม:
+* **คะแนน 80 - 100:** ได้รับไอเทมช่วยเหลือแบบจัดเต็ม:
+  * 🔭 กล้องส่องทางไกล x2
+  * 🔧 กล่องพยาบาล x2
+  * 💣 กระสุนปืนใหญ่ x1
+  * ✨ สิทธิ์ฟื้นคืนชีพเมื่อพลังชีวิตเหลือ 0 (Revive) x1
+* **คะแนน 70 - 79:** ได้รับไอเทมระดับปานกลาง:
+  * 🔭 กล้องส่องทางไกล x1
+  * 🔧 กล่องพยาบาล x1
+  * 💣 กระสุนปืนใหญ่ x1
+  * ✨ สิทธิ์ฟื้นคืนชีพ x0
+* **คะแนน 61 - 69:** ได้รับไอเทมระดับเริ่มต้น:
+  * 🔭 กล้องส่องทางไกล x1
+  * 🔧 กล่องพยาบาล x1
+  * 💣 กระสุนปืนใหญ่ x0
+  * ✨ สิทธิ์ฟื้นคืนชีพ x0
+* **คะแนน 60 หรือน้อยกว่า:** ไม่ได้รับไอเทมช่วยเหลือเลย (ปุ่มแสดงสีเทาและถูกล็อกใช้งาน)
 
-To pass the score from the previous system to this game, append the `score` parameter to the URL query string using the format `&score=value` or `?score=value`.
+*หากไม่ระบุพารามิเตอร์ `score` ใน URL ระบบจะถือว่าได้ 100 คะแนนเต็มโดยอัตโนมัติ*
 
-#### How to Input the Score (วิธีการใส่คะแนน):
-* **Format:** `[URL_TO_GAME]?score=[คะแนน]` or combined with subject: `[URL_TO_GAME]?subject=[วิชา]&score=[คะแนน]`
-* **Examples (ตัวอย่างการใช้งาน):**
-  * `http://localhost:8000/web/?subject=math&score=95` (Passes score 95 for Math)
-  * `http://localhost:8000/web/?subject=วิทยาศาสตร์&score=75` (Passes score 75 for Science)
-  * `http://localhost:8000/web/?score=65` (Passes score 65 with default Math subject)
+### 3. พารามิเตอร์เลือกสกินตัวละคร (`player` หรือ `character`)
+ใช้เลือกสกินตัวละครผู้เล่นจาก 6 ตัวละครที่มีในเครื่อง:
+* **รูปแบบการใส่:** `?player=[1-6 หรือ player1-player6]`
+* **ตัวอย่างการใช้:** `?player=5` จะเปิดใช้งานสกินสัญลักษณ์ **Player 5** ทันที
+* *หากไม่ระบุ จะเปิดใช้งานตัวละครที่ 1 เป็นค่าเริ่มต้น*
 
-#### Items allocation based on score (เกณฑ์การแจกไอเทมจากคะแนน):
-* **Score 80 - 100:** Full inventory (ได้ครบทุกอย่าง):
-  * 🔭 Telescope (ตัดช้อย) x2
-  * 🔧 Repair Kit (เพิ่มเลือด) x2
-  * 💣 Heavy Cannonball (เพิ่มพลังโจมตี) x1
-  * ✨ Revive (ชุบชีวิตเมื่อ HP = 0) x1
-* **Score 70 - 79:** Reduced inventory (ได้ทุกอย่างอย่างละ 1 แต่ไม่ได้ชุบชีวิต):
-  * 🔭 Telescope x1
-  * 🔧 Repair Kit x1
-  * 💣 Heavy Cannonball x1
-  * ✨ Revive x0
-* **Score 61 - 69:** Minimal inventory (ได้แค่ตัดช้อย 1 ครั้งกับเพิ่มเลือด 1 ครั้ง):
-  * 🔭 Telescope x1
-  * 🔧 Repair Kit x1
-  * 💣 Heavy Cannonball x0
-  * ✨ Revive x0
-* **Score 60 or below:** No inventory items (ไม่ได้ไอเทมช่วยเหลือเลย):
-  * All items set to 0. Buttons are disabled and grayed out.
+### 4. การเชื่อมต่อกับระบบอื่นและการส่งผลสอบกลับ (LMS Integration & Redirect Callback)
+เพื่อรองรับการเชื่อมต่อกับระบบเรียนหลัก (LMS) ที่ต้องการรับผลสอบและส่งตัวไปออกเกียรติบัตรต่อ ระบบนี้ทำงานผ่านการส่งนักเรียนกลับ (Redirect Callback):
+* `student_id`: รหัสนักเรียน (เช่น `student_id=STD001`)
+* `token` หรือ `session_token`: รหัสตรวจสอบความปลอดภัยของรอบการสอบนั้น ๆ (เช่น `token=SECURE99`)
+* `callback_url`: ลิงก์ปลายทางขากลับของระบบหลักที่จะให้ผู้เล่นคลิกส่งผลสอบ (เช่น `callback_url=https://lms.com/certificate-handler`)
 
-*Default fallback: If no `score` is provided in the URL, it defaults to `100` (full items).*
+#### 🔄 รูปแบบการส่งผลสอบกลับของบราวเซอร์:
+เมื่อนักเรียนเล่นเกมเสร็จ (ไม่ว่าจะชนะหรือแพ้) หากมีตัวแปร `callback_url` อยู่ในระบบ จะมีปุ่ม **"ส่งผลสอบและรับเกียรติบัตร"** หรือปุ่ม **"ส่งผลสอบ"** ขึ้นมาให้กด เมื่อกดแล้วเกมจะเปลี่ยนหน้าบราวเซอร์ไปยังลิงก์ปลายทางนั้นพร้อมแนบข้อมูลพารามิเตอร์ส่งกลับดังนี้:
+`[CALLBACK_URL]?student_id=[รหัสนักเรียน]&token=[รหัสโทเคน]&score=[คะแนนที่ตอบถูกจริง]&answers=[ประวัติการคลิกตัวเลือก]&status=[victory หรือ gameover]`
+
+* **ตัวอย่าง URL ขากลับ:**
+  `https://lms.com/certificate-handler?student_id=STD001&token=SECURE99&score=28&answers=%5B0%2C2%2C1%2C0%2C3%5D&status=victory`
+* **ระบบป้องกันการโกงคำตอบ (Anti-Cheat):** พารามิเตอร์ `answers` จะส่งกลับเป็นอาร์เรย์ของปุ่มที่นักเรียนกดจริง (เช่น `[0, 2, 1, 0...]` คือปุ่ม ก, ค, ข, ก...) เพื่อให้เซิร์ฟเวอร์หลังบ้านของระบบหลักของคุณนำไปประเมินตรวจคะแนนเทียบกับฐานข้อมูลข้อสอบจริงอีกครั้ง ป้องกันการแฮกแก้ไขตัวเลขคะแนนบนหน้าเว็บโดยตรง
+
+### 5. ตัวอย่างการใช้งานพารามิเตอร์ร่วมกันทั้งหมด (Full Combined Example)
+`http://localhost:8000/web/?subject=math&score=85&player=3&student_id=STD_009&token=SECURE123&callback_url=https://lms.com/certificate-handler`
 
 ---
 
-## 👾 Custom Combat Mechanics (Web)
+## 👾 กลไกการต่อสู้เพิ่มเติม (Custom Combat Mechanics)
 
-* **Wrong Answer Penalty:** Answering a question incorrectly results in taking damage and immediately skipping that question to load the next one.
-* **Monster Hit Points:**
-  * **Easy (Small):** 60 HP (takes 2 hits of 30 damage to die)
-  * **Middle (Big):** 90 HP (takes 3 hits of 30 damage to die)
-  * **Boss:** 150 HP (takes 5 hits of 30 damage to die). Appears automatically for the final 5 questions (questions 26 - 30).
-* **Monster Spawning:** 5 Easy and 5 Middle monsters are shuffled and spawned randomly during the first 25 questions. The Boss always spawns for the final 5 questions.
-
+* **บทลงโทษเมื่อตอบผิด:** เมื่อผู้เล่นตอบคำถามข้อใดข้อหนึ่งผิด ตัวเรือจะได้รับความเสียหายทันที และระบบจะทำการข้ามคำถามข้อนั้นไปเพื่อโหลดคำถามข้อถัดไปทันที
+* **ค่าพลังชีวิตของมอนสเตอร์:**
+  * **มอนสเตอร์ขนาดเล็ก (Easy):** 60 HP (ตอบถูก 2 ครั้ง ครั้งละ 30 ดาเมจเพื่อกำจัด)
+  * **มอนสเตอร์ขนาดใหญ่ (Middle):** 90 HP (ตอบถูก 3 ครั้งเพื่อกำจัด)
+  * **บอสใหญ่ (Final Boss):** 150 HP (ตอบถูก 5 ครั้งเพื่อกำจัด) จะปรากฏตัวออกมาในคำถาม 5 ข้อสุดท้ายเสมอ (คำถามที่ 26 - 30)
+* **เอฟเฟกต์การเปิดตัวบอส (Boss Transition Effect):** เมื่อก้าวเข้าสู่ข้อที่ 26 หน้าจอจะเปลี่ยนเป็นขอบไฟกระพริบแจ้งเตือนสีแดงไซเรน (Red Alert) พร้อมเสียงไซเรนเตือนภัย มีเอฟเฟกต์สั่นไหวรุนแรง และอนุภาคเปลวไฟประทุขึ้นมา เพื่อส่งสัญญาณเตือนอย่างตื่นเต้นตระการตา

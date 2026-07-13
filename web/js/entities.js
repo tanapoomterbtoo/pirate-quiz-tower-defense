@@ -8,6 +8,25 @@ function loadFrameImages(charName, folder, action, direction, count) {
     for (let i = 1; i <= count; i++) {
         const img = new Image();
         img.src = `${CHAR_PATH}/${charName}/${folder}/${action}/${direction}/${i}.png`;
+        
+        if (folder === "custom") {
+            img.onerror = () => {
+                // Fall back to standard/slash
+                img.src = `${CHAR_PATH}/${charName}/standard/slash/${direction}/${i}.png`;
+                img.onerror = () => {
+                    // Fall back to standard/idle frame 1 if slash frame doesn't exist
+                    img.src = `${CHAR_PATH}/${charName}/standard/idle/${direction}/1.png`;
+                    img.onerror = null;
+                };
+            };
+        } else {
+            img.onerror = () => {
+                // Fall back to standard/idle frame 1 if standard frame doesn't exist
+                img.src = `${CHAR_PATH}/${charName}/standard/idle/${direction}/1.png`;
+                img.onerror = null;
+            };
+        }
+        
         frames.push(img);
     }
     return frames;
@@ -233,7 +252,7 @@ class AnimatedEntity {
     }
 
     loadAnimations() {
-        const isPlayer = (this.charName === "player");
+        const isPlayer = this.charName.startsWith("player/");
         const facing = isPlayer ? "right" : "left";
 
         // Load Idle & Walk sequences
@@ -243,7 +262,14 @@ class AnimatedEntity {
 
         // Load Attacks based on character type
         if (isPlayer) {
-            this.frames["attack"] = loadFrameImages("player", "custom", "tool_whip", "right", 8);
+            const profile = Object.values(PLAYER_PROFILES).find(p => p.charName === this.charName) || activePlayerProfile;
+            this.frames["attack"] = loadFrameImages(
+                profile.charName,
+                profile.animFolder,
+                profile.animAction,
+                "right",
+                profile.frameCount
+            );
         } else {
             // charName is in format: "Monster_SetX/easy" or "Monster_SetX/Middle" etc.
             const parts = this.charName.split('/');
@@ -448,7 +474,7 @@ class AnimatedEntity {
 // PiratePlayer character class
 class PiratePlayer extends AnimatedEntity {
     constructor(x, y) {
-        super(x, y, "player", SIZE_PLAYER);
+        super(x, y, activePlayerProfile.charName, SIZE_PLAYER);
         this.isPlayer = true;
         this.maxHp = 100;
         this.hp = this.maxHp;

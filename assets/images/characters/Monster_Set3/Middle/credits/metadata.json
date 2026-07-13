@@ -1,6 +1,6 @@
 {
-  "exportTimestamp": "2026-07-05T07-52-43",
-  "bodyType": "muscular",
+  "exportTimestamp": "2026-07-10T15-35-07",
+  "bodyType": "teen",
   "frameSize": 64,
   "structure": {
     "standard": {
@@ -27,7 +27,9 @@
     },
     "custom": {
       "exported": [
-        "slash_128"
+        "slash_128",
+        "backslash_128",
+        "halfslash_128"
       ],
       "failed": []
     }
@@ -281,27 +283,27 @@
   "note": "Individual animation frames organized by standard/custom > animation > direction > frame number",
   "performance": {
     "exportKind": "individualFrames",
-    "totalMs": 161,
+    "totalMs": 7117.6,
     "phasesMs": {
-      "render_composite_extractAnimationFromCanvas": 0,
-      "render_composite_extractFramesFromAnimation": 64,
-      "render_composite_sliceCanvasForCustomAnim": 3,
-      "render_composite_extractFramesFromCustomAnimation": 3,
-      "pngEncode": 74,
-      "zipFile": 12,
-      "staticFiles": 2
+      "render_composite_extractAnimationFromCanvas": 0.6,
+      "render_composite_extractFramesFromAnimation": 183.7,
+      "render_composite_sliceCanvasForCustomAnim": 14.2,
+      "render_composite_extractFramesFromCustomAnimation": 33.4,
+      "pngEncode": 6769.7,
+      "zipFile": 10.2,
+      "staticFiles": 4.2
     },
     "counters": {
-      "pngEncodeCount": 460,
-      "totalPngBytes": 767440,
+      "pngEncodeCount": 536,
+      "totalPngBytes": 1022637,
       "drawAndSliceCount": 0,
-      "zipFileEntryCount": 460,
+      "zipFileEntryCount": 536,
       "renderExtractAnimationFromCanvasCalls": 17,
       "renderSingleItemCalls": 0,
       "renderSingleItemAnimationCalls": 0,
       "extractFramesFromAnimationBatchCount": 17,
-      "renderSliceCanvasForCustomAnimCalls": 1
+      "renderSliceCanvasForCustomAnimCalls": 3
     },
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15"
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0"
   }
 }
