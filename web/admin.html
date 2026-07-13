@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบหลังบ้านจัดการข้อสอบ - Pirate Quiz Tower Defense</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --font-header: 'Cinzel', 'Kanit', serif;
+            --font-body: 'Kanit', sans-serif;
+            --color-bg: #090b16;
+            --color-panel: #0f1426;
+            --color-border: #7c673d;
+            --color-gold: #c5a059;
+            --color-bright-gold: #ffd700;
+            --color-text: #cad8ee;
+            --color-white: #ffffff;
+            --color-wrong: #4a1215;
+            --color-correct: #143525;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(180deg, #0c0f1d 0%, var(--color-panel) 100%);
+            border-bottom: 2px solid var(--color-border);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-family: var(--font-header);
+            font-size: 1.6rem;
+            color: var(--color-bright-gold);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        select, input[type="text"], textarea {
+            background-color: #0c0e17;
+            border: 1px solid var(--color-border);
+            color: var(--color-white);
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input[type="text"]:focus, textarea:focus {
+            border-color: var(--color-bright-gold);
+        }
+
+        .btn {
+            font-family: var(--font-header);
+            background: linear-gradient(135deg, var(--color-gold) 0%, #8c6a30 100%);
+            border: 1px solid var(--color-bright-gold);
+            color: var(--color-white);
+            padding: 0.6rem 1.4rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4b526d 0%, #2e3440 100%);
+            border-color: #5d6175;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 70px);
+            overflow: hidden;
+        }
+
+        /* Left Sidebar: Question List */
+        .sidebar {
+            width: 280px;
+            border-right: 2px solid var(--color-border);
+            background-color: #0c0f1d;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-title {
+            padding: 1rem;
+            font-family: var(--font-header);
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(124, 103, 61, 0.2);
+            color: var(--color-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-list {
+            flex: 1;
+            overflow-y: auto;
+            list-style: none;
+        }
+
+        .question-item {
+            padding: 0.9rem 1.2rem;
+            border-bottom: 1px solid rgba(124, 103, 61, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .question-item:hover {
+            background-color: rgba(197, 160, 89, 0.05);
+        }
+
+        .question-item.active {
+            background-color: rgba(197, 160, 89, 0.15);
+            border-left: 4px solid var(--color-bright-gold);
+            color: var(--color-bright-gold);
+            font-weight: 500;
+        }
+
+        /* Middle: Editor Form */
+        .editor {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            background-color: var(--color-panel);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            font-family: var(--font-header);
+            font-size: 0.95rem;
+            color: var(--color-gold);
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .choices-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+        }
+
+        .choice-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .choice-input-wrapper input[type="text"] {
+            width: 100%;
+            padding-left: 3rem;
+        }
+
+        .choice-badge {
+            position: absolute;
+            left: 0.6rem;
+            width: 28px;
+            height: 28px;
+            background-color: #171d33;
+            border: 1.5px solid var(--color-border);
+            color: var(--color-gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+            font-family: var(--font-header);
+            font-size: 0.85rem;
+        }
+
+        .correct-answer-select {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        .radio-label input[type="radio"] {
+            accent-color: var(--color-bright-gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Right Sidebar: JRPG Game Preview */
+        .preview-panel {
+            width: 480px;
+            border-left: 2px solid var(--color-border);
+            background-color: #080b13;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .preview-title {
+            font-family: var(--font-header);
+            font-size: 1.2rem;
+            color: var(--color-bright-gold);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        /* JRPG Preview Containers */
+        .jrpg-preview-box {
+            background: linear-gradient(180deg, #0e1322 0%, #070912 100%);
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .jrpg-preview-box::before {
+            content: "";
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border: 2px solid var(--color-border);
+            pointer-events: none;
+            clip-path: polygon(
+                0 0, 12px 0, 12px 2px, 2px 2px, 2px 12px, 0 12px, 0 0,
+                100% 0, 100% 12px, calc(100% - 2px) 12px, calc(100% - 2px) 2px, calc(100% - 12px) 2px, calc(100% - 12px) 0, 100% 0,
+                100% 100%, calc(100% - 12px) 100%, calc(100% - 12px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 12px), 100% calc(100% - 12px), 100% 100%,
+                0 100%, 0 calc(100% - 12px), 2px calc(100% - 12px), 2px calc(100% - 2px), 12px calc(100% - 2px), 12px 100%, 0 100%
+            );
+        }
+
+        .preview-img-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .preview-img {
+            max-height: 120px;
+            max-width: 90%;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .preview-q-text {
+            font-size: 1.15rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        .preview-choices-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .preview-btn-choice {
+            position: relative;
+            background: #111526;
+            border: 1px solid #5d4e33;
+            color: #cad8ee;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.8rem 1rem 0.8rem 3.5rem;
+            border-radius: 4px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .preview-btn-choice::before {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 2px;
+            background: #171d33;
+            border: 1.5px solid #a38245;
+            color: var(--color-gold);
+            font-family: var(--font-header);
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #p-choice-0::before { content: "ก"; }
+        #p-choice-1::before { content: "ข"; }
+        #p-choice-2::before { content: "ค"; }
+        #p-choice-3::before { content: "ง"; }
+
+        .preview-btn-choice.correct {
+            background-color: var(--color-correct);
+            border-color: #2e7d32;
+            color: #8effa3;
+        }
+        .preview-btn-choice.correct::before {
+            background-color: #8effa3;
+            border-color: #8effa3;
+            color: var(--color-correct);
+        }
+
+        /* LaTeX Cheat Sheet Box */
+        .cheat-sheet-box {
+            background-color: #0c0e17;
+            border: 1px dashed var(--color-border);
+            border-radius: 4px;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        .cheat-sheet-box h3 {
+            font-family: var(--font-header);
+            color: var(--color-gold);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .cheat-sheet-box code {
+            background-color: #20263f;
+            padding: 0.1rem 0.3rem;
+            border-radius: 2px;
+            color: var(--color-white);
+        }
+
+        /* Drag & Drop Overlay Alert */
+        .drag-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 20, 38, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            border: 4px dashed var(--color-bright-gold);
+        }
+
+        .drag-overlay h2 {
+            font-family: var(--font-header);
+            font-size: 2.2rem;
+            color: var(--color-bright-gold);
+        }
+
+        /* Responsive Layouts */
+        @media (max-width: 1100px) {
+            .preview-panel {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ระบบหลังบ้านจัดการข้อสอบ 🏴‍☠️</h1>
+        <div class="header-actions">
+            <select id="subject-select" onchange="loadSelectedSubject()">
+                <option value="math">วิชาคณิตศาสตร์ (math.json)</option>
+                <option value="science">วิชาวิทยาศาสตร์ (science.json)</option>
+                <option value="thai">วิชาภาษาไทย (thai.json)</option>
+                <option value="exam">วิชาสอบรวม (exam.json)</option>
+            </select>
+            <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">โหลดไฟล์ JSON</button>
+            <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="handleFileImport(event)">
+            <button class="btn" onclick="exportJSONFile()">ดาวน์โหลดไฟล์ข้อสอบ (JSON)</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-title">
+                <span>ข้อคำถาม (30 ข้อ)</span>
+                <span id="question-count-badge" style="font-size: 0.8rem; background: var(--color-border); padding: 0.1rem 0.5rem; border-radius: 10px;">0/30</span>
+            </div>
+            <ul id="sidebar-question-list" class="question-list">
+                <!-- Filled dynamically -->
+            </ul>
+        </div>
+
+        <!-- Form Editor -->
+        <div class="editor" id="form-editor" style="display: none;">
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label for="input-q-text">ข้อความคำถาม (โจทย์) *</label>
+                    <textarea id="input-q-text" oninput="updateCurrentQuestionData()"></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="input-q-img">ลิงก์ภาพประกอบคำถาม (รูปภาพเสริม - ไม่ใส่ได้)</label>
+                    <input type="text" id="input-q-img" placeholder="เช่น assets/images/questions/geometry_q1.png" oninput="updateCurrentQuestionData()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>ตัวเลือกคำตอบ *</label>
+                <div class="choices-container">
+                    <div class="choice-input-wrapper">
+                        <span class="choice-badge">ก</span>
+                        <input type="text" id="input-choice-0" oninput="updateCurrentQuestionData()">
+                    </div>
+                    <div class="choice-input-wrapper">
+                        <span class="choice-badge">ข</span>
+                        <input type="text" id="input-choice-1" oninput="updateCurrentQuestionData()">
+                    </div>
+                    <div class="choice-input-wrapper">
+                        <span class="choice-badge">ค</span>
+                        <input type="text" id="input-choice-2" oninput="updateCurrentQuestionData()">
+                    </div>
+                    <div class="choice-input-wrapper">
+                        <span class="choice-badge">ง</span>
+                        <input type="text" id="input-choice-3" oninput="updateCurrentQuestionData()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>คำตอบที่ถูกต้อง *</label>
+                <div class="correct-answer-select">
+                    <label class="radio-label">
+                        <input type="radio" name="correct-choice-radio" value="0" onchange="updateCurrentQuestionData()"> ตัวเลือก ก
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="correct-choice-radio" value="1" onchange="updateCurrentQuestionData()"> ตัวเลือก ข
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="correct-choice-radio" value="2" onchange="updateCurrentQuestionData()"> ตัวเลือก ค
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="correct-choice-radio" value="3" onchange="updateCurrentQuestionData()"> ตัวเลือก ง
+                    </label>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1rem; border-top: 1px solid rgba(124, 103, 61, 0.2); padding-top: 1.5rem; display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="addQuestionAtEnd()">+ เพิ่มคำถามข้อถัดไป</button>
+                <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80;" onclick="deleteCurrentQuestion()">ลบคำถามข้อนี้</button>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <h2 class="preview-title">แสดงผลสดในเกม (Live Game Preview)</h2>
+            
+            <!-- RPG Box Mockup -->
+            <div class="jrpg-preview-box">
+                <!-- Preview Image -->
+                <div class="preview-img-container hidden" id="preview-img-box">
+                    <img id="preview-img-el" class="preview-img" src="" alt="คำถาม">
+                </div>
+                <!-- Preview Text -->
+                <p class="preview-q-text" id="preview-q-text-el">คำถามจะแสดงที่นี่...</p>
+            </div>
+
+            <!-- Preview Choices -->
+            <div class="preview-choices-grid">
+                <button class="preview-btn-choice" id="p-choice-0">ตัวเลือก ก</button>
+                <button class="preview-btn-choice" id="p-choice-1">ตัวเลือก ข</button>
+                <button class="preview-btn-choice" id="p-choice-2">ตัวเลือก ค</button>
+                <button class="preview-btn-choice" id="p-choice-3">ตัวเลือก ง</button>
+            </div>
+
+            <!-- LaTeX Guide Box -->
+            <div class="cheat-sheet-box">
+                <h3>💡 วิธีพิมพ์สูตรคณิตศาสตร์ (LaTeX Guide):</h3>
+                <p>ห่อหุ้มสมการด้วยเครื่องหมายดอลล่าร์:</p>
+                <p>• แบบบรรทัดปกติ: <code>$สูตร$</code> เช่น <code>$x^2 + y^2 = r^2$</code></p>
+                <p>• แบบบรรทัดแยกเดี่ยว (ตัวใหญ่): <code>$$สูตร$$</code> เช่น <code>$$\frac{x}{y} = \sqrt{a}$$</code></p>
+                <p style="margin-top: 0.5rem; color: #a4b3c6;">
+                    *ตัวอย่างเลขเศษส่วน: <code>\frac{เศษ}{ส่วน}</code><br>
+                    *ตัวอย่างสแควรูท: <code>\sqrt{ค่า}</code><br>
+                    *ตัวอย่างเลขยกกำลัง: <code>x^2</code>, ห้อย: <code>x_n</code>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drag Overlay -->
+    <div id="drag-overlay" class="drag-overlay">
+        <h2>วางไฟล์ JSON ข้อสอบลงตรงนี้ 📂</h2>
+    </div>
+
+    <script>
+        let loadedQuestions = [];
+        let selectedIdx = 0;
+
+        // Path to JSON files
+        const ASSETS_PATH = "../assets";
+
+        // Load initially selected subject
+        window.addEventListener("load", () => {
+            loadSelectedSubject();
+            setupDragAndDrop();
+        });
+
+        async function loadSelectedSubject() {
+            const subject = document.getElementById("subject-select").value;
+            const fileUrl = `${ASSETS_PATH}/data/${subject}.json`;
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) throw new Error("ไม่สามารถเชื่อมต่อไฟล์ได้");
+                loadedQuestions = await response.json();
+                selectedIdx = 0;
+                renderSidebarList();
+                loadQuestionIntoEditor(0);
+            } catch (e) {
+                console.warn("Fetch failed, creating empty questions template", e);
+                // Create template with 30 questions
+                loadedQuestions = Array.from({length: 30}, (_, i) => ({
+                    q: `คำถามข้อที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
+                    img: "",
+                    c: ["ตัวเลือก A", "ตัวเลือก B", "ตัวเลือก C", "ตัวเลือก D"],
+                    a: 0
+                }));
+                selectedIdx = 0;
+                renderSidebarList();
+                loadQuestionIntoEditor(0);
+            }
+        }
+
+        function renderSidebarList() {
+            const listEl = document.getElementById("sidebar-question-list");
+            listEl.innerHTML = "";
+            loadedQuestions.forEach((q, idx) => {
+                const li = document.createElement("li");
+                li.className = `question-item ${idx === selectedIdx ? 'active' : ''}`;
+                li.innerText = `${idx + 1}. ${q.q.replace(/\$/g, "")}`;
+                li.onclick = () => selectQuestion(idx);
+                listEl.appendChild(li);
+            });
+            document.getElementById("question-count-badge").innerText = `${loadedQuestions.length}/30`;
+        }
+
+        function selectQuestion(idx) {
+            selectedIdx = idx;
+            document.querySelectorAll(".question-item").forEach((el, index) => {
+                el.classList.toggle("active", index === idx);
+            });
+            loadQuestionIntoEditor(idx);
+        }
+
+        function loadQuestionIntoEditor(idx) {
+            const q = loadedQuestions[idx];
+            if (!q) {
+                document.getElementById("form-editor").style.display = "none";
+                return;
+            }
+            
+            document.getElementById("form-editor").style.display = "flex";
+            document.getElementById("input-q-text").value = q.q;
+            document.getElementById("input-q-img").value = q.img || "";
+            
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`input-choice-${i}`).value = q.c[i] || "";
+            }
+
+            // Set radio button correct index
+            const radios = document.getElementsByName("correct-choice-radio");
+            radios.forEach((r, i) => {
+                r.checked = (i === q.a);
+            });
+
+            updatePreview();
+        }
+
+        function updateCurrentQuestionData() {
+            if (!loadedQuestions[selectedIdx]) return;
+
+            const text = document.getElementById("input-q-text").value;
+            const img = document.getElementById("input-q-img").value;
+            const choices = [];
+            for (let i = 0; i < 4; i++) {
+                choices.push(document.getElementById(`input-choice-${i}`).value);
+            }
+
+            let correctAns = 0;
+            const radios = document.getElementsByName("correct-choice-radio");
+            radios.forEach((r, i) => {
+                if (r.checked) correctAns = i;
+            });
+
+            // Update local object
+            loadedQuestions[selectedIdx].q = text;
+            loadedQuestions[selectedIdx].img = img;
+            loadedQuestions[selectedIdx].c = choices;
+            loadedQuestions[selectedIdx].a = correctAns;
+
+            // Sync sidebar text
+            const listItems = document.querySelectorAll(".question-item");
+            if (listItems[selectedIdx]) {
+                listItems[selectedIdx].innerText = `${selectedIdx + 1}. ${text.replace(/\$/g, "")}`;
+            }
+
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const q = loadedQuestions[selectedIdx];
+            if (!q) return;
+
+            const qTextEl = document.getElementById("preview-q-text-el");
+            const imgBox = document.getElementById("preview-img-box");
+            const imgEl = document.getElementById("preview-img-el");
+
+            // Update image preview
+            if (q.img && q.img.trim() !== "") {
+                imgEl.src = q.img;
+                imgBox.classList.remove("hidden");
+            } else {
+                imgBox.classList.add("hidden");
+                imgEl.src = "";
+            }
+
+            // Update text preview
+            qTextEl.innerHTML = escapeHtml(q.q).replace(/\n/g, "<br>");
+
+            // Update choice button preview
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`p-choice-${i}`);
+                btn.innerHTML = escapeHtml(q.c[i] || "");
+                btn.classList.toggle("correct", i === q.a);
+            }
+
+            // Trigger KaTeX rendering on preview elements
+            if (window.renderMathInElement) {
+                try {
+                    renderMathInElement(document.querySelector(".jrpg-preview-box"), {
+                        delims: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ]
+                    });
+                    for (let i = 0; i < 4; i++) {
+                        renderMathInElement(document.getElementById(`p-choice-${i}`), {
+                            delims: [
+                                {left: "$$", right: "$$", display: true},
+                                {left: "$", right: "$", display: false}
+                            ]
+                        });
+                    }
+                } catch (e) {
+                    console.warn("Preview math render error", e);
+                }
+            }
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Add / Delete Questions
+        function addQuestionAtEnd() {
+            loadedQuestions.push({
+                q: "คำถามใหม่เพิ่มเติม? (แก้ไขโจทย์ที่นี่)",
+                img: "",
+                c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
+                a: 0
+            });
+            renderSidebarList();
+            selectQuestion(loadedQuestions.length - 1);
+        }
+
+        function deleteCurrentQuestion() {
+            if (loadedQuestions.length <= 1) {
+                alert("ต้องมีคำถามเหลืออยู่อย่างน้อย 1 ข้อ!");
+                return;
+            }
+            if (confirm(`คุณต้องการลบคำถามข้อที่ ${selectedIdx + 1} ใช่หรือไม่?`)) {
+                loadedQuestions.splice(selectedIdx, 1);
+                selectedIdx = Math.max(0, selectedIdx - 1);
+                renderSidebarList();
+                selectQuestion(selectedIdx);
+            }
+        }
+
+        // Export/Import Files
+        function exportJSONFile() {
+            const subject = document.getElementById("subject-select").value;
+            const dataStr = JSON.stringify(loadedQuestions, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(dataBlob);
+            downloadLink.download = `${subject}.json`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed)) {
+                        loadedQuestions = parsed;
+                        selectedIdx = 0;
+                        renderSidebarList();
+                        loadQuestionIntoEditor(0);
+                        alert(`โหลดข้อมูลสำเร็จ! ทั้งหมด ${loadedQuestions.length} ข้อ`);
+                    } else {
+                        alert("รูปแบบไฟล์ไม่ถูกต้อง: ต้องเป็นไฟล์ JSON Array ของข้อสอบ");
+                    }
+                } catch (err) {
+                    alert(`ไม่สามารถอ่านไฟล์ได้: ${err.message}`);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Drag and drop setup
+        function setupDragAndDrop() {
+            const dropZone = document.body;
+            const overlay = document.getElementById("drag-overlay");
+
+            window.addEventListener("dragenter", (e) => {
+                e.preventDefault();
+                overlay.style.display = "flex";
+            });
+
+            overlay.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+
+            overlay.addEventListener("dragleave", () => {
+                overlay.style.display = "none";
+            });
+
+            overlay.addEventListener("drop", (e) => {
+                e.preventDefault();
+                overlay.style.display = "none";
+                const file = e.dataTransfer.files[0];
+                if (file && file.name.endsWith(".json")) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const parsed = JSON.parse(event.target.result);
+                            if (Array.isArray(parsed)) {
+                                loadedQuestions = parsed;
+                                selectedIdx = 0;
+                                renderSidebarList();
+                                loadQuestionIntoEditor(0);
+                                alert(`ลากและโหลดข้อมูลไฟล์สำเร็จ! ทั้งหมด ${loadedQuestions.length} ข้อ`);
+                            }
+                        } catch (err) {
+                            alert("ไฟล์มีข้อผิดพลาด: " + err.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

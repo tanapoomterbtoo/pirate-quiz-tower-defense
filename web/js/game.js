@@ -292,6 +292,19 @@ class Game {
         this.currentQText = qData.q;
         this.correctAns = qData.c[qData.a];
 
+        // Handle question image display
+        const imgContainer = document.getElementById("question-img-container");
+        const imgEl = document.getElementById("question-img");
+        if (imgContainer && imgEl) {
+            if (qData.img && qData.img.trim() !== "") {
+                imgEl.src = qData.img;
+                imgContainer.classList.remove("hidden");
+            } else {
+                imgContainer.classList.add("hidden");
+                imgEl.src = "";
+            }
+        }
+
         this.questionText.innerText = this.currentQText;
 
         // Render answers onto HTML buttons
@@ -300,6 +313,29 @@ class Game {
             btn.innerText = qData.c[i];
             btn.disabled = false;
             btn.classList.remove("correct", "wrong");
+        }
+
+        // Render equations using KaTeX if available
+        if (window.renderMathInElement) {
+            try {
+                renderMathInElement(this.questionText, {
+                    delims: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`choice-${i}`);
+                    renderMathInElement(btn, {
+                        delims: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ]
+                    });
+                }
+            } catch (e) {
+                console.warn("Math rendering failed", e);
+            }
         }
 
         // Show double damage indicator
@@ -758,6 +794,23 @@ function declineRevive() {
 
 function submitExamResults() {
     if (gameInstance) gameInstance.submitExamResults();
+}
+
+function zoomQuestionImage() {
+    const imgEl = document.getElementById("question-img");
+    const modal = document.getElementById("image-zoom-modal");
+    const modalImg = document.getElementById("zoom-modal-img");
+    if (imgEl && modal && modalImg) {
+        modalImg.src = imgEl.src;
+        modal.classList.add("active");
+    }
+}
+
+function closeZoomModal() {
+    const modal = document.getElementById("image-zoom-modal");
+    if (modal) {
+        modal.classList.remove("active");
+    }
 }
 
 // Dynamic root font size scaling for perfect responsiveness across computer & mobile screens

@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for beautiful math equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -90,6 +96,10 @@
                 <div id="quiz-panel" class="hud-layer hidden">
                     <div id="double-damage-badge" class="badge hidden">ใช้งานความเสียหาย 2 เท่า!</div>
                     <div class="quiz-box">
+                        <!-- Question Image Container -->
+                        <div id="question-img-container" class="question-media hidden">
+                            <img id="question-img" class="question-img" src="" alt="โจทย์คำถาม" onclick="zoomQuestionImage()">
+                        </div>
                         <h2 id="question-text">กำลังโหลดคำถาม...</h2>
                     </div>
                     <div class="choices-grid">
@@ -156,6 +166,12 @@
             <h2>กรุณาหมุนโทรศัพท์ของคุณ</h2>
             <p>เพื่อการเล่นและแสดงผลที่ดีที่สุด กรุณาเล่นในแนวนอน (Landscape Mode)</p>
         </div>
+    </div>
+
+    <!-- Image Zoom Modal -->
+    <div id="image-zoom-modal" class="zoom-modal" onclick="closeZoomModal()">
+        <span class="zoom-modal-close">&times;</span>
+        <img id="zoom-modal-img" class="zoom-modal-img" src="" alt="ขยายรูป">
     </div>
 
     <!-- Scripts -->

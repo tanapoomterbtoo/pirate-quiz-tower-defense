@@ -758,3 +758,80 @@ canvas {
     transition: transform 0.05s ease !important;
 }
 
+/* Question Image Styles */
+.question-media {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    pointer-events: auto;
+}
+
+.question-img {
+    max-height: 150px;
+    max-width: 90%;
+    border: 2px solid #7c673d;
+    border-radius: 4px;
+    cursor: zoom-in;
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+}
+
+.question-img:hover {
+    transform: scale(1.04);
+    border-color: #ffd700;
+}
+
+/* Image Zoom Modal */
+.zoom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 6, 12, 0.95);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.zoom-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.zoom-modal-img {
+    max-width: 85%;
+    max-height: 85%;
+    border: 3px double #c5a059;
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+    transform: scale(0.9);
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.zoom-modal.active .zoom-modal-img {
+    transform: scale(1.0);
+}
+
+.zoom-modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    font-size: 2.5rem;
+    color: #c5a059;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.zoom-modal-close:hover {
+    color: #ffd700;
+}
+
