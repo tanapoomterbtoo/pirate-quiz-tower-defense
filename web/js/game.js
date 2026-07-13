@@ -435,18 +435,6 @@ class Game {
             selectedBtn.classList.add("correct");
             this.playSound("shoot");
             
-            // Spawn celebratory confetti particles around the clicked correct button!
-            if (selectedBtn) {
-                const rect = selectedBtn.getBoundingClientRect();
-                const canvasRect = this.canvas.getBoundingClientRect();
-                const scaleX = WIDTH / canvasRect.width;
-                const scaleY = HEIGHT / canvasRect.height;
-                const clickX = (rect.left + rect.width / 2 - canvasRect.left) * scaleX;
-                const clickY = (rect.top + rect.height / 2 - canvasRect.top) * scaleY;
-                
-                this.spawnParticles({ x: clickX, y: clickY }, 25, null, "confetti");
-            }
-            
             // Set double damage hit flag
             this.hitIsDouble = this.doubleDamage;
             
