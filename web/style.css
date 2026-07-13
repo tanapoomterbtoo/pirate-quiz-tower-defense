@@ -41,8 +41,9 @@ body {
     max-height: 56.25vw;
     aspect-ratio: 16 / 9;
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 100px rgba(13, 27, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border: 5px solid #3d2b1f; /* Wood frame */
+    outline: 1px solid #c5a059; /* Inner gold frame */
+    border-radius: 4px; /* Classic sharp frame */
     overflow: hidden;
 }
 
@@ -98,10 +99,10 @@ canvas {
 .overlay-content {
     text-align: center;
     padding: 3.5rem 4rem;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(20, 24, 46, 0.95) 0%, rgba(12, 14, 28, 0.98) 100%);
-    border: 2px solid rgba(255, 215, 0, 0.25);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.05);
+    border-radius: 4px;
+    background: linear-gradient(135deg, #0e1324 0%, #070912 100%);
+    border: 3px double #c5a059;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(197, 160, 89, 0.05);
     max-width: 620px;
     width: 90%;
     transform: translateY(0);
@@ -170,16 +171,17 @@ canvas {
 
 /* Premium Primary Call to Action buttons */
 .btn-primary {
-    background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
-    color: #05060b;
+    background: linear-gradient(135deg, #c5a059 0%, #8c6a30 100%);
+    color: #ffffff;
     font-family: 'Cinzel', serif;
     font-weight: 900;
     font-size: 1.4rem;
     letter-spacing: 1px;
     padding: 1.1rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(255, 149, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #ffd700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn-primary:hover {
@@ -409,30 +411,39 @@ canvas {
     width: 100%;
     max-width: 960px;
     text-align: center;
-    background: linear-gradient(180deg, rgba(22, 28, 48, 0.9) 0%, rgba(15, 19, 33, 0.95) 100%);
-    border: 3px double rgba(255, 215, 0, 0.3);
-    border-radius: 16px;
-    padding: 1.6rem 2.5rem;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.05);
-    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, #0e1322 0%, #070912 100%);
+    border: 2px solid #7c673d;
+    border-radius: 4px;
+    padding: 1.8rem 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(197, 160, 89, 0.08);
     position: relative;
 }
 
+/* Ornate corner bracket decorations for classic RPG look */
 .quiz-box::before {
     content: "";
     position: absolute;
-    top: 5px; left: 5px; right: 5px; bottom: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 2px solid #7c673d;
     pointer-events: none;
+    clip-path: polygon(
+        0 0, 16px 0, 16px 2px, 2px 2px, 2px 16px, 0 16px,
+        0 0,
+        100% 0, 100% 16px, calc(100% - 2px) 16px, calc(100% - 2px) 2px, calc(100% - 16px) 2px, calc(100% - 16px) 0,
+        100% 0,
+        100% 100%, calc(100% - 16px) 100%, calc(100% - 16px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 16px), 100% calc(100% - 16px),
+        100% 100%,
+        0 100%, 0 calc(100% - 16px), 2px calc(100% - 16px), 2px calc(100% - 2px), 16px calc(100% - 2px), 16px 100%,
+        0 100%
+    );
 }
 
 #question-text {
     font-size: 1.45rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.55;
-    color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    color: #e2e8f0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     letter-spacing: 0.2px;
 }
 
@@ -448,19 +459,19 @@ canvas {
 /* JRPG Styled choice cards */
 .btn-choice {
     position: relative;
-    background: linear-gradient(135deg, rgba(35, 43, 73, 0.8) 0%, rgba(22, 28, 48, 0.95) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #d1dcf0;
+    background: #111526;
+    border: 1px solid #5d4e33;
+    color: #cad8ee;
     font-size: 1.15rem;
     font-weight: 600;
     padding: 1.15rem 1.5rem 1.15rem 4.5rem; /* Indent text to fit the prefix badge on the left */
-    border-radius: 10px;
+    border-radius: 4px;
     text-align: left;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease-in-out;
 }
 
-/* Choice badges (A, B, C, D) prefixes inside the buttons */
+/* Choice badges (A, B, C, D) prefixes inside the buttons - Styled as stamped coin/stone plates */
 .btn-choice::before {
     position: absolute;
     left: 1.25rem;
@@ -468,10 +479,10 @@ canvas {
     transform: translateY(-50%);
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1.5px solid rgba(255, 215, 0, 0.4);
-    color: #ffd700;
+    border-radius: 2px;
+    background: #171d33;
+    border: 1.5px solid #a38245;
+    color: #c5a059;
     font-family: 'Cinzel', serif;
     font-size: 0.95rem;
     font-weight: 800;
@@ -487,59 +498,59 @@ canvas {
 #choice-2::before { content: "ค"; }
 #choice-3::before { content: "ง"; }
 
-/* Choice hovers (Gold Highlight Effect) */
+/* Choice hovers (Gold Plaque Highlight Effect) */
 .btn-choice:hover:not(:disabled) {
-    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
-    color: #06070c;
+    background: #c5a059;
+    color: #0c0e17;
     border-color: #ffd700;
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 170, 0, 0.35);
+    box-shadow: 0 8px 20px rgba(197, 160, 89, 0.35);
 }
 
 .btn-choice:hover:not(:disabled)::before {
-    background: #06070c;
-    border-color: #06070c;
+    background: #0c0e17;
+    border-color: #ffd700;
     color: #ffd700;
 }
 
 .btn-choice:disabled {
     background: rgba(15, 17, 26, 0.4);
     color: #4b526d;
-    border-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(93, 78, 51, 0.2);
     cursor: not-allowed;
     box-shadow: none;
 }
 .btn-choice:disabled::before {
-    opacity: 0.3;
-    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.35;
+    border-color: rgba(163, 130, 69, 0.2);
     color: #4b526d;
 }
 
-/* Correct Answer Highlights */
+/* Correct Answer Highlights - Emerald Gold style */
 .btn-choice.correct {
-    background: linear-gradient(135deg, #4cd964 0%, #28a745 100%) !important;
-    color: #ffffff !important;
-    border-color: #4cd964 !important;
-    box-shadow: 0 0 25px rgba(76, 217, 100, 0.45) !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    background: #143525 !important;
+    color: #8effa3 !important;
+    border-color: #2e7d32 !important;
+    box-shadow: 0 0 15px rgba(46, 125, 50, 0.3) !important;
 }
 .btn-choice.correct::before {
-    background: rgba(0, 0, 0, 0.25) !important;
-    border-color: #ffffff !important;
-    color: #ffffff !important;
+    border-color: #8effa3 !important;
+    color: #143525 !important;
+    background: #8effa3 !important;
 }
 
-/* Wrong Answer Highlights */
+/* Incorrect Answer Highlights - Crimson Blood style */
 .btn-choice.wrong {
-    background: linear-gradient(135deg, #ff3b30 0%, #c82333 100%) !important;
-    color: #ffffff !important;
-    border-color: #ff3b30 !important;
-    box-shadow: 0 0 25px rgba(255, 59, 48, 0.45) !important;
+    background: #4a1215 !important;
+    color: #ff8a80 !important;
+    border-color: #c62828 !important;
+    box-shadow: 0 0 15px rgba(198, 40, 40, 0.3) !important;
+    animation: shakeError 0.4s ease;
 }
 .btn-choice.wrong::before {
-    background: rgba(0, 0, 0, 0.25) !important;
-    border-color: #ffffff !important;
-    color: #ffffff !important;
+    border-color: #ff8a80 !important;
+    color: #4a1215 !important;
+    background: #ff8a80 !important;
 }
 
 /* Animations */
