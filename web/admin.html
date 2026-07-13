@@ -169,14 +169,39 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.2rem;
             background-color: var(--color-panel);
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(197, 160, 89, 0.25);
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .editor-title {
+            font-family: var(--font-header);
+            font-size: 1.25rem;
+            color: var(--color-bright-gold);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-nav {
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .form-row {
@@ -197,13 +222,41 @@
 
         textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 80px;
+        }
+
+        /* LaTeX Quick Bar */
+        .math-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            background: #0c0e17;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(124, 103, 61, 0.3);
+        }
+
+        .btn-tool {
+            background-color: #1a2238;
+            border: 1px solid var(--color-border);
+            color: var(--color-white);
+            padding: 0.3rem 0.6rem;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-tool:hover {
+            background-color: var(--color-gold);
+            color: #0c0e17;
+            border-color: var(--color-bright-gold);
         }
 
         .choices-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
         .choice-input-wrapper {
@@ -255,15 +308,15 @@
             height: 18px;
         }
 
-        /* Right Sidebar: JRPG Game Preview */
+        /* Right Sidebar: Real Gameplay Preview */
         .preview-panel {
             width: 480px;
             border-left: 2px solid var(--color-border);
             background-color: #080b13;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1.2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.2rem;
             overflow-y: auto;
         }
 
@@ -276,39 +329,191 @@
             text-align: center;
         }
 
-        /* JRPG Preview Containers */
-        .jrpg-preview-box {
+        /* Live 16:9 Game Screen Mockup */
+        .mockup-frame {
+            width: 100%;
+            height: 238px;
+            position: relative;
+            border: 4px solid #3d2b1f; /* Wood frame style */
+            outline: 1px solid var(--color-gold);
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+
+        .mockup-screen {
+            width: 1280px;
+            height: 720px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0) scale(0.328); /* Scale exactly to fit 420px width */
+            transform-origin: top center;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Mockup Background Layers */
+        .mock-bg-sky {
+            position: absolute;
+            width: 1280px; height: 720px;
+            background-image: url('../assets/images/backgrounds/bg_sky.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .mock-bg-islands {
+            position: absolute;
+            width: 1280px; height: 720px;
+            background-image: url('../assets/images/backgrounds/bg_islands.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .mock-bg-deck {
+            position: absolute;
+            width: 1280px; height: 720px;
+            background-image: url('../assets/images/backgrounds/bg_deck.png');
+            background-size: cover;
+            background-position: center;
+            top: 20px;
+        }
+
+        /* Sprite Mockups */
+        .mock-player {
+            position: absolute;
+            left: 160px;
+            bottom: 110px;
+            width: 210px;
+            height: 280px;
+            background-image: url('../assets/images/characters/player/Player1/standard/idle/right/1.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+        }
+
+        .mock-monster {
+            position: absolute;
+            right: 160px;
+            bottom: 110px;
+            width: 210px;
+            height: 280px;
+            background-image: url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+        }
+
+        /* HP Bars Mockup */
+        .mock-hp-bar {
+            position: absolute;
+            width: 150px;
+            height: 16px;
+            border: 2px solid #5a4b36;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+        }
+        .mock-hp-bar-fill {
+            height: 100%;
+        }
+        .mock-player-hp {
+            left: 190px;
+            bottom: 400px;
+            box-shadow: 0 0 8px rgba(76, 217, 100, 0.4);
+        }
+        .mock-monster-hp {
+            right: 190px;
+            bottom: 400px;
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.4);
+        }
+
+        /* Wave Indicator Text */
+        .mock-wave-text {
+            position: absolute;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-family: var(--font-header);
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px #000;
+            white-space: nowrap;
+        }
+
+        /* Mini Top HUD */
+        .mock-top-hud {
+            position: absolute;
+            top: 24px;
+            left: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .mock-hud-item {
+            background: #0f1322;
+            border: 1.5px solid #5a4b36;
+            border-radius: 4px;
+            width: 220px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            color: var(--color-text);
+            gap: 8px;
+            font-size: 14px;
+        }
+        .mock-item-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Mock Quiz Panel */
+        .mock-quiz-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 1280px;
+            padding: 24px 40px;
+            background: linear-gradient(0deg, rgba(6, 7, 12, 0.98) 0%, rgba(6, 7, 12, 0.8) 75%, rgba(6, 7, 12, 0) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Mock JRPG Containers */
+        .mock-quiz-box {
+            width: 100%;
+            max-width: 960px;
+            text-align: center;
             background: linear-gradient(180deg, #0e1322 0%, #070912 100%);
             border: 2px solid var(--color-border);
             border-radius: 4px;
-            padding: 1.5rem;
+            padding: 16px 24px;
             position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
-
-        .jrpg-preview-box::before {
+        .mock-quiz-box::before {
             content: "";
             position: absolute;
             top: -4px; left: -4px; right: -4px; bottom: -4px;
             border: 2px solid var(--color-border);
             pointer-events: none;
             clip-path: polygon(
-                0 0, 12px 0, 12px 2px, 2px 2px, 2px 12px, 0 12px, 0 0,
-                100% 0, 100% 12px, calc(100% - 2px) 12px, calc(100% - 2px) 2px, calc(100% - 12px) 2px, calc(100% - 12px) 0, 100% 0,
-                100% 100%, calc(100% - 12px) 100%, calc(100% - 12px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 12px), 100% calc(100% - 12px), 100% 100%,
-                0 100%, 0 calc(100% - 12px), 2px calc(100% - 12px), 2px calc(100% - 2px), 12px calc(100% - 2px), 12px 100%, 0 100%
+                0 0, 16px 0, 16px 2px, 2px 2px, 2px 16px, 0 16px, 0 0,
+                100% 0, 100% 16px, calc(100% - 2px) 16px, calc(100% - 2px) 2px, calc(100% - 16px) 2px, calc(100% - 16px) 0, 100% 0,
+                100% 100%, calc(100% - 16px) 100%, calc(100% - 16px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 16px), 100% calc(100% - 16px), 100% 100%,
+                0 100%, 0 calc(100% - 16px), 2px calc(100% - 16px), 2px calc(100% - 2px), 16px calc(100% - 2px), 16px 100%, 0 100%
             );
         }
 
-        .preview-img-container {
+        .mock-preview-img-container {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-bottom: 0.8rem;
+            margin-bottom: 8px;
         }
-
-        .preview-img {
-            max-height: 120px;
+        .mock-preview-img {
+            max-height: 110px;
             max-width: 90%;
             border: 2px solid var(--color-border);
             border-radius: 4px;
@@ -316,67 +521,67 @@
             background: #000;
         }
 
-        .preview-q-text {
-            font-size: 1.15rem;
-            font-weight: 500;
+        .mock-preview-q-text {
+            font-size: 26px;
+            font-weight: 600;
             line-height: 1.5;
             color: var(--color-white);
             text-align: center;
         }
 
-        .preview-choices-grid {
+        .mock-preview-choices-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 960px;
         }
 
-        .preview-btn-choice {
+        .mock-preview-btn-choice {
             position: relative;
             background: #111526;
             border: 1px solid #5d4e33;
             color: #cad8ee;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.8rem 1rem 0.8rem 3.5rem;
+            font-size: 22px;
+            font-weight: 600;
+            padding: 16px 20px 16px 70px;
             border-radius: 4px;
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .preview-btn-choice::before {
+        .mock-preview-btn-choice::before {
             position: absolute;
-            left: 1rem;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             border-radius: 2px;
             background: #171d33;
             border: 1.5px solid #a38245;
             color: var(--color-gold);
             font-family: var(--font-header);
-            font-size: 0.8rem;
+            font-size: 20px;
             font-weight: 800;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        #p-choice-0::before { content: "ก"; }
-        #p-choice-1::before { content: "ข"; }
-        #p-choice-2::before { content: "ค"; }
-        #p-choice-3::before { content: "ง"; }
+        #mock-choice-0::before { content: "ก"; }
+        #mock-choice-1::before { content: "ข"; }
+        #mock-choice-2::before { content: "ค"; }
+        #mock-choice-3::before { content: "ง"; }
 
-        .preview-btn-choice.correct {
-            background-color: var(--color-correct);
-            border-color: #2e7d32;
-            color: #8effa3;
+        .mock-preview-btn-choice.correct {
+            background: var(--color-correct) !important;
+            color: #8effa3 !important;
+            border-color: #2e7d32 !important;
         }
-        .preview-btn-choice.correct::before {
-            background-color: #8effa3;
-            border-color: #8effa3;
-            color: var(--color-correct);
+        .mock-preview-btn-choice.correct::before {
+            border-color: #8effa3 !important;
+            color: var(--color-correct) !important;
+            background: #8effa3 !important;
         }
 
         /* LaTeX Cheat Sheet Box */
@@ -460,13 +665,41 @@
 
         <!-- Form Editor -->
         <div class="editor" id="form-editor" style="display: none;">
-            <div class="form-row">
-                <div class="form-group" style="flex: 2;">
-                    <label for="input-q-text">ข้อความคำถาม (โจทย์) *</label>
-                    <textarea id="input-q-text" oninput="updateCurrentQuestionData()"></textarea>
+            
+            <!-- Editor Header Navigation -->
+            <div class="editor-header">
+                <span class="editor-title" id="editor-question-number-title">กำลังแก้ไขคำถามข้อที่ 1</span>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-nav" onclick="navigateToQuestion(-1)">← ข้อก่อนหน้า</button>
+                    <button class="btn btn-secondary btn-nav" onclick="navigateToQuestion(1)">ข้อถัดไป →</button>
                 </div>
             </div>
 
+            <!-- Question Input -->
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="input-q-text">ข้อความคำถาม (โจทย์) *</label>
+                        <span style="font-size: 0.8rem; color: #8a92a5;">รองรับสูตรคณิตศาสตร์ LaTeX</span>
+                    </div>
+                    
+                    <!-- LaTeX Quick Tools Panel -->
+                    <div class="math-tools">
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$$\\frac{a}{b}$$')">$\frac{a}{b}$ (เศษส่วน)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$x^2$')">$x^2$ (เลขยกกำลัง)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$$\\sqrt{x}$$')">$\sqrt{x}$ (สแควรูท)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$\\pm$')">$\pm$ (บวกลบ)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$\\times$')">$\times$ (คูณ)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$\\div$')">$\div$ (หาร)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$\\theta$')">$\theta$ (เซต้า)</button>
+                        <button type="button" class="btn-tool" onclick="insertLaTeX('$\\pi$')">$\pi$ (พาย)</button>
+                    </div>
+                    
+                    <textarea id="input-q-text" oninput="updateCurrentQuestionData()" placeholder="พิมพ์คำถามของคุณที่นี่..."></textarea>
+                </div>
+            </div>
+
+            <!-- Image Input -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="input-q-img">ลิงก์ภาพประกอบคำถาม (รูปภาพเสริม - ไม่ใส่ได้)</label>
@@ -474,28 +707,30 @@
                 </div>
             </div>
 
+            <!-- Choices inputs -->
             <div class="form-group">
                 <label>ตัวเลือกคำตอบ *</label>
                 <div class="choices-container">
                     <div class="choice-input-wrapper">
                         <span class="choice-badge">ก</span>
-                        <input type="text" id="input-choice-0" oninput="updateCurrentQuestionData()">
+                        <input type="text" id="input-choice-0" oninput="updateCurrentQuestionData()" placeholder="พิมพ์ตัวเลือก ก">
                     </div>
                     <div class="choice-input-wrapper">
                         <span class="choice-badge">ข</span>
-                        <input type="text" id="input-choice-1" oninput="updateCurrentQuestionData()">
+                        <input type="text" id="input-choice-1" oninput="updateCurrentQuestionData()" placeholder="พิมพ์ตัวเลือก ข">
                     </div>
                     <div class="choice-input-wrapper">
                         <span class="choice-badge">ค</span>
-                        <input type="text" id="input-choice-2" oninput="updateCurrentQuestionData()">
+                        <input type="text" id="input-choice-2" oninput="updateCurrentQuestionData()" placeholder="พิมพ์ตัวเลือก ค">
                     </div>
                     <div class="choice-input-wrapper">
                         <span class="choice-badge">ง</span>
-                        <input type="text" id="input-choice-3" oninput="updateCurrentQuestionData()">
+                        <input type="text" id="input-choice-3" oninput="updateCurrentQuestionData()" placeholder="พิมพ์ตัวเลือก ง">
                     </div>
                 </div>
             </div>
 
+            <!-- Correct answer choice index -->
             <div class="form-group">
                 <label>คำตอบที่ถูกต้อง *</label>
                 <div class="correct-answer-select">
@@ -514,44 +749,92 @@
                 </div>
             </div>
             
-            <div style="margin-top: 1rem; border-top: 1px solid rgba(124, 103, 61, 0.2); padding-top: 1.5rem; display: flex; gap: 1rem;">
+            <!-- Question controls -->
+            <div style="margin-top: 0.5rem; border-top: 1px solid rgba(124, 103, 61, 0.2); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
                 <button class="btn btn-secondary" onclick="addQuestionAtEnd()">+ เพิ่มคำถามข้อถัดไป</button>
-                <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80;" onclick="deleteCurrentQuestion()">ลบคำถามข้อนี้</button>
+                <div style="font-size: 0.85rem; color: #2ecc71;" id="save-status-text">💾 บันทึกอัตโนมัติแล้ว</div>
+                <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80; padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteCurrentQuestion()">ลบข้อสอบนี้</button>
             </div>
         </div>
 
-        <!-- Preview Panel -->
+        <!-- Preview Panel (Scaled Game Viewport) -->
         <div class="preview-panel">
-            <h2 class="preview-title">แสดงผลสดในเกม (Live Game Preview)</h2>
+            <h2 class="preview-title">หน้าจอแสดงผลจริงในเกม (16:9 Game Mockup)</h2>
             
-            <!-- RPG Box Mockup -->
-            <div class="jrpg-preview-box">
-                <!-- Preview Image -->
-                <div class="preview-img-container hidden" id="preview-img-box">
-                    <img id="preview-img-el" class="preview-img" src="" alt="คำถาม">
+            <!-- 16:9 Viewport frame -->
+            <div class="mockup-frame">
+                <!-- Scaled down real 1280x720 mockup -->
+                <div class="mockup-screen">
+                    <!-- Parallax Backgrounds -->
+                    <div class="mock-bg-sky"></div>
+                    <div class="mock-bg-islands"></div>
+                    <div class="mock-bg-deck"></div>
+                    
+                    <!-- Top HUD -->
+                    <div class="mock-top-hud">
+                        <div class="mock-hud-item">
+                            <svg class="mock-item-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18.5 5.5L13.5 10.5M10.5 7.5L5.5 12.5M15.5 2.5L21.5 8.5M3 21l3-3M3 17l4 4" />
+                                <circle cx="17" cy="7" r="3" />
+                            </svg>
+                            <span>กล้องส่องทางไกล (2)</span>
+                        </div>
+                        <div class="mock-hud-item">
+                            <svg class="mock-item-icon" viewBox="0 0 24 24" fill="none" stroke="#4cd964" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="9" width="18" height="12" rx="2" />
+                                <path d="M7 9V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" />
+                                <path d="M12 12v6M9 15h6" />
+                            </svg>
+                            <span>กล่องพยาบาล (2)</span>
+                        </div>
+                    </div>
+
+                    <!-- Top Wave & Subject Title -->
+                    <div class="mock-wave-text" id="mock-top-wave-text">วิชา: คณิตศาสตร์   คำถามที่: 1/30</div>
+
+                    <!-- HP Bars -->
+                    <div class="mock-hp-bar mock-player-hp">
+                        <div class="mock-hp-bar-fill" style="width: 100%; background-color: #4cd964;"></div>
+                    </div>
+                    <div class="mock-hp-bar mock-monster-hp">
+                        <div class="mock-hp-bar-fill" style="width: 80%; background-color: #ff3b30;"></div>
+                    </div>
+
+                    <!-- Characters sprites -->
+                    <div class="mock-player"></div>
+                    <div class="mock-monster" id="mock-monster-sprite"></div>
+
+                    <!-- HUD Quiz Interface -->
+                    <div class="mock-quiz-panel">
+                        <div class="mock-quiz-box">
+                            <!-- Image Container -->
+                            <div class="mock-preview-img-container hidden" id="mock-preview-img-box">
+                                <img id="mock-preview-img-el" class="mock-preview-img" src="" alt="คำถาม">
+                            </div>
+                            <!-- Question Text -->
+                            <p class="mock-preview-q-text" id="mock-preview-q-text-el">กำลังโหลดคำถาม...</p>
+                        </div>
+
+                        <!-- Choices Grid -->
+                        <div class="mock-preview-choices-grid">
+                            <button class="mock-preview-btn-choice" id="mock-choice-0">ตัวเลือก ก</button>
+                            <button class="mock-preview-btn-choice" id="mock-choice-1">ตัวเลือก ข</button>
+                            <button class="mock-preview-btn-choice" id="mock-choice-2">ตัวเลือก ค</button>
+                            <button class="mock-preview-btn-choice" id="mock-choice-3">ตัวเลือก ง</button>
+                        </div>
+                    </div>
                 </div>
-                <!-- Preview Text -->
-                <p class="preview-q-text" id="preview-q-text-el">คำถามจะแสดงที่นี่...</p>
             </div>
 
-            <!-- Preview Choices -->
-            <div class="preview-choices-grid">
-                <button class="preview-btn-choice" id="p-choice-0">ตัวเลือก ก</button>
-                <button class="preview-btn-choice" id="p-choice-1">ตัวเลือก ข</button>
-                <button class="preview-btn-choice" id="p-choice-2">ตัวเลือก ค</button>
-                <button class="preview-btn-choice" id="p-choice-3">ตัวเลือก ง</button>
-            </div>
-
-            <!-- LaTeX Guide Box -->
+            <!-- LaTeX Quick Reference -->
             <div class="cheat-sheet-box">
                 <h3>💡 วิธีพิมพ์สูตรคณิตศาสตร์ (LaTeX Guide):</h3>
                 <p>ห่อหุ้มสมการด้วยเครื่องหมายดอลล่าร์:</p>
                 <p>• แบบบรรทัดปกติ: <code>$สูตร$</code> เช่น <code>$x^2 + y^2 = r^2$</code></p>
                 <p>• แบบบรรทัดแยกเดี่ยว (ตัวใหญ่): <code>$$สูตร$$</code> เช่น <code>$$\frac{x}{y} = \sqrt{a}$$</code></p>
                 <p style="margin-top: 0.5rem; color: #a4b3c6;">
-                    *ตัวอย่างเลขเศษส่วน: <code>\frac{เศษ}{ส่วน}</code><br>
-                    *ตัวอย่างสแควรูท: <code>\sqrt{ค่า}</code><br>
-                    *ตัวอย่างเลขยกกำลัง: <code>x^2</code>, ห้อย: <code>x_n</code>
+                    *เศษส่วน: <code>\frac{เศษ}{ส่วน}</code>  *รูท: <code>\sqrt{ค่า}</code><br>
+                    *ยกกำลัง: <code>x^2</code>  *คูณ: <code>\times</code>  *หาร: <code>\div</code>
                 </p>
             </div>
         </div>
@@ -565,6 +848,7 @@
     <script>
         let loadedQuestions = [];
         let selectedIdx = 0;
+        let lastFocusedInputId = 'input-q-text'; // Tracks the active editing text field
 
         // Path to JSON files
         const ASSETS_PATH = "../assets";
@@ -573,6 +857,7 @@
         window.addEventListener("load", () => {
             loadSelectedSubject();
             setupDragAndDrop();
+            setupInputFocusTracker();
         });
 
         async function loadSelectedSubject() {
@@ -589,15 +874,50 @@
                 console.warn("Fetch failed, creating empty questions template", e);
                 // Create template with 30 questions
                 loadedQuestions = Array.from({length: 30}, (_, i) => ({
-                    q: `คำถามข้อที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
+                    q: `คำถามคณิตศาสตร์จำลองที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
                     img: "",
-                    c: ["ตัวเลือก A", "ตัวเลือก B", "ตัวเลือก C", "ตัวเลือก D"],
+                    c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
                     a: 0
                 }));
                 selectedIdx = 0;
                 renderSidebarList();
                 loadQuestionIntoEditor(0);
             }
+        }
+
+        // Keep track of the last focused text field to insert LaTeX symbols at the cursor
+        function setupInputFocusTracker() {
+            const inputs = ['input-q-text', 'input-q-img', 'input-choice-0', 'input-choice-1', 'input-choice-2', 'input-choice-3'];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('focus', () => {
+                        lastFocusedInputId = id;
+                    });
+                }
+            });
+        }
+
+        // Insert LaTeX formula at cursor in the last focused input field
+        function insertLaTeX(latexCode) {
+            const input = document.getElementById(lastFocusedInputId);
+            if (!input) return;
+            
+            const startPos = input.selectionStart;
+            const endPos = input.selectionEnd;
+            const text = input.value;
+            
+            input.value = text.substring(0, startPos) + latexCode + text.substring(endPos, text.length);
+            input.focus();
+            
+            // Re-position cursor inside formula if appropriate (e.g. inside brackets)
+            let newCursorPos = startPos + latexCode.length;
+            if (latexCode.includes('{')) {
+                newCursorPos = startPos + latexCode.indexOf('{') + 1;
+            }
+            input.setSelectionRange(newCursorPos, newCursorPos);
+            
+            updateCurrentQuestionData();
         }
 
         function renderSidebarList() {
@@ -629,6 +949,7 @@
             }
             
             document.getElementById("form-editor").style.display = "flex";
+            document.getElementById("editor-question-number-title").innerText = `กำลังแก้ไขคำถามข้อที่ ${idx + 1}`;
             document.getElementById("input-q-text").value = q.q;
             document.getElementById("input-q-img").value = q.img || "";
             
@@ -643,6 +964,13 @@
             });
 
             updatePreview();
+        }
+
+        function navigateToQuestion(direction) {
+            let targetIdx = selectedIdx + direction;
+            if (targetIdx >= 0 && targetIdx < loadedQuestions.length) {
+                selectQuestion(targetIdx);
+            }
         }
 
         function updateCurrentQuestionData() {
@@ -673,6 +1001,11 @@
                 listItems[selectedIdx].innerText = `${selectedIdx + 1}. ${text.replace(/\$/g, "")}`;
             }
 
+            // Show save status badge briefly
+            const saveBadge = document.getElementById("save-status-text");
+            saveBadge.style.opacity = 1;
+            saveBadge.innerText = "💾 บันทึกอัตโนมัติแล้ว";
+
             updatePreview();
         }
 
@@ -680,11 +1013,34 @@
             const q = loadedQuestions[selectedIdx];
             if (!q) return;
 
-            const qTextEl = document.getElementById("preview-q-text-el");
-            const imgBox = document.getElementById("preview-img-box");
-            const imgEl = document.getElementById("preview-img-el");
+            // 1. Update Mock Monster Sprite based on Subject
+            const subject = document.getElementById("subject-select").value;
+            const monsterSprite = document.getElementById("mock-monster-sprite");
+            if (monsterSprite) {
+                if (subject === "math") {
+                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png')";
+                } else if (subject === "science") {
+                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set2/easy/standard/idle/left/1.png')";
+                } else if (subject === "thai") {
+                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set3/easy/standard/idle/left/1.png')";
+                } else {
+                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png')";
+                }
+            }
 
-            // Update image preview
+            // 2. Update Wave/Subject title
+            const waveText = document.getElementById("mock-top-wave-text");
+            if (waveText) {
+                const subjectNames = { "math": "คณิตศาสตร์", "science": "วิทยาศาสตร์", "thai": "ภาษาไทย", "exam": "สอบรวม" };
+                const subjName = subjectNames[subject] || "คณิตศาสตร์";
+                waveText.innerText = `วิชา: ${subjName}   คำถามที่: ${selectedIdx + 1}/${loadedQuestions.length}`;
+            }
+
+            // 3. Update question text & image preview inside mockup
+            const qTextEl = document.getElementById("mock-preview-q-text-el");
+            const imgBox = document.getElementById("mock-preview-img-box");
+            const imgEl = document.getElementById("mock-preview-img-el");
+
             if (q.img && q.img.trim() !== "") {
                 imgEl.src = q.img;
                 imgBox.classList.remove("hidden");
@@ -693,35 +1049,26 @@
                 imgEl.src = "";
             }
 
-            // Update text preview
             qTextEl.innerHTML = escapeHtml(q.q).replace(/\n/g, "<br>");
 
-            // Update choice button preview
+            // 4. Update choice buttons preview inside mockup
             for (let i = 0; i < 4; i++) {
-                const btn = document.getElementById(`p-choice-${i}`);
+                const btn = document.getElementById(`mock-choice-${i}`);
                 btn.innerHTML = escapeHtml(q.c[i] || "");
                 btn.classList.toggle("correct", i === q.a);
             }
 
-            // Trigger KaTeX rendering on preview elements
+            // 5. Trigger KaTeX rendering on preview elements
             if (window.renderMathInElement) {
                 try {
-                    renderMathInElement(document.querySelector(".jrpg-preview-box"), {
+                    renderMathInElement(document.querySelector(".mockup-screen"), {
                         delims: [
                             {left: "$$", right: "$$", display: true},
                             {left: "$", right: "$", display: false}
                         ]
                     });
-                    for (let i = 0; i < 4; i++) {
-                        renderMathInElement(document.getElementById(`p-choice-${i}`), {
-                            delims: [
-                                {left: "$$", right: "$$", display: true},
-                                {left: "$", right: "$", display: false}
-                            ]
-                        });
-                    }
                 } catch (e) {
-                    console.warn("Preview math render error", e);
+                    console.warn("Mockup math render error", e);
                 }
             }
         }
@@ -737,8 +1084,11 @@
 
         // Add / Delete Questions
         function addQuestionAtEnd() {
+            const subject = document.getElementById("subject-select").value;
+            const subjectNames = { "math": "คณิตศาสตร์", "science": "วิทยาศาสตร์", "thai": "ภาษาไทย", "exam": "ข้อสอบรวม" };
+            const subjName = subjectNames[subject] || "คณิตศาสตร์";
             loadedQuestions.push({
-                q: "คำถามใหม่เพิ่มเติม? (แก้ไขโจทย์ที่นี่)",
+                q: `โจทย์วิชา${subjName}จำลองที่ ${loadedQuestions.length + 1}? (แก้ไขโจทย์ที่นี่)`,
                 img: "",
                 c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
                 a: 0
