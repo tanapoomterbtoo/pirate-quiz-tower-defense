@@ -310,9 +310,9 @@ class Game {
         }
     }
 
-    spawnParticles(pos, count, color) {
+    spawnParticles(pos, count, color, type = "normal") {
         for (let i = 0; i < count; i++) {
-            this.particles.push(new Particle(pos.x, pos.y, color));
+            this.particles.push(new Particle(pos.x, pos.y, color, type));
         }
     }
 
@@ -371,7 +371,7 @@ class Game {
             
             if (actualHealed > 0) {
                 this.dmgTexts.push(new DamageText(this.player.xFloat, this.player.yFloat - 80, -actualHealed, "#4cd964"));
-                this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat }, 30, "#4cd964");
+                this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat + 40 }, 30, "#4cd964", "heal");
             }
             
             this.items["Repair Kit"].count -= 1;
@@ -434,6 +434,21 @@ class Game {
         if (selectedText === this.correctAns) {
             selectedBtn.classList.add("correct");
             this.playSound("shoot");
+            
+            // Spawn celebratory confetti particles around the clicked correct button!
+            if (selectedBtn) {
+                const rect = selectedBtn.getBoundingClientRect();
+                const canvasRect = this.canvas.getBoundingClientRect();
+                const scaleX = WIDTH / canvasRect.width;
+                const scaleY = HEIGHT / canvasRect.height;
+                const clickX = (rect.left + rect.width / 2 - canvasRect.left) * scaleX;
+                const clickY = (rect.top + rect.height / 2 - canvasRect.top) * scaleY;
+                
+                this.spawnParticles({ x: clickX, y: clickY }, 25, null, "confetti");
+            }
+            
+            // Set double damage hit flag
+            this.hitIsDouble = this.doubleDamage;
             
             this.pendingDmg = PLAYER_BASE_DMG * (this.doubleDamage ? 2 : 1);
             this.doubleDamage = false;
@@ -520,7 +535,13 @@ class Game {
             if (this.player.hitTriggered && !this.hitApplied) {
                 this.playSound("hit");
                 this.monster.triggerHurt();
-                this.spawnParticles({ x: this.monster.xFloat, y: this.monster.yFloat }, 20, "#ff8c00");
+                
+                if (this.hitIsDouble) {
+                    this.spawnParticles({ x: this.monster.xFloat, y: this.monster.yFloat }, 45, null, "fire");
+                    this.screenShake = 15.0; // stronger shake for double damage!
+                } else {
+                    this.spawnParticles({ x: this.monster.xFloat, y: this.monster.yFloat }, 20, "#ff8c00", "normal");
+                }
                 
                 this.monster.hp -= this.pendingDmg;
                 this.dmgTexts.push(new DamageText(this.monster.xFloat, this.monster.yFloat - 60, this.pendingDmg, "#ffd700"));

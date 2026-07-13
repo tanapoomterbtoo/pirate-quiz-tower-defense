@@ -142,32 +142,110 @@ class HealthBar {
 
 // Particle Effect
 class Particle {
-    constructor(x, y, color) {
+    constructor(x, y, color, type = "normal") {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.size = Math.floor(Math.random() * 5) + 4; // 4 to 8
-        this.velX = (Math.random() - 0.5) * 500; // random speed x
-        this.velY = Math.random() * -300 - 50; // upward launch
-        this.life = Math.random() * 0.4 + 0.3; // 0.3 to 0.7 seconds
-        this.maxLife = this.life;
+        this.type = type; // "normal", "fire", "heal", "confetti"
+        
+        if (type === "fire") {
+            this.size = Math.random() * 8 + 6; // slightly bigger
+            this.velX = (Math.random() - 0.5) * 200;
+            this.velY = -Math.random() * 250 - 100;
+            this.life = Math.random() * 0.4 + 0.4;
+            this.maxLife = this.life;
+            // Fire colors: orange, red, yellow
+            const fireColors = ["#ff3b30", "#ff9500", "#ffcc00"];
+            this.color = fireColors[Math.floor(Math.random() * fireColors.length)];
+        } else if (type === "heal") {
+            this.size = Math.random() * 6 + 4;
+            this.velX = (Math.random() - 0.5) * 80;
+            this.velY = -Math.random() * 120 - 60; // slow drift up
+            this.life = Math.random() * 0.6 + 0.5;
+            this.maxLife = this.life;
+            this.color = "#4cd964"; // green
+        } else if (type === "confetti") {
+            this.size = Math.random() * 8 + 5;
+            this.velX = (Math.random() - 0.5) * 350;
+            this.velY = -Math.random() * 250 - 150;
+            this.life = Math.random() * 0.8 + 0.6;
+            this.maxLife = this.life;
+            // Confetti colors
+            const colors = ["#ff2d55", "#5856d6", "#007aff", "#34aadc", "#5ac8fa", "#4cd964", "#ffcc00", "#ff9500", "#ff3b30"];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.angle = Math.random() * Math.PI * 2;
+            this.rotSpeed = (Math.random() - 0.5) * 10;
+        } else {
+            // Normal hit particles
+            this.size = Math.floor(Math.random() * 5) + 4;
+            this.velX = (Math.random() - 0.5) * 500;
+            this.velY = Math.random() * -300 - 50;
+            this.life = Math.random() * 0.4 + 0.3;
+            this.maxLife = this.life;
+        }
     }
 
     update(dt) {
-        this.velY += 500 * dt; // Gravity
-        this.x += this.velX * dt;
-        this.y += this.velY * dt;
+        if (this.type === "fire") {
+            this.velY += 100 * dt; // weak gravity for smoke rise
+            this.x += this.velX * dt;
+            this.y += this.velY * dt;
+            this.size = Math.max(0, this.size - 10 * dt); // shrink
+        } else if (this.type === "heal") {
+            // wavy floating pattern
+            this.x += (this.velX + Math.sin(this.life * 10) * 30) * dt;
+            this.y += this.velY * dt;
+        } else if (this.type === "confetti") {
+            this.velY += 400 * dt; // gravity
+            this.x += this.velX * dt;
+            this.y += this.velY * dt;
+            this.angle += this.rotSpeed * dt;
+        } else {
+            this.velY += 500 * dt; // Normal gravity
+            this.x += this.velX * dt;
+            this.y += this.velY * dt;
+        }
         this.life -= dt;
     }
 
     draw(ctx) {
-        if (this.life > 0) {
-            ctx.save();
+        if (this.life <= 0) return;
+
+        ctx.save();
+        ctx.globalAlpha = this.life / this.maxLife;
+
+        if (this.type === "fire") {
+            // Glowing circles
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = this.color;
             ctx.fillStyle = this.color;
-            ctx.globalAlpha = this.life / this.maxLife;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (this.type === "heal") {
+            // Sparkly green stars/circles
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#4cd964";
+            ctx.fillStyle = "#ffffff"; // white core
+            ctx.strokeStyle = "#4cd964"; // green border
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+        } else if (this.type === "confetti") {
+            // Rotating rectangles
+            ctx.fillStyle = this.color;
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.fillRect(-this.size / 2, -this.size / 4, this.size, this.size / 2);
+        } else {
+            // Normal squares
+            ctx.fillStyle = this.color;
             ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
-            ctx.restore();
         }
+
+        ctx.restore();
     }
 }
 
