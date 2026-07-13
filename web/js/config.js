@@ -3,6 +3,10 @@ const WIDTH = 1280;
 const HEIGHT = 720;
 const FPS = 60;
 
+// Font configurations matching the CSS theme
+const FONT_HEADER = "'Cinzel', 'Kanit', serif";
+const FONT_BODY = "'Outfit', 'Kanit', sans-serif";
+
 // Dimensions matching SIZE_PLAYER, SIZE_MONSTER_SMALL, etc.
 const SIZE_PLAYER = { width: 210, height: 280 };
 const SIZE_MONSTER_SMALL = { width: 210, height: 280 };

@@ -1,5 +1,11 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+/* Import Google Fonts - includes Cinzel (English Serif), Kanit (Thai/English Gaming Sans), and Outfit (English Sans) */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Kanit:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Easily edit fonts here */
+    --font-header: 'Cinzel', 'Kanit', serif;
+    --font-body: 'Outfit', 'Kanit', sans-serif;
+}
 
 /* Game General CSS Reset */
 * {
@@ -13,7 +19,7 @@
 body {
     background-color: #06070c;
     color: #e6ebf5;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-body);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,7 +77,7 @@ canvas {
     cursor: pointer;
     border: none;
     outline: none;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-body);
     transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -111,7 +117,7 @@ canvas {
 
 /* Typography styles */
 .game-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-size: 3.8rem;
     font-weight: 900;
     line-height: 1.05;
@@ -138,7 +144,7 @@ canvas {
 }
 
 .state-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-size: 4.5rem;
     font-weight: 900;
     margin-bottom: 1rem;
@@ -173,7 +179,7 @@ canvas {
 .btn-primary {
     background: linear-gradient(135deg, #c5a059 0%, #8c6a30 100%);
     color: #ffffff;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-weight: 900;
     font-size: 1.4rem;
     letter-spacing: 1px;
@@ -321,7 +327,7 @@ canvas {
     pointer-events: auto;
     background: linear-gradient(135deg, #ff9500 0%, #d84315 100%);
     color: #ffffff;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-weight: 800;
     font-size: 1.05rem;
     padding: 0.75rem 1.6rem;
@@ -395,7 +401,7 @@ canvas {
 .badge {
     background: linear-gradient(90deg, #ffd700, #ffaa00);
     color: #06070c;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-weight: 900;
     font-size: 0.85rem;
     padding: 0.4rem 1.4rem;
@@ -483,7 +489,7 @@ canvas {
     background: #171d33;
     border: 1.5px solid #a38245;
     color: #c5a059;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-size: 0.95rem;
     font-weight: 800;
     display: flex;
@@ -591,7 +597,7 @@ canvas {
 .btn-secondary {
     background: linear-gradient(135deg, #4b526d 0%, #2e3440 100%);
     color: #ffffff;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-weight: 800;
     font-size: 1.2rem;
     letter-spacing: 1px;
@@ -652,7 +658,7 @@ canvas {
 }
 
 .warning-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-size: 4rem;
     font-weight: 900;
     color: #ff3b30;
@@ -663,7 +669,7 @@ canvas {
 }
 
 .warning-subtitle {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-body);
     font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
@@ -721,7 +727,7 @@ canvas {
 }
 
 #rotate-device-overlay h2 {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-header);
     font-size: 1.8rem;
     color: #ffd700;
     margin-bottom: 1rem;

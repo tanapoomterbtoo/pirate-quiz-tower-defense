@@ -639,7 +639,7 @@ class Game {
         if (this.state === STATE_PLAYING) {
             // Draw Wave & Question text centered at the top of the canvas (matching Python version)
             this.ctx.save();
-            this.ctx.font = "bold 32px 'Cinzel', serif";
+            this.ctx.font = "bold 32px " + FONT_HEADER;
             this.ctx.fillStyle = "#ffffff";
             this.ctx.textAlign = "center";
             this.ctx.shadowColor = "#000000";

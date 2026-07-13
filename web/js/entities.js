@@ -278,7 +278,7 @@ class DamageText {
         if (this.alpha <= 0) return;
 
         ctx.save();
-        ctx.font = `bold ${Math.round(28 * this.scale)}px 'Outfit', sans-serif`;
+        ctx.font = `bold ${Math.round(28 * this.scale)}px ${FONT_BODY}`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.globalAlpha = this.alpha;
