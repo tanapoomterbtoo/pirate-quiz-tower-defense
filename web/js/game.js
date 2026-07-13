@@ -292,13 +292,18 @@ class Game {
         this.currentQText = qData.q;
         this.correctAns = qData.c[qData.a];
 
-        // Handle question image display
+        // Handle question image display (starts hidden, requiring button click to show)
         const imgContainer = document.getElementById("question-img-container");
         const imgEl = document.getElementById("question-img");
+        const btnToggleImg = document.getElementById("btn-toggle-img");
         if (imgContainer && imgEl) {
             if (qData.img && qData.img.trim() !== "") {
                 imgEl.src = qData.img;
+                imgEl.classList.add("hidden"); // always start hidden
                 imgContainer.classList.remove("hidden");
+                if (btnToggleImg) {
+                    btnToggleImg.innerText = "🖼️ แสดงภาพประกอบ";
+                }
             } else {
                 imgContainer.classList.add("hidden");
                 imgEl.src = "";
@@ -810,6 +815,15 @@ function closeZoomModal() {
     const modal = document.getElementById("image-zoom-modal");
     if (modal) {
         modal.classList.remove("active");
+    }
+}
+
+function toggleQuestionImage() {
+    const imgEl = document.getElementById("question-img");
+    const btn = document.getElementById("btn-toggle-img");
+    if (imgEl && btn) {
+        const isHidden = imgEl.classList.toggle("hidden");
+        btn.innerText = isHidden ? "🖼️ แสดงภาพประกอบ" : "🖼️ ซ่อนภาพประกอบ";
     }
 }
 

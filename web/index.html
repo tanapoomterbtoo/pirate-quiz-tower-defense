@@ -97,8 +97,9 @@
                     <div id="double-damage-badge" class="badge hidden">ใช้งานความเสียหาย 2 เท่า!</div>
                     <div class="quiz-box">
                         <!-- Question Image Container -->
-                        <div id="question-img-container" class="question-media hidden">
-                            <img id="question-img" class="question-img" src="" alt="โจทย์คำถาม" onclick="zoomQuestionImage()">
+                        <div id="question-img-container" class="question-media hidden" style="flex-direction: column;">
+                            <button id="btn-toggle-img" class="btn btn-secondary btn-toggle-img" onclick="toggleQuestionImage()">🖼️ แสดงภาพประกอบ</button>
+                            <img id="question-img" class="question-img hidden" src="" alt="โจทย์คำถาม" onclick="zoomQuestionImage()">
                         </div>
                         <h2 id="question-text">กำลังโหลดคำถาม...</h2>
                     </div>

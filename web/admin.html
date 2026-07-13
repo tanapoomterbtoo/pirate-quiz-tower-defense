@@ -507,6 +507,7 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            pointer-events: auto; /* enable clicking the toggle image button in preview */
         }
 
         /* Mock JRPG Containers */
@@ -833,8 +834,9 @@
                     <div class="mock-quiz-panel">
                         <div class="mock-quiz-box">
                             <!-- Image Container -->
-                            <div class="mock-preview-img-container hidden" id="mock-preview-img-box">
-                                <img id="mock-preview-img-el" class="mock-preview-img" src="" alt="คำถาม">
+                            <div class="mock-preview-img-container hidden" id="mock-preview-img-box" style="flex-direction: column; align-items: center; gap: 8px;">
+                                <button class="preview-btn-choice" id="mock-btn-toggle-img" onclick="toggleMockImage()" style="font-size: 16px; padding: 6px 14px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245;">🖼️ แสดงภาพประกอบ</button>
+                                <img id="mock-preview-img-el" class="mock-preview-img hidden" src="" alt="คำถาม">
                             </div>
                             <!-- Question Text -->
                             <p class="mock-preview-q-text" id="mock-preview-q-text-el">กำลังโหลดคำถาม...</p>
@@ -1076,7 +1078,10 @@
 
             if (q.img && q.img.trim() !== "") {
                 imgEl.src = q.img;
+                imgEl.classList.add("hidden"); // start hidden
                 imgBox.classList.remove("hidden");
+                const btn = document.getElementById("mock-btn-toggle-img");
+                if (btn) btn.innerText = "🖼️ แสดงภาพประกอบ";
             } else {
                 imgBox.classList.add("hidden");
                 imgEl.src = "";
@@ -1103,6 +1108,15 @@
                 } catch (e) {
                     console.warn("Mockup math render error", e);
                 }
+            }
+        }
+
+        function toggleMockImage() {
+            const imgEl = document.getElementById("mock-preview-img-el");
+            const btn = document.getElementById("mock-btn-toggle-img");
+            if (imgEl && btn) {
+                const isHidden = imgEl.classList.toggle("hidden");
+                btn.innerText = isHidden ? "🖼️ แสดงภาพประกอบ" : "🖼️ ซ่อนภาพประกอบ";
             }
         }
 
