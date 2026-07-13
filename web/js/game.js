@@ -760,5 +760,21 @@ function submitExamResults() {
     if (gameInstance) gameInstance.submitExamResults();
 }
 
-// Run initializer on window load
-window.addEventListener("load", initWebGame);
+// Dynamic root font size scaling for perfect responsiveness across computer & mobile screens
+function resizeGame() {
+    const container = document.getElementById("game-container");
+    if (!container) return;
+    const width = container.clientWidth;
+    // Base design width is 1280px. Standard font size is 16px.
+    // Scale font size proportionally: 16px * (width / 1280) = width / 80
+    // We cap it at minimum 9.5px to keep text legible on ultra-small screens
+    const baseFontSize = Math.max(9.5, width / 80);
+    document.documentElement.style.fontSize = baseFontSize + "px";
+}
+
+// Bind resize and load events
+window.addEventListener("resize", resizeGame);
+window.addEventListener("load", () => {
+    resizeGame();
+    initWebGame();
+});

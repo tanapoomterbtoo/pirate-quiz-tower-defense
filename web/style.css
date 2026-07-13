@@ -681,3 +681,63 @@ canvas {
     100% { transform: scale(1.05); filter: brightness(1.2); }
 }
 
+/* Rotate Device Warning Overlay for Portrait Mobile */
+#rotate-device-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #0e132c 0%, #05060c 100%);
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: #ffffff;
+    pointer-events: auto;
+}
+
+.rotate-content {
+    animation: rotatePulse 1.8s infinite ease-in-out;
+}
+
+.rotate-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+#rotate-device-overlay h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+#rotate-device-overlay p {
+    font-size: 1.1rem;
+    color: #a4b3c6;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+@keyframes rotatePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Show only on portrait screens on mobile/tablet devices */
+@media (max-width: 1024px) and (orientation: portrait) {
+    #rotate-device-overlay {
+        display: flex;
+    }
+}
+
+/* Smooth touch active feedback for mobile buttons */
+.btn:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.05s ease !important;
+}
+
