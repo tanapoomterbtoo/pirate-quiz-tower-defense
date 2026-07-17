@@ -847,7 +847,13 @@ class Game {
             this.ctx.shadowOffsetX = 2;
             this.ctx.shadowOffsetY = 2;
             const subjName = window.SUBJECT_NAME || "คณิตศาสตร์";
-            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${this.currentQIdx + 1}/${this.questionPool.length}`, WIDTH / 2, 45);
+            const qNum = (typeof this.previewDisplayIndex === "number")
+                ? this.previewDisplayIndex + 1
+                : this.currentQIdx + 1;
+            const qTotal = (typeof this.previewDisplayTotal === "number")
+                ? this.previewDisplayTotal
+                : this.questionPool.length;
+            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${qNum}/${qTotal}`, WIDTH / 2, 45);
             this.ctx.restore();
 
             // 2. Draw Characters
@@ -921,8 +927,138 @@ class Game {
 // Global functions linked to HTML click handlers
 let gameInstance = null;
 
+function isAdminPreviewMode() {
+    try {
+        return new URLSearchParams(window.location.search).get("adminPreview") === "1";
+    } catch (e) {
+        return false;
+    }
+}
+
+/**
+ * Apply a single question payload from Admin iframe (pixel-identical game UI).
+ */
+function applyAdminPreviewPayload(p) {
+    if (!isAdminPreviewMode() || !gameInstance || !p) return;
+
+    const PREVIEW_SCEN_ID = "__admin_preview_scenario__";
+    const hasScen = !!(p.scenario && String(p.scenario).trim());
+
+    // Register / clear temporary scenario used only for this preview frame
+    if (typeof SCENARIOS_BY_ID === "object" && SCENARIOS_BY_ID) {
+        if (hasScen) {
+            SCENARIOS_BY_ID[PREVIEW_SCEN_ID] = {
+                id: PREVIEW_SCEN_ID,
+                title: "preview",
+                body: p.scenario
+            };
+            window.SCENARIOS_BY_ID = SCENARIOS_BY_ID;
+        } else if (SCENARIOS_BY_ID[PREVIEW_SCEN_ID]) {
+            delete SCENARIOS_BY_ID[PREVIEW_SCEN_ID];
+        }
+    }
+
+    const qObj = {
+        q: p.question || "",
+        c: Array.isArray(p.choices) ? p.choices.slice(0, 4) : ["", "", "", ""],
+        a: (typeof p.answerIndex === "number" && p.answerIndex >= 0) ? p.answerIndex : 0,
+        img: p.img || "",
+        showImg: p.showImg === true || p.showImg === "true",
+        scenarioId: hasScen ? PREVIEW_SCEN_ID : null
+    };
+    while (qObj.c.length < 4) qObj.c.push("");
+
+    // Keep a long pool so combat/victory logic never ends the preview session
+    QUESTIONS.length = 0;
+    for (let i = 0; i < 40; i++) {
+        QUESTIONS.push({
+            q: qObj.q,
+            c: qObj.c.slice(),
+            a: qObj.a,
+            img: qObj.img,
+            showImg: qObj.showImg,
+            scenarioId: qObj.scenarioId
+        });
+    }
+
+    gameInstance.questionPool = QUESTIONS.map((q) => ({
+        q: q.q,
+        c: q.c.slice(),
+        a: q.a,
+        img: q.img,
+        showImg: q.showImg,
+        scenarioId: q.scenarioId
+    }));
+    gameInstance.currentQIdx = 0;
+    gameInstance.combatState = "idle";
+    gameInstance.state = STATE_PLAYING;
+    gameInstance.doubleDamage = false;
+    gameInstance.previewDisplayIndex = (typeof p.index === "number") ? p.index : 0;
+    gameInstance.previewDisplayTotal = (typeof p.total === "number" && p.total > 0)
+        ? p.total
+        : QUESTIONS.length;
+
+    // Scenario auto-open control
+    if (p.forceOpenScenario && hasScen) {
+        gameInstance.lastSeenScenario = "";
+    } else {
+        gameInstance.lastSeenScenario = hasScen ? PREVIEW_SCEN_ID : "";
+    }
+
+    // Ensure playing HUD visible
+    if (gameInstance.menuOverlay) gameInstance.menuOverlay.classList.add("hidden");
+    if (gameInstance.gameoverOverlay) gameInstance.gameoverOverlay.classList.add("hidden");
+    if (gameInstance.victoryOverlay) gameInstance.victoryOverlay.classList.add("hidden");
+    if (gameInstance.reviveOverlay) gameInstance.reviveOverlay.classList.add("hidden");
+    if (gameInstance.topHud) gameInstance.topHud.classList.remove("hidden");
+    if (gameInstance.quizPanel) gameInstance.quizPanel.classList.remove("hidden");
+
+    // Load UI (may auto-open scenario only when lastSeen cleared + auto enabled)
+    const prevAuto = (() => {
+        try { return localStorage.getItem("autoScenario"); } catch (e) { return null; }
+    })();
+    if (p.forceOpenScenario) {
+        try { localStorage.setItem("autoScenario", "1"); } catch (e) { /* ignore */ }
+    } else {
+        try { localStorage.setItem("autoScenario", "0"); } catch (e) { /* ignore */ }
+    }
+
+    gameInstance.loadQuestion();
+
+    // Restore user's auto-scenario preference
+    try {
+        if (prevAuto === null) localStorage.removeItem("autoScenario");
+        else localStorage.setItem("autoScenario", prevAuto);
+    } catch (e) { /* ignore */ }
+
+    if (p.forceOpenScenario && hasScen) {
+        setTimeout(() => {
+            if (typeof openScenarioOverlay === "function") openScenarioOverlay();
+        }, 80);
+    } else if (typeof closeScenarioOverlay === "function") {
+        closeScenarioOverlay();
+    }
+
+    // Soft-highlight the correct answer for editors (does not start combat)
+    for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`choice-${i}`);
+        if (!btn) continue;
+        btn.classList.toggle("correct", i === qObj.a);
+        btn.classList.remove("wrong");
+        btn.disabled = false;
+    }
+
+    if (gameInstance.quizPanel) gameInstance.quizPanel.scrollTop = 0;
+}
+
 async function initWebGame() {
     const btnStart = document.getElementById("btn-start");
+    const adminPreview = isAdminPreviewMode();
+    if (adminPreview) {
+        document.documentElement.classList.add("admin-preview");
+        document.body.classList.add("admin-preview-mode");
+        document.documentElement.style.fontSize = "16px";
+    }
     try {
         await initQuestions();
         if (!QUESTIONS || QUESTIONS.length === 0) {
@@ -963,13 +1099,41 @@ async function initWebGame() {
                 );
             }
         }
+
+        // Admin live preview: auto-enter playing UI (muted), wait for postMessage payloads
+        if (adminPreview) {
+            gameInstance.isMuted = true;
+            if (gameInstance.audioBgm) gameInstance.audioBgm.muted = true;
+            if (gameInstance.muteWaves) gameInstance.muteWaves.classList.add("hidden");
+            if (gameInstance.muteX) gameInstance.muteX.classList.remove("hidden");
+            gameInstance.startGame();
+            // Stop BGM even if startGame tried to play
+            try {
+                gameInstance.audioBgm.pause();
+                gameInstance.audioBgm.muted = true;
+            } catch (e) { /* ignore */ }
+
+            window.addEventListener("message", (e) => {
+                if (!e.data || e.data.type !== "admin-preview-update") return;
+                applyAdminPreviewPayload(e.data.payload || {});
+            });
+            try {
+                window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, "*");
+            } catch (e) { /* ignore */ }
+            // Retry handshake (parent may bind late)
+            setTimeout(() => {
+                try { window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, "*"); } catch (e) {}
+            }, 300);
+        }
     } catch (e) {
         console.error(e);
         if (btnStart) {
             btnStart.disabled = true;
             btnStart.innerText = "โหลดคำถามไม่สำเร็จ";
         }
-        alert("ไม่สามารถโหลดคำถามได้: " + (e.message || e));
+        if (!adminPreview) {
+            alert("ไม่สามารถโหลดคำถามได้: " + (e.message || e));
+        }
     }
 }
 
@@ -987,6 +1151,16 @@ function restartGame() {
 }
 
 function selectChoice(idx) {
+    // In admin preview, only show selection highlight — no combat / question advance
+    if (isAdminPreviewMode() && gameInstance) {
+        for (let i = 0; i < 4; i++) {
+            const btn = document.getElementById(`choice-${i}`);
+            if (!btn) continue;
+            btn.classList.remove("wrong");
+            btn.classList.toggle("correct", i === idx || i === (gameInstance.questionPool[gameInstance.currentQIdx] || {}).a);
+        }
+        return;
+    }
     if (gameInstance) gameInstance.selectChoice(idx);
 }
 

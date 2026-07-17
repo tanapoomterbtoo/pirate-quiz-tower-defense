@@ -16,6 +16,37 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
     <link rel="stylesheet" href="style.css?v=14">
+    <style>
+        /* Admin iframe preview: lock design canvas so parent can scale 1:1 with game */
+        html.admin-preview, html.admin-preview body {
+            width: 1280px !important;
+            height: 720px !important;
+            min-height: 720px !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+        }
+        html.admin-preview body {
+            display: block !important;
+        }
+        html.admin-preview #game-wrapper,
+        html.admin-preview #game-container {
+            width: 1280px !important;
+            height: 720px !important;
+            max-width: none !important;
+            max-height: none !important;
+            aspect-ratio: auto !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+        html.admin-preview #rotate-device-overlay {
+            display: none !important;
+        }
+        html.admin-preview #menu-overlay {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <div id="game-wrapper">

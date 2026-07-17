@@ -336,50 +336,72 @@
             height: 18px;
         }
 
-        /* Right Sidebar: Real Gameplay Preview */
+        /* Right Sidebar: Real Gameplay Preview (iframe = real game CSS) */
         .preview-panel {
-            width: 480px;
+            width: min(560px, 38vw);
+            min-width: 420px;
             border-left: 2px solid var(--color-border);
             background-color: #080b13;
-            padding: 1.5rem 1.2rem;
+            padding: 1.2rem 1rem;
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
             overflow-y: auto;
         }
 
         .preview-title {
             font-family: var(--font-header);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--color-bright-gold);
             border-bottom: 2px solid var(--color-border);
             padding-bottom: 0.5rem;
             text-align: center;
         }
+        .preview-title-sub {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            color: #8a92a5;
+            font-weight: 400;
+            margin-top: 0.25rem;
+        }
+        .preview-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .preview-toolbar .btn {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+        }
 
-        /* Live 16:9 Game Screen Mockup */
+        /* Live 16:9 frame — iframe is real 1280×720 UI scaled to fit */
         .mockup-frame {
             width: 100%;
-            height: 238px;
+            height: 0;
+            padding: 0;
             position: relative;
-            border: 4px solid #3d2b1f; /* Wood frame style */
+            border: 4px solid #3d2b1f;
             outline: 1px solid var(--color-gold);
             border-radius: 4px;
             overflow: hidden;
             background-color: #000;
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            /* height set by JS from scale of 720 */
+            min-height: 200px;
         }
 
-        .mockup-screen {
-            width: 1280px;
-            height: 720px;
+        #game-preview-frame {
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translate(-50%, 0) scale(0.328); /* Scale exactly to fit 420px width */
-            transform-origin: top center;
-            pointer-events: none;
-            overflow: hidden;
+            left: 0;
+            width: 1280px;
+            height: 720px;
+            border: 0;
+            transform-origin: top left;
+            background: #06070c;
+            pointer-events: auto;
         }
 
         /* Mockup Background Layers */
@@ -823,29 +845,57 @@
                 border-top: 2px solid var(--color-border);
                 flex-shrink: 0;
             }
-            .mockup-frame {
-                height: min(50vw, 360px);
-                max-width: 640px;
-                margin: 0 auto;
+            .preview-panel {
+                min-width: 0;
             }
-            .mockup-screen {
-                /* Larger scale when preview is full-width (~640px) */
-                transform: translate(-50%, 0) scale(0.5);
+            .mockup-frame {
+                max-width: 720px;
+                margin: 0 auto;
             }
         }
         @media (max-width: 640px) {
             .preview-panel {
                 padding: 1rem 0.75rem;
             }
-            .mockup-frame {
-                height: min(56vw, 280px);
-            }
-            .mockup-screen {
-                transform: translate(-50%, 0) scale(0.35);
-            }
             .sidebar {
                 max-height: 180px;
             }
+        }
+
+        /* Fullscreen live preview overlay */
+        #preview-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            background: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1rem;
+        }
+        #preview-lightbox.is-open {
+            display: flex;
+        }
+        #preview-lightbox-frame-wrap {
+            width: min(1280px, 96vw);
+            max-height: 90vh;
+            aspect-ratio: 16/9;
+            border: 4px solid #3d2b1f;
+            outline: 1px solid #c5a059;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        #preview-lightbox iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1280px;
+            height: 720px;
+            border: 0;
+            transform-origin: top left;
         }
         .mode-tabs {
             display: flex;
@@ -1138,92 +1188,36 @@
             </div>
         </div>
 
-        <!-- Preview Panel (Scaled Game Viewport) -->
+        <!-- Preview Panel: real game UI via iframe (same style.css as play) -->
         <div class="preview-panel">
-            <h2 class="preview-title">หน้าจอแสดงผลจริงในเกม (16:9 Game Mockup)</h2>
-            
-            <!-- 16:9 Viewport frame -->
-            <div class="mockup-frame">
-                <!-- Scaled down real 1280x720 mockup -->
-                <div class="mockup-screen">
-                    <!-- Parallax Backgrounds -->
-                    <div class="mock-bg-sky"></div>
-                    <div class="mock-bg-islands"></div>
-                    <div class="mock-bg-deck"></div>
-                    
-                    <!-- Top HUD -->
-                    <div class="mock-top-hud">
-                        <div class="mock-hud-item">
-                            <svg class="mock-item-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18.5 5.5L13.5 10.5M10.5 7.5L5.5 12.5M15.5 2.5L21.5 8.5M3 21l3-3M3 17l4 4" />
-                                <circle cx="17" cy="7" r="3" />
-                            </svg>
-                            <span>กล้องส่องทางไกล (2)</span>
-                        </div>
-                        <div class="mock-hud-item">
-                            <svg class="mock-item-icon" viewBox="0 0 24 24" fill="none" stroke="#4cd964" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="9" width="18" height="12" rx="2" />
-                                <path d="M7 9V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" />
-                                <path d="M12 12v6M9 15h6" />
-                            </svg>
-                            <span>กล่องพยาบาล (2)</span>
-                        </div>
-                    </div>
+            <h2 class="preview-title">
+                หน้าจอแสดงผลจริงในเกม
+                <span class="preview-title-sub">พรีวิวจากหน้าเกมจริง (index.html) · 1280×720 ย่อตามความกว้าง</span>
+            </h2>
+            <div class="preview-toolbar">
+                <button type="button" class="btn btn-secondary" onclick="openPreviewScenario()">📜 เปิดสถานการณ์ในพรีวิว</button>
+                <button type="button" class="btn" onclick="openPreviewLightbox()">⛶ ขยายเต็มจอ</button>
+            </div>
 
-                    <!-- Top Wave & Subject Title -->
-                    <div class="mock-wave-text" id="mock-top-wave-text">วิชา: คณิตศาสตร์   คำถามที่: 1/?</div>
+            <div class="mockup-frame" id="mockup-frame">
+                <iframe id="game-preview-frame" src="index.html?adminPreview=1&subject=math&v=5" title="พรีวิวเกมจริง" loading="eager"></iframe>
+            </div>
 
-                    <!-- HP Bars -->
-                    <div class="mock-hp-bar mock-player-hp">
-                        <div class="mock-hp-bar-fill" style="width: 100%; background-color: #4cd964;"></div>
-                    </div>
-                    <div class="mock-hp-bar mock-monster-hp">
-                        <div class="mock-hp-bar-fill" style="width: 80%; background-color: #ff3b30;"></div>
-                    </div>
-
-                    <!-- Characters sprites -->
-                    <div class="mock-player"></div>
-                    <div class="mock-monster" id="mock-monster-sprite"></div>
-
-                    <!-- HUD Quiz Interface -->
-                    <div class="mock-quiz-panel">
-                        <div class="mock-quiz-box">
-                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; width: 100%; gap: 10px;">
-                                <button type="button" id="mock-btn-open-scenario" class="preview-btn-choice hidden" onclick="openMockScenarioOverlay(); return false;" style="font-size: 14px; padding: 4px 10px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245; background: linear-gradient(90deg, #a38245, #7c673d); color: #ffd700; font-weight: bold; pointer-events: auto; z-index: 5;">📜 อ่านสถานการณ์</button>
-                                <div class="mock-preview-img-container hidden" id="mock-preview-img-box" style="margin-bottom: 0; width: auto;">
-                                    <button class="preview-btn-choice" id="mock-btn-toggle-img" onclick="toggleMockImage()" style="font-size: 14px; padding: 4px 10px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245; margin: 0;">🖼️ แสดงภาพประกอบ</button>
-                                    <img id="mock-preview-img-el" class="mock-preview-img hidden" src="" alt="คำถาม">
-                                </div>
-                            </div>
-                            <p class="mock-preview-q-text" id="mock-preview-q-text-el">กำลังโหลดคำถาม...</p>
-                        </div>
-
-                        <!-- Choices Grid -->
-                        <div class="mock-preview-choices-grid">
-                            <button class="mock-preview-btn-choice" id="mock-choice-0">ตัวเลือก ก</button>
-                            <button class="mock-preview-btn-choice" id="mock-choice-1">ตัวเลือก ข</button>
-                            <button class="mock-preview-btn-choice" id="mock-choice-2">ตัวเลือก ค</button>
-                            <button class="mock-preview-btn-choice" id="mock-choice-3">ตัวเลือก ง</button>
-                        </div>
-                    </div>
-
-                    <!-- Mockup Scenario Overlay -->
-                    <div id="mock-scenario-overlay" class="overlay-panel">
-                        <div class="parchment-scroll" style="width: 80%; height: 75%; max-width: 800px; max-height: 500px; background: linear-gradient(135deg, #161e33 0%, #0d1220 100%); border: 3px solid #ffd700; border-radius: 6px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8); position: relative; overflow-y: auto; pointer-events: auto;">
-                            <button class="btn-close-scroll" onclick="closeMockScenarioOverlay()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ffd700; background: #0d1220; color: #ffd700; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: all 0.2s; z-index: 2;">✕</button>
-                            <div id="mock-scroll-content" class="scroll-content" style="color: #cbd5e1; font-size: 16px; line-height: 1.6; text-align: left;">
-                                <!-- Mock scenario text goes here -->
-                            </div>
-                        </div>
-                    </div>
+            <!-- Live scenario output (text backup under the live frame) -->
+            <div class="scenario-live-preview" id="scenario-live-preview">
+                <h3>📜 เนื้อหาสถานการณ์ (ข้อความ)</h3>
+                <div class="scenario-live-body" id="scenario-live-body">
+                    <span class="scenario-live-empty">ยังไม่มีสถานการณ์ผูกกับข้อนี้</span>
                 </div>
             </div>
 
-            <!-- Live scenario output (not hidden behind mockup click) -->
-            <div class="scenario-live-preview" id="scenario-live-preview">
-                <h3>📜 ตัวอย่างสถานการณ์ที่แสดงในเกม</h3>
-                <div class="scenario-live-body" id="scenario-live-body">
-                    <span class="scenario-live-empty">ยังไม่มีสถานการณ์ผูกกับข้อนี้</span>
+            <!-- Fullscreen lightbox with the same real preview -->
+            <div id="preview-lightbox" class="preview-lightbox" onclick="if(event.target===this)closePreviewLightbox()">
+                <div style="display:flex;justify-content:flex-end;width:min(1280px,96vw);">
+                    <button type="button" class="btn" onclick="closePreviewLightbox()">ปิดพรีวิวเต็มจอ</button>
+                </div>
+                <div id="preview-lightbox-frame-wrap">
+                    <iframe id="game-preview-frame-lg" src="index.html?adminPreview=1&subject=math&v=5" title="พรีวิวเกมเต็มจอ"></iframe>
                 </div>
             </div>
 
@@ -1682,130 +1676,68 @@
             }
         }
 
-        function openMockScenarioOverlay() {
-            const overlay = document.getElementById("mock-scenario-overlay");
-            const content = document.getElementById("mock-scroll-content");
-            const text = window.mockCurrentScenario || '';
-            if (!overlay || !content) return;
-            if (!text.trim()) {
-                alert('ยังไม่มีเนื้อหาสถานการณ์สำหรับข้อนี้');
-                return;
-            }
-            content.innerHTML = renderScenarioHtml(text);
-            overlay.classList.add("is-open");
-            overlay.classList.remove("hidden");
-            if (window.renderMathInElement) {
-                try {
-                    renderMathInElement(content, {
-                        delims: [
-                            {left: "$$", right: "$$", display: true},
-                            {left: "$", right: "$", display: false}
-                        ]
-                    });
-                } catch (e) {
-                    console.warn("Math rendering error in mockup overlay", e);
+        /** Latest payload for real game preview iframes */
+        let lastPreviewPayload = null;
+
+        function getAdminPreviewSrc() {
+            const subjectEl = document.getElementById("subject-select");
+            const subject = subjectEl ? subjectEl.value : "math";
+            const scene = getSceneFromUrl();
+            const q = new URLSearchParams();
+            q.set("adminPreview", "1");
+            q.set("subject", subject);
+            if (scene) q.set("scene", scene);
+            q.set("v", "5");
+            return "index.html?" + q.toString();
+        }
+
+        function ensurePreviewIframes() {
+            const src = getAdminPreviewSrc();
+            ["game-preview-frame", "game-preview-frame-lg"].forEach((id) => {
+                const f = document.getElementById(id);
+                if (!f) return;
+                // Reload only when subject/scene changes
+                if (f.dataset.previewSrc !== src) {
+                    f.dataset.previewSrc = src;
+                    f.src = src;
                 }
-            }
+            });
         }
 
-        function closeMockScenarioOverlay() {
-            const overlay = document.getElementById("mock-scenario-overlay");
-            if (overlay) {
-                overlay.classList.remove("is-open");
-                overlay.classList.add("hidden");
-            }
+        function getSceneFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return (urlParams.get("scene") || urlParams.get("sean") || "morning").trim().toLowerCase();
         }
 
-        function updatePreview() {
-            // When editing scenarios tab, preview that scenario body directly
-            if (adminMode === 'scenarios') {
+        function buildPreviewPayload(extra) {
+            const subjectEl = document.getElementById("subject-select");
+            const subject = subjectEl ? subjectEl.value : "math";
+            const scene = getSceneFromUrl();
+
+            if (adminMode === "scenarios") {
                 const s = loadedScenarios[selectedScenarioIdx];
-                const body = s ? (s.body || '') : '';
+                const body = s ? (s.body || "") : "";
                 window.mockCurrentScenario = body;
-                updateScenarioLivePanel(body, s ? `สถานการณ์: ${s.title || s.id}` : '');
-                const btnScenario = document.getElementById("mock-btn-open-scenario");
-                if (btnScenario) {
-                    if (body.trim()) btnScenario.classList.remove("hidden");
-                    else btnScenario.classList.add("hidden");
-                }
-                const qTextEl = document.getElementById("mock-preview-q-text-el");
-                if (qTextEl) {
-                    qTextEl.innerHTML = body.trim()
-                        ? '<span style="color:#ffd700;">กำลังแก้ไขสถานการณ์ — กด “อ่านสถานการณ์” หรือดูกล่องด้านล่าง</span>'
-                        : 'ยังไม่มีสถานการณ์';
-                }
-                return;
+                return Object.assign({
+                    mode: "scenarios",
+                    subject,
+                    scene,
+                    index: selectedScenarioIdx,
+                    total: loadedScenarios.length,
+                    question: "",
+                    choices: ["", "", "", ""],
+                    answerIndex: -1,
+                    scenario: body,
+                    img: "",
+                    showImg: false,
+                    forceOpenScenario: false,
+                    keepScenarioOpen: false
+                }, extra || {});
             }
 
             const q = loadedQuestions[selectedIdx];
-            if (!q) return;
+            if (!q) return null;
 
-            // 1. Update Mock Monster Sprite based on Subject
-            const subject = document.getElementById("subject-select").value;
-            const monsterSprite = document.getElementById("mock-monster-sprite");
-            if (monsterSprite) {
-                if (subject === "math") {
-                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png')";
-                } else if (subject === "science") {
-                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set2/easy/standard/idle/left/1.png')";
-                } else if (subject === "thai") {
-                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set3/easy/standard/idle/left/1.png')";
-                } else {
-                    monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png')";
-                }
-            }
-
-            // Update Mock Background Deck & Sky based on subject and scene URL parameters
-            const mockDeck = document.querySelector(".mock-bg-deck");
-            if (mockDeck) {
-                let deckImg = "bg_deck_Math.png";
-                if (subject === "science") {
-                    deckImg = "bg_deck_Sci.png";
-                } else if (subject === "thai") {
-                    deckImg = "bg_deck_Thailang.png";
-                }
-                mockDeck.style.backgroundImage = `url('../assets/images/backgrounds/${deckImg}')`;
-            }
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const scene = urlParams.get("scene") || urlParams.get("sean") || "morning";
-            const normScene = scene.trim().toLowerCase();
-            let skyImg = "bg_sky_Morning.png";
-            if (normScene === "evening" || normScene === "เย็น") {
-                skyImg = "bg_sky_Evening.png";
-            } else if (normScene === "night" || normScene === "กลางคืน" || normScene === "ค่ำ") {
-                skyImg = "bg_sky_night.png";
-            }
-            const mockSky = document.querySelector(".mock-bg-sky");
-            if (mockSky) {
-                mockSky.style.backgroundImage = `url('../assets/images/backgrounds/${skyImg}')`;
-            }
-
-            // 2. Update Wave/Subject title
-            const waveText = document.getElementById("mock-top-wave-text");
-            if (waveText) {
-                const subjectNames = { "math": "คณิตศาสตร์", "science": "วิทยาศาสตร์", "thai": "ภาษาไทย", "exam": "สอบรวม" };
-                const subjName = subjectNames[subject] || "คณิตศาสตร์";
-                waveText.innerText = `วิชา: ${subjName}   คำถามที่: ${selectedIdx + 1}/${loadedQuestions.length}`;
-            }
-
-            // 3. Update question text & image preview inside mockup
-            const qTextEl = document.getElementById("mock-preview-q-text-el");
-            const imgBox = document.getElementById("mock-preview-img-box");
-            const imgEl = document.getElementById("mock-preview-img-el");
-
-            if (q.img && q.img.trim() !== "") {
-                imgEl.src = q.img;
-                imgEl.classList.add("hidden"); // start hidden
-                imgBox.classList.remove("hidden");
-                const btn = document.getElementById("mock-btn-toggle-img");
-                if (btn) btn.innerText = "🖼️ แสดงภาพประกอบ";
-            } else {
-                imgBox.classList.add("hidden");
-                imgEl.src = "";
-            }
-
-            // Resolve scenario from system registry (scenarioId) or legacy embedded text
             let scenario = "";
             let question = q.q || "";
             const scenObj = getScenarioById(q.scenarioId);
@@ -1820,77 +1752,149 @@
                     question = q.q.substring(index).trim();
                 }
             }
-
-            // Save scenario on window object so mockup trigger can read it
             window.mockCurrentScenario = scenario;
-            const scenTitle = scenObj ? `ผูกกับ: ${scenObj.title || scenObj.id}` : (scenario ? 'สถานการณ์ (ฝังในโจทย์แบบเก่า)' : '');
-            updateScenarioLivePanel(scenario, scenTitle);
 
-            const btnScenario = document.getElementById("mock-btn-open-scenario");
-            if (btnScenario) {
-                if (scenario && scenario.trim()) {
-                    btnScenario.classList.remove("hidden");
-                } else {
-                    btnScenario.classList.add("hidden");
-                }
-            }
-            // Keep mock overlay closed unless user opens it
-            closeMockScenarioOverlay();
-
-            // Reset scroll position of mockup question box
-            const mockQuizBox = document.querySelector(".mock-quiz-box");
-            if (mockQuizBox) {
-                mockQuizBox.scrollTop = 0;
-            }
-
-            if (qTextEl) {
-                const qHtml = question
-                    ? String(question).replace(/>\s+</g, '><').replace(/\n/g, '<br>')
-                    : '';
-                qTextEl.innerHTML = qHtml || '<span style="color:#8a92a5;">(ยังไม่มีข้อความโจทย์)</span>';
-            }
-
-            // Detect if mockup choices need 1-column layout
-            let isLongChoice = false;
-            const mockGrid = document.querySelector(".mock-preview-choices-grid");
-
-            // 4. Update choice buttons preview inside mockup
-            for (let i = 0; i < 4; i++) {
-                const btn = document.getElementById(`mock-choice-${i}`);
-                btn.innerHTML = q.c[i] || "";
-                btn.classList.toggle("correct", i === q.a);
-                
-                if (q.c[i] && q.c[i].length > 35) {
-                    isLongChoice = true;
-                }
-            }
-
-            if (mockGrid) {
-                mockGrid.classList.toggle("long-choices", isLongChoice);
-            }
-
-            // 5. Trigger KaTeX rendering on preview elements
-            if (window.renderMathInElement) {
-                try {
-                    renderMathInElement(document.querySelector(".mockup-screen"), {
-                        delims: [
-                            {left: "$$", right: "$$", display: true},
-                            {left: "$", right: "$", display: false}
-                        ]
-                    });
-                } catch (e) {
-                    console.warn("Mockup math render error", e);
-                }
-            }
+            return Object.assign({
+                mode: "questions",
+                subject,
+                scene,
+                index: selectedIdx,
+                total: loadedQuestions.length,
+                question,
+                choices: q.c || ["", "", "", ""],
+                answerIndex: q.a,
+                scenario,
+                img: q.img || "",
+                showImg: q.showImg === true || q.showImg === "true",
+                forceOpenScenario: false,
+                keepScenarioOpen: false
+            }, extra || {});
         }
 
-        function toggleMockImage() {
-            const imgEl = document.getElementById("mock-preview-img-el");
-            const btn = document.getElementById("mock-btn-toggle-img");
-            if (imgEl && btn) {
-                const isHidden = imgEl.classList.toggle("hidden");
-                btn.innerText = isHidden ? "🖼️ แสดงภาพประกอบ" : "🖼️ ซ่อนภาพประกอบ";
+        function postToPreviewIframes(payload) {
+            lastPreviewPayload = payload;
+            ["game-preview-frame", "game-preview-frame-lg"].forEach((id) => {
+                const f = document.getElementById(id);
+                if (f && f.contentWindow) {
+                    try {
+                        f.contentWindow.postMessage({ type: "admin-preview-update", payload }, "*");
+                    } catch (e) {
+                        console.warn("preview postMessage failed", e);
+                    }
+                }
+            });
+        }
+
+        function scalePreviewFrame() {
+            function fit(box, iframe) {
+                if (!box || !iframe) return;
+                const w = box.clientWidth || 1;
+                const s = w / 1280;
+                iframe.style.width = "1280px";
+                iframe.style.height = "720px";
+                iframe.style.transformOrigin = "top left";
+                iframe.style.transform = "scale(" + s + ")";
+                // Frame must exactly match scaled visual size so bottom choices are not clipped
+                box.style.height = (720 * s) + "px";
             }
+            fit(document.getElementById("mockup-frame"), document.getElementById("game-preview-frame"));
+            fit(document.getElementById("preview-lightbox-frame-wrap"), document.getElementById("game-preview-frame-lg"));
+        }
+
+        function openPreviewScenario() {
+            if (!window.mockCurrentScenario || !String(window.mockCurrentScenario).trim()) {
+                alert("ยังไม่มีเนื้อหาสถานการณ์สำหรับข้อนี้");
+                return;
+            }
+            const payload = buildPreviewPayload({ forceOpenScenario: true, keepScenarioOpen: true });
+            if (payload) postToPreviewIframes(payload);
+        }
+
+        function openMockScenarioOverlay() {
+            openPreviewScenario();
+        }
+
+        function closeMockScenarioOverlay() {
+            const payload = buildPreviewPayload({ forceOpenScenario: false, keepScenarioOpen: false });
+            if (payload) postToPreviewIframes(payload);
+        }
+
+        function openPreviewLightbox() {
+            const box = document.getElementById("preview-lightbox");
+            if (box) box.classList.add("is-open");
+            scalePreviewFrame();
+            if (lastPreviewPayload) postToPreviewIframes(lastPreviewPayload);
+        }
+
+        function closePreviewLightbox() {
+            const box = document.getElementById("preview-lightbox");
+            if (box) box.classList.remove("is-open");
+        }
+
+        function updatePreview() {
+            ensurePreviewIframes();
+            if (adminMode === "scenarios") {
+                const s = loadedScenarios[selectedScenarioIdx];
+                const body = s ? (s.body || "") : "";
+                window.mockCurrentScenario = body;
+                updateScenarioLivePanel(body, s ? ("สถานการณ์: " + (s.title || s.id)) : "");
+                const payload = buildPreviewPayload();
+                if (payload) postToPreviewIframes(payload);
+                scalePreviewFrame();
+                return;
+            }
+
+            const q = loadedQuestions[selectedIdx];
+            if (!q) return;
+
+            let scenario = "";
+            const scenObj = getScenarioById(q.scenarioId);
+            if (scenObj) {
+                scenario = scenObj.body || "";
+            } else {
+                const qMatch = (q.q || "").match(/(^|\n|>)\s*(ข้อ\s*\d+\.?)/);
+                if (qMatch) {
+                    const index = qMatch.index + qMatch[1].length;
+                    scenario = q.q.substring(0, index).trim();
+                }
+            }
+            window.mockCurrentScenario = scenario;
+            const scenTitle = scenObj
+                ? ("ผูกกับ: " + (scenObj.title || scenObj.id))
+                : (scenario ? "สถานการณ์ (ฝังในโจทย์แบบเก่า)" : "");
+            updateScenarioLivePanel(scenario, scenTitle);
+
+            const payload = buildPreviewPayload();
+            if (payload) postToPreviewIframes(payload);
+            scalePreviewFrame();
+        }
+
+        window.addEventListener("message", (e) => {
+            if (!e.data || e.data.type !== "admin-preview-ready") return;
+            if (lastPreviewPayload) {
+                try {
+                    e.source && e.source.postMessage(
+                        { type: "admin-preview-update", payload: lastPreviewPayload },
+                        "*"
+                    );
+                } catch (err) { /* ignore */ }
+            } else {
+                updatePreview();
+            }
+        });
+        window.addEventListener("resize", () => scalePreviewFrame());
+        window.addEventListener("load", () => {
+            scalePreviewFrame();
+            const mf = document.getElementById("mockup-frame");
+            if (mf && window.ResizeObserver) {
+                new ResizeObserver(() => scalePreviewFrame()).observe(mf);
+            }
+            // re-push preview after iframes settle
+            setTimeout(() => { if (typeof updatePreview === "function") updatePreview(); }, 300);
+        });
+
+        function toggleMockImage() {
+            // Image toggle lives inside the real preview iframe now
         }
 
         function escapeHtml(text) {
