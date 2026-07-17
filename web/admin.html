@@ -386,7 +386,7 @@
         .mock-bg-sky {
             position: absolute;
             width: 1280px; height: 720px;
-            background-image: url('../assets/images/backgrounds/bg_sky.png');
+            background-image: url('../assets/images/backgrounds/bg_sky_Morning.png');
             background-size: cover;
             background-position: center;
         }
@@ -400,7 +400,7 @@
         .mock-bg-deck {
             position: absolute;
             width: 1280px; height: 720px;
-            background-image: url('../assets/images/backgrounds/bg_deck.png');
+            background-image: url('../assets/images/backgrounds/bg_deck_Math.png');
             background-size: cover;
             background-position: center;
             top: 20px;
@@ -410,7 +410,7 @@
         .mock-player {
             position: absolute;
             left: 160px;
-            bottom: 110px;
+            bottom: 170px;
             width: 210px;
             height: 280px;
             background-image: url('../assets/images/characters/player/Player1/standard/idle/right/1.png');
@@ -422,7 +422,7 @@
         .mock-monster {
             position: absolute;
             right: 160px;
-            bottom: 110px;
+            bottom: 170px;
             width: 210px;
             height: 280px;
             background-image: url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png');
@@ -445,12 +445,12 @@
         }
         .mock-player-hp {
             left: 190px;
-            bottom: 400px;
+            bottom: 460px;
             box-shadow: 0 0 8px rgba(76, 217, 100, 0.4);
         }
         .mock-monster-hp {
             right: 190px;
-            bottom: 400px;
+            bottom: 460px;
             box-shadow: 0 0 8px rgba(255, 59, 48, 0.4);
         }
 
@@ -514,13 +514,31 @@
         .mock-quiz-box {
             width: 100%;
             max-width: 960px;
-            text-align: center;
+            text-align: left; /* Left align to match game layout */
             background: linear-gradient(180deg, #0e1322 0%, #070912 100%);
             border: 2px solid var(--color-border);
             border-radius: 4px;
             padding: 16px 24px;
             position: relative;
+            min-height: 90px;
+            height: auto;
         }
+        
+        /* Custom Scrollbar for admin mockup */
+        .mock-quiz-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .mock-quiz-box::-webkit-scrollbar-track {
+            background: #070912;
+        }
+        .mock-quiz-box::-webkit-scrollbar-thumb {
+            background: #7c673d;
+            border-radius: 4px;
+        }
+        .mock-quiz-box::-webkit-scrollbar-thumb:hover {
+            background: #c5a059;
+        }
+
         .mock-quiz-box::before {
             content: "";
             position: absolute;
@@ -551,11 +569,33 @@
         }
 
         .mock-preview-q-text {
-            font-size: 26px;
+            font-size: 22px; /* Slightly smaller for long texts */
             font-weight: 600;
             line-height: 1.5;
             color: var(--color-white);
-            text-align: center;
+            text-align: left; /* Align left */
+            white-space: pre-wrap; /* Preserve spaces and newlines */
+            word-break: break-word;
+        }
+
+        /* RPG-themed tables inside mockup preview */
+        .mock-scenario-content table, .mock-preview-q-text table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 18px;
+            background: rgba(14, 19, 34, 0.6);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .mock-scenario-content th, .mock-scenario-content td, .mock-preview-q-text th, .mock-preview-q-text td {
+            border: 1px solid #7c673d;
+            padding: 6px 10px;
+            text-align: left;
+            color: var(--color-text);
+        }
+        .mock-scenario-content th, .mock-preview-q-text th {
+            background: rgba(197, 160, 89, 0.2);
+            color: var(--color-gold);
         }
 
         .mock-preview-choices-grid {
@@ -566,16 +606,119 @@
             max-width: 960px;
         }
 
+        /* 1-column layout for long choices in mockup */
+        .mock-preview-choices-grid.long-choices {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
         .mock-preview-btn-choice {
             position: relative;
             background: #111526;
             border: 1px solid #5d4e33;
             color: #cad8ee;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
-            padding: 16px 20px 16px 70px;
+            padding: 14px 20px 14px 70px;
             border-radius: 4px;
             text-align: left;
+            max-width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .mock-preview-btn-choice table {
+            width: 100% !important;
+            max-width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .mock-preview-btn-choice img {
+            max-width: 100% !important;
+            max-height: 48px !important;
+            height: auto !important;
+            width: auto;
+            object-fit: contain;
+            margin: 1px !important;
+            background-color: #ffffff !important;
+            padding: 3px !important;
+            border-radius: 3px;
+            pointer-events: none;
+            cursor: default !important;
+        }
+        .mock-preview-btn-choice table img[src*="pie_q23_"] {
+            max-height: 120px !important;
+            width: 100% !important;
+        }
+        .mock-preview-btn-choice table,
+        .mock-preview-btn-choice table td,
+        .mock-preview-btn-choice table div {
+            color: #1a1a1a !important;
+        }
+
+        .mock-preview-q-text img {
+            max-width: 100%;
+            max-height: 160px;
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #7c673d;
+            display: block;
+            margin: 8px auto;
+            object-fit: contain;
+        }
+
+        /* Compact buttons inside long-choices grid in mockup */
+        .mock-preview-choices-grid.long-choices .mock-preview-btn-choice {
+            padding: 10px 20px 10px 70px;
+            font-size: 18px;
+        }
+
+        /* Parchment Scroll Overlay inside mockup */
+        .parchment-scroll {
+            position: relative;
+            width: 80%;
+            height: 75%;
+            max-width: 800px;
+            max-height: 500px;
+            background: linear-gradient(135deg, #161e33 0%, #0d1220 100%);
+            border: 3px solid #ffd700;
+            border-radius: 6px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8);
+            overflow-y: auto;
+            animation: scrollFadeIn 0.3s ease-out;
+        }
+        .btn-close-scroll {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            background: #0d1220;
+            color: #ffd700;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-close-scroll:hover {
+            background: #ffd700;
+            color: #0d1220;
+            transform: scale(1.1);
+        }
+        .scroll-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e1;
         }
 
         .mock-preview-btn-choice::before {
@@ -655,11 +798,162 @@
             color: var(--color-bright-gold);
         }
 
-        /* Responsive Layouts */
+        /* Responsive: stack sidebar / editor / preview on narrow screens */
         @media (max-width: 1100px) {
-            .preview-panel {
-                display: none;
+            .main-container {
+                flex-direction: column;
+                height: auto;
+                min-height: calc(100vh - 70px);
+                overflow-y: auto;
             }
+            .sidebar {
+                width: 100%;
+                max-height: 220px;
+                border-right: none;
+                border-bottom: 2px solid var(--color-border);
+            }
+            .editor {
+                width: 100%;
+                flex: none;
+            }
+            .preview-panel {
+                width: 100%;
+                max-width: 100%;
+                border-left: none;
+                border-top: 2px solid var(--color-border);
+                flex-shrink: 0;
+            }
+            .mockup-frame {
+                height: min(50vw, 360px);
+                max-width: 640px;
+                margin: 0 auto;
+            }
+            .mockup-screen {
+                /* Larger scale when preview is full-width (~640px) */
+                transform: translate(-50%, 0) scale(0.5);
+            }
+        }
+        @media (max-width: 640px) {
+            .preview-panel {
+                padding: 1rem 0.75rem;
+            }
+            .mockup-frame {
+                height: min(56vw, 280px);
+            }
+            .mockup-screen {
+                transform: translate(-50%, 0) scale(0.35);
+            }
+            .sidebar {
+                max-height: 180px;
+            }
+        }
+        .mode-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: #0c0f1d;
+            border-bottom: 2px solid var(--color-border);
+            align-items: center;
+        }
+        .mode-tab {
+            font-family: var(--font-header);
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-gold);
+            padding: 0.45rem 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .mode-tab.active {
+            background: linear-gradient(135deg, var(--color-gold) 0%, #8c6a30 100%);
+            color: #fff;
+            border-color: var(--color-bright-gold);
+        }
+        .panel-hidden { display: none !important; }
+        /* Critical: without this, class "hidden" does nothing in admin */
+        .hidden { display: none !important; }
+
+        #scenario-editor textarea { min-height: 220px; }
+        .hint-text { font-size: 0.8rem; color: #8a92a5; }
+        .usage-badge { font-size: 0.75rem; color: #8effa3; margin-top: 0.25rem; }
+        select#input-scenario-id, #input-scen-id, #input-scen-title, #input-scen-images {
+            width: 100%;
+            background-color: #0c0e17;
+            border: 1px solid var(--color-border);
+            color: var(--color-white);
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-family: var(--font-body);
+        }
+
+        /* Live scenario output panel (always visible when scenario is set) */
+        .scenario-live-preview {
+            margin-top: 1rem;
+            background: #0c0e17;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 0.9rem 1rem;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .scenario-live-preview h3 {
+            font-family: var(--font-header);
+            color: var(--color-bright-gold);
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px dashed rgba(197,160,89,0.35);
+            padding-bottom: 0.4rem;
+        }
+        .scenario-live-preview .scenario-live-body {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .scenario-live-preview .scenario-live-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+        .scenario-live-preview .scenario-live-body td,
+        .scenario-live-preview .scenario-live-body th {
+            border: 1px solid #7c673d;
+            padding: 4px 6px;
+        }
+        .scenario-live-preview .scenario-live-body img {
+            max-width: 100%;
+            max-height: 160px;
+            background: #fff;
+            padding: 4px;
+            border-radius: 4px;
+            display: block;
+            margin: 0.5rem auto;
+        }
+        .scenario-live-empty {
+            color: #8a92a5;
+            font-style: italic;
+        }
+
+        /* Scenario overlay in mockup: only flex when open */
+        #mock-scenario-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 1280px; height: 720px;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 40;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        #mock-scenario-overlay.is-open {
+            display: flex !important;
+        }
+        .mockup-screen {
+            pointer-events: auto !important; /* allow clicking scenario button in preview */
         }
     </style>
 </head>
@@ -676,21 +970,40 @@
             </select>
             <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">โหลดไฟล์ JSON</button>
             <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="handleFileImport(event)">
-            <button class="btn btn-secondary" onclick="exportJSONFile()">ดาวน์โหลดไฟล์ (JSON)</button>
-            <button class="btn" style="background: linear-gradient(135deg, #27ae60 0%, #1e824c 100%); border-color: #2ecc71;" onclick="saveToLocalFile()">💾 บันทึกทับไฟล์เดิมโดยตรง</button>
+            <button class="btn btn-secondary" onclick="exportJSONFile()">ดาวน์โหลดข้อสอบ</button>
+            <button class="btn btn-secondary" onclick="exportScenariosFile()">ดาวน์โหลดสถานการณ์</button>
+            <button class="btn" style="background: linear-gradient(135deg, #27ae60 0%, #1e824c 100%); border-color: #2ecc71;" onclick="saveToLocalFile()">💾 บันทึกทับไฟล์</button>
         </div>
     </header>
 
+    <div class="mode-tabs">
+        <button type="button" class="mode-tab active" id="tab-questions" onclick="setAdminMode('questions')">📝 ข้อสอบ</button>
+        <button type="button" class="mode-tab" id="tab-scenarios" onclick="setAdminMode('scenarios')">📜 สถานการณ์</button>
+        <span class="hint-text" style="margin-left:auto;">สถานการณ์แยกไฟล์ · ผูกกับข้อผ่าน scenarioId</span>
+    </div>
+
     <div class="main-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
+        <!-- Sidebar: questions -->
+        <div class="sidebar" id="sidebar-questions">
             <div class="sidebar-title">
-                <span>ข้อคำถาม (30 ข้อ)</span>
-                <span id="question-count-badge" style="font-size: 0.8rem; background: var(--color-border); padding: 0.1rem 0.5rem; border-radius: 10px;">0/30</span>
+                <span>ข้อคำถาม</span>
+                <span id="question-count-badge" style="font-size: 0.8rem; background: var(--color-border); padding: 0.1rem 0.5rem; border-radius: 10px;">0 ข้อ</span>
             </div>
             <ul id="sidebar-question-list" class="question-list">
                 <!-- Filled dynamically -->
             </ul>
+        </div>
+
+        <!-- Sidebar: scenarios -->
+        <div class="sidebar panel-hidden" id="sidebar-scenarios">
+            <div class="sidebar-title">
+                <span>สถานการณ์</span>
+                <span id="scenario-count-badge" style="font-size: 0.8rem; background: var(--color-border); padding: 0.1rem 0.5rem; border-radius: 10px;">0</span>
+            </div>
+            <ul id="sidebar-scenario-list" class="question-list"></ul>
+            <div style="padding: 0.8rem; border-top: 1px solid rgba(124,103,61,0.2);">
+                <button class="btn" style="width:100%;" onclick="addScenario()">+ เพิ่มสถานการณ์</button>
+            </div>
         </div>
 
         <!-- Form Editor -->
@@ -705,12 +1018,20 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="input-scenario-id">สถานการณ์ที่ผูกกับข้อนี้</label>
+                <select id="input-scenario-id" onchange="updateCurrentQuestionData()">
+                    <option value="">— ไม่มีสถานการณ์ —</option>
+                </select>
+                <div class="hint-text">แก้เนื้อหาสถานการณ์ที่แท็บ “สถานการณ์” (แก้ครั้งเดียว ใช้หลายข้อ)</div>
+            </div>
+
             <!-- Question Input -->
             <div class="form-row">
                 <div class="form-group" style="flex: 2;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label for="input-q-text">ข้อความคำถาม (โจทย์) *</label>
-                        <span style="font-size: 0.8rem; color: #8a92a5;">รองรับสูตรคณิตศาสตร์ LaTeX</span>
+                        <label for="input-q-text">ข้อความคำถาม (โจทย์เท่านั้น) *</label>
+                        <span style="font-size: 0.8rem; color: #8a92a5;">ไม่ต้องวางสถานการณ์ซ้ำในช่องนี้</span>
                     </div>
                     
                     <!-- LaTeX Quick Tools Panel -->
@@ -779,8 +1100,41 @@
             <!-- Question controls -->
             <div style="margin-top: 0.5rem; border-top: 1px solid rgba(124, 103, 61, 0.2); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
                 <button class="btn btn-secondary" onclick="addQuestionAtEnd()">+ เพิ่มคำถามข้อถัดไป</button>
-                <div style="font-size: 0.85rem; color: #2ecc71;" id="save-status-text">💾 บันทึกอัตโนมัติแล้ว</div>
+                <div style="font-size: 0.85rem; color: #2ecc71;" id="save-status-text">💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)</div>
                 <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80; padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteCurrentQuestion()">ลบข้อสอบนี้</button>
+            </div>
+        </div>
+
+        <!-- Form Editor: scenarios -->
+        <div class="editor panel-hidden" id="scenario-editor">
+            <div class="editor-header">
+                <span class="editor-title" id="editor-scenario-title">สถานการณ์</span>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary btn-nav" onclick="navigateScenario(-1)">← ก่อนหน้า</button>
+                    <button class="btn btn-secondary btn-nav" onclick="navigateScenario(1)">ถัดไป →</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-scen-id">รหัสสถานการณ์ (id) *</label>
+                <input type="text" id="input-scen-id" placeholder="เช่น gelato, solar" oninput="updateCurrentScenarioData()">
+                <div class="hint-text">ใช้ตัวอักษร a-z, 0-9, ขีดกลาง เท่านั้น · ใช้ผูกกับข้อสอบ</div>
+            </div>
+            <div class="form-group">
+                <label for="input-scen-title">ชื่อสถานการณ์ *</label>
+                <input type="text" id="input-scen-title" placeholder="เช่น ร้านเจลาโต้" oninput="updateCurrentScenarioData()">
+            </div>
+            <div class="form-group">
+                <label for="input-scen-body">เนื้อหาสถานการณ์ (รองรับ HTML ตาราง / รูป) *</label>
+                <textarea id="input-scen-body" placeholder="พิมพ์เนื้อหาสถานการณ์..." oninput="updateCurrentScenarioData()"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input-scen-images">รูปประกอบ (path คั่นด้วยคอมมา, ไม่บังคับ)</label>
+                <input type="text" id="input-scen-images" placeholder="../assets/images/questions/math/image1.png" oninput="updateCurrentScenarioData()">
+            </div>
+            <div class="usage-badge" id="scenario-usage-text">ใช้โดย 0 ข้อ</div>
+            <div style="margin-top: 1rem; display: flex; justify-content: space-between; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="addScenario()">+ เพิ่มสถานการณ์</button>
+                <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80;" onclick="deleteCurrentScenario()">ลบสถานการณ์นี้</button>
             </div>
         </div>
 
@@ -817,7 +1171,7 @@
                     </div>
 
                     <!-- Top Wave & Subject Title -->
-                    <div class="mock-wave-text" id="mock-top-wave-text">วิชา: คณิตศาสตร์   คำถามที่: 1/30</div>
+                    <div class="mock-wave-text" id="mock-top-wave-text">วิชา: คณิตศาสตร์   คำถามที่: 1/?</div>
 
                     <!-- HP Bars -->
                     <div class="mock-hp-bar mock-player-hp">
@@ -834,12 +1188,13 @@
                     <!-- HUD Quiz Interface -->
                     <div class="mock-quiz-panel">
                         <div class="mock-quiz-box">
-                            <!-- Image Container -->
-                            <div class="mock-preview-img-container hidden" id="mock-preview-img-box" style="flex-direction: column; align-items: center; gap: 8px;">
-                                <button class="preview-btn-choice" id="mock-btn-toggle-img" onclick="toggleMockImage()" style="font-size: 16px; padding: 6px 14px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245;">🖼️ แสดงภาพประกอบ</button>
-                                <img id="mock-preview-img-el" class="mock-preview-img hidden" src="" alt="คำถาม">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; width: 100%; gap: 10px;">
+                                <button type="button" id="mock-btn-open-scenario" class="preview-btn-choice hidden" onclick="openMockScenarioOverlay(); return false;" style="font-size: 14px; padding: 4px 10px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245; background: linear-gradient(90deg, #a38245, #7c673d); color: #ffd700; font-weight: bold; pointer-events: auto; z-index: 5;">📜 อ่านสถานการณ์</button>
+                                <div class="mock-preview-img-container hidden" id="mock-preview-img-box" style="margin-bottom: 0; width: auto;">
+                                    <button class="preview-btn-choice" id="mock-btn-toggle-img" onclick="toggleMockImage()" style="font-size: 14px; padding: 4px 10px; cursor: pointer; width: auto; height: auto; position: static; transform: none; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #a38245; margin: 0;">🖼️ แสดงภาพประกอบ</button>
+                                    <img id="mock-preview-img-el" class="mock-preview-img hidden" src="" alt="คำถาม">
+                                </div>
                             </div>
-                            <!-- Question Text -->
                             <p class="mock-preview-q-text" id="mock-preview-q-text-el">กำลังโหลดคำถาม...</p>
                         </div>
 
@@ -851,6 +1206,24 @@
                             <button class="mock-preview-btn-choice" id="mock-choice-3">ตัวเลือก ง</button>
                         </div>
                     </div>
+
+                    <!-- Mockup Scenario Overlay -->
+                    <div id="mock-scenario-overlay" class="overlay-panel">
+                        <div class="parchment-scroll" style="width: 80%; height: 75%; max-width: 800px; max-height: 500px; background: linear-gradient(135deg, #161e33 0%, #0d1220 100%); border: 3px solid #ffd700; border-radius: 6px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.8); position: relative; overflow-y: auto; pointer-events: auto;">
+                            <button class="btn-close-scroll" onclick="closeMockScenarioOverlay()" style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ffd700; background: #0d1220; color: #ffd700; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: all 0.2s; z-index: 2;">✕</button>
+                            <div id="mock-scroll-content" class="scroll-content" style="color: #cbd5e1; font-size: 16px; line-height: 1.6; text-align: left;">
+                                <!-- Mock scenario text goes here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live scenario output (not hidden behind mockup click) -->
+            <div class="scenario-live-preview" id="scenario-live-preview">
+                <h3>📜 ตัวอย่างสถานการณ์ที่แสดงในเกม</h3>
+                <div class="scenario-live-body" id="scenario-live-body">
+                    <span class="scenario-live-empty">ยังไม่มีสถานการณ์ผูกกับข้อนี้</span>
                 </div>
             </div>
 
@@ -875,49 +1248,143 @@
 
     <script>
         let loadedQuestions = [];
+        let loadedScenarios = [];
         let selectedIdx = 0;
-        let lastFocusedInputId = 'input-q-text'; // Tracks the active editing text field
-        let fileHandle = null; // Store file system handle for direct saving
+        let selectedScenarioIdx = 0;
+        let adminMode = 'questions'; // 'questions' | 'scenarios'
+        let lastFocusedInputId = 'input-q-text';
+        let fileHandle = null;
+        let scenarioFileHandle = null;
+        let hasUnsavedChanges = false;
+        
+        window.addEventListener('beforeunload', function (e) {
+            if (hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
 
-        // Path to JSON files
         const ASSETS_PATH = "../assets";
 
-        // Load initially selected subject
         window.addEventListener("load", () => {
             loadSelectedSubject();
             setupDragAndDrop();
             setupInputFocusTracker();
         });
 
+        function setAdminMode(mode) {
+            adminMode = mode;
+            const qTab = document.getElementById('tab-questions');
+            const sTab = document.getElementById('tab-scenarios');
+            const sideQ = document.getElementById('sidebar-questions');
+            const sideS = document.getElementById('sidebar-scenarios');
+            const formQ = document.getElementById('form-editor');
+            const formS = document.getElementById('scenario-editor');
+            if (qTab) qTab.classList.toggle('active', mode === 'questions');
+            if (sTab) sTab.classList.toggle('active', mode === 'scenarios');
+            if (sideQ) sideQ.classList.toggle('panel-hidden', mode !== 'questions');
+            if (sideS) sideS.classList.toggle('panel-hidden', mode !== 'scenarios');
+            if (mode === 'questions') {
+                if (formS) formS.classList.add('panel-hidden');
+                if (loadedQuestions.length) {
+                    loadQuestionIntoEditor(selectedIdx);
+                } else if (formQ) formQ.style.display = 'none';
+            } else {
+                if (formQ) formQ.style.display = 'none';
+                if (formS) formS.classList.remove('panel-hidden');
+                if (loadedScenarios.length) {
+                    loadScenarioIntoEditor(selectedScenarioIdx);
+                } else if (formS) {
+                    formS.classList.remove('panel-hidden');
+                }
+                renderScenarioSidebar();
+            }
+        }
+
+        function rebuildScenarioSelect() {
+            const sel = document.getElementById('input-scenario-id');
+            if (!sel) return;
+            const current = sel.value;
+            sel.innerHTML = '<option value="">— ไม่มีสถานการณ์ —</option>';
+            loadedScenarios.forEach((s) => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = `${s.title || s.id} (${s.id})`;
+                sel.appendChild(opt);
+            });
+            if (current && loadedScenarios.some(s => s.id === current)) sel.value = current;
+        }
+
+        function getScenarioById(id) {
+            if (!id) return null;
+            return loadedScenarios.find(s => s.id === id) || null;
+        }
+
         async function loadSelectedSubject() {
-            fileHandle = null; // Reset file handle when subject changes to prevent saving in the wrong file!
+            fileHandle = null;
+            scenarioFileHandle = null;
             const subject = document.getElementById("subject-select").value;
             const fileUrl = `${ASSETS_PATH}/data/${subject}.json`;
+            const scenUrl = `${ASSETS_PATH}/data/scenarios/${subject}.json`;
             try {
-                const response = await fetch(fileUrl);
-                if (!response.ok) throw new Error("ไม่สามารถเชื่อมต่อไฟล์ได้");
-                loadedQuestions = await response.json();
-                selectedIdx = 0;
-                renderSidebarList();
-                loadQuestionIntoEditor(0);
-            } catch (e) {
-                console.warn("Fetch failed, creating empty questions template", e);
-                // Create template with 30 questions
-                loadedQuestions = Array.from({length: 30}, (_, i) => ({
-                    q: `คำถามคณิตศาสตร์จำลองที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
-                    img: "",
-                    c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
-                    a: 0
+                const [qRes, sRes] = await Promise.all([
+                    fetch(fileUrl),
+                    fetch(scenUrl).catch(() => null)
+                ]);
+                if (!qRes.ok) throw new Error("ไม่สามารถเชื่อมต่อไฟล์ข้อสอบได้");
+                loadedQuestions = await qRes.json();
+                if (sRes && sRes.ok) {
+                    loadedScenarios = await sRes.json();
+                } else {
+                    loadedScenarios = [];
+                }
+                // normalize
+                loadedQuestions = loadedQuestions.map(q => ({
+                    q: q.q || '',
+                    c: q.c || ['', '', '', ''],
+                    a: typeof q.a === 'number' ? q.a : 0,
+                    img: q.img || '',
+                    showImg: !!q.showImg,
+                    scenarioId: q.scenarioId || null
+                }));
+                loadedScenarios = (loadedScenarios || []).map((s, i) => ({
+                    id: s.id || `scen-${i+1}`,
+                    title: s.title || s.id || `สถานการณ์ ${i+1}`,
+                    body: s.body || '',
+                    images: Array.isArray(s.images) ? s.images : [],
+                    order: s.order || (i + 1)
                 }));
                 selectedIdx = 0;
+                selectedScenarioIdx = 0;
+                rebuildScenarioSelect();
                 renderSidebarList();
+                renderScenarioSidebar();
+                setAdminMode('questions');
+                loadQuestionIntoEditor(0);
+                hasUnsavedChanges = false;
+            } catch (e) {
+                console.warn("Fetch failed, creating empty template", e);
+                loadedQuestions = Array.from({length: 30}, (_, i) => ({
+                    q: `คำถามจำลองที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
+                    img: "",
+                    c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
+                    a: 0,
+                    scenarioId: null,
+                    showImg: false
+                }));
+                loadedScenarios = [];
+                selectedIdx = 0;
+                rebuildScenarioSelect();
+                renderSidebarList();
+                renderScenarioSidebar();
+                setAdminMode('questions');
                 loadQuestionIntoEditor(0);
             }
         }
 
         // Keep track of the last focused text field to insert LaTeX symbols at the cursor
         function setupInputFocusTracker() {
-            const inputs = ['input-q-text', 'input-q-img', 'input-choice-0', 'input-choice-1', 'input-choice-2', 'input-choice-3'];
+            const inputs = ['input-q-text', 'input-q-img', 'input-choice-0', 'input-choice-1', 'input-choice-2', 'input-choice-3', 'input-scen-body', 'input-scen-title'];
             inputs.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -926,6 +1393,123 @@
                     });
                 }
             });
+        }
+
+        function renderScenarioSidebar() {
+            const listEl = document.getElementById('sidebar-scenario-list');
+            const badge = document.getElementById('scenario-count-badge');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+            loadedScenarios.forEach((s, idx) => {
+                const li = document.createElement('li');
+                li.className = `question-item ${idx === selectedScenarioIdx ? 'active' : ''}`;
+                const used = loadedQuestions.filter(q => q.scenarioId === s.id).length;
+                li.innerText = `${idx + 1}. ${s.title || s.id} (${used} ข้อ)`;
+                li.title = s.id;
+                li.onclick = () => selectScenario(idx);
+                listEl.appendChild(li);
+            });
+            if (badge) badge.innerText = String(loadedScenarios.length);
+        }
+
+        function selectScenario(idx) {
+            selectedScenarioIdx = idx;
+            renderScenarioSidebar();
+            loadScenarioIntoEditor(idx);
+        }
+
+        function loadScenarioIntoEditor(idx) {
+            const s = loadedScenarios[idx];
+            const form = document.getElementById('scenario-editor');
+            if (!s) {
+                if (form) form.classList.remove('panel-hidden');
+                return;
+            }
+            if (form) form.classList.remove('panel-hidden');
+            document.getElementById('editor-scenario-title').innerText = `สถานการณ์: ${s.title || s.id}`;
+            document.getElementById('input-scen-id').value = s.id || '';
+            document.getElementById('input-scen-title').value = s.title || '';
+            document.getElementById('input-scen-body').value = s.body || '';
+            document.getElementById('input-scen-images').value = (s.images || []).join(', ');
+            const used = loadedQuestions.filter(q => q.scenarioId === s.id).map((_, i) => i + 1);
+            // show question numbers that use it
+            const usedIdx = [];
+            loadedQuestions.forEach((q, i) => { if (q.scenarioId === s.id) usedIdx.push(i + 1); });
+            document.getElementById('scenario-usage-text').innerText =
+                usedIdx.length ? `ใช้โดยข้อ: ${usedIdx.join(', ')}` : 'ยังไม่มีข้อไหนผูกสถานการณ์นี้';
+            // Preview scenario parchment content
+            window.mockCurrentScenario = s.body || '';
+            updatePreview();
+        }
+
+        function updateCurrentScenarioData() {
+            hasUnsavedChanges = true;
+            const s = loadedScenarios[selectedScenarioIdx];
+            if (!s) return;
+            const oldId = s.id;
+            let newId = (document.getElementById('input-scen-id').value || '').trim();
+            newId = newId.toLowerCase().replace(/[^a-z0-9-_]/g, '-').replace(/-+/g, '-');
+            s.id = newId || oldId;
+            s.title = document.getElementById('input-scen-title').value;
+            s.body = document.getElementById('input-scen-body').value;
+            const imgRaw = document.getElementById('input-scen-images').value || '';
+            s.images = imgRaw.split(',').map(x => x.trim()).filter(Boolean);
+            // cascade rename scenarioId on questions
+            if (oldId && s.id && oldId !== s.id) {
+                loadedQuestions.forEach(q => {
+                    if (q.scenarioId === oldId) q.scenarioId = s.id;
+                });
+            }
+            document.getElementById('save-status-text').innerText = '💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)';
+            rebuildScenarioSelect();
+            renderScenarioSidebar();
+            window.mockCurrentScenario = s.body || '';
+            updatePreview();
+        }
+
+        function addScenario() {
+            let n = 1;
+            let id = `scenario-${n}`;
+            while (loadedScenarios.some(s => s.id === id)) { n++; id = `scenario-${n}`; }
+            loadedScenarios.push({
+                id,
+                title: `สถานการณ์ใหม่ ${n}`,
+                body: `สถานการณ์ “สถานการณ์ใหม่ ${n}”\n(แก้ไขเนื้อหาที่นี่)`,
+                images: [],
+                order: loadedScenarios.length + 1
+            });
+            hasUnsavedChanges = true;
+            rebuildScenarioSelect();
+            renderScenarioSidebar();
+            selectScenario(loadedScenarios.length - 1);
+            setAdminMode('scenarios');
+        }
+
+        function deleteCurrentScenario() {
+            if (!loadedScenarios.length) return;
+            const s = loadedScenarios[selectedScenarioIdx];
+            const used = loadedQuestions.filter(q => q.scenarioId === s.id).length;
+            if (!confirm(`ลบสถานการณ์ "${s.title}" ?${used ? `\nมี ${used} ข้อผูกอยู่ — จะถอดการผูกออก` : ''}`)) return;
+            loadedQuestions.forEach(q => {
+                if (q.scenarioId === s.id) q.scenarioId = null;
+            });
+            loadedScenarios.splice(selectedScenarioIdx, 1);
+            selectedScenarioIdx = Math.max(0, selectedScenarioIdx - 1);
+            hasUnsavedChanges = true;
+            rebuildScenarioSelect();
+            renderScenarioSidebar();
+            if (loadedScenarios.length) loadScenarioIntoEditor(selectedScenarioIdx);
+            else {
+                document.getElementById('input-scen-id').value = '';
+                document.getElementById('input-scen-title').value = '';
+                document.getElementById('input-scen-body').value = '';
+                document.getElementById('input-scen-images').value = '';
+            }
+        }
+
+        function navigateScenario(dir) {
+            const t = selectedScenarioIdx + dir;
+            if (t >= 0 && t < loadedScenarios.length) selectScenario(t);
         }
 
         // Insert LaTeX formula at cursor in the last focused input field
@@ -950,17 +1534,28 @@
             updateCurrentQuestionData();
         }
 
+        function sidebarPreviewText(raw) {
+            // Strip HTML tags / LaTeX $ for a readable sidebar label
+            return String(raw || "")
+                .replace(/<[^>]*>/g, " ")
+                .replace(/\$/g, "")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
         function renderSidebarList() {
             const listEl = document.getElementById("sidebar-question-list");
             listEl.innerHTML = "";
             loadedQuestions.forEach((q, idx) => {
                 const li = document.createElement("li");
                 li.className = `question-item ${idx === selectedIdx ? 'active' : ''}`;
-                li.innerText = `${idx + 1}. ${q.q.replace(/\$/g, "")}`;
+                const preview = sidebarPreviewText(q.q);
+                li.innerText = `${idx + 1}. ${preview || "(ยังไม่มีข้อความโจทย์)"}`;
+                li.title = preview;
                 li.onclick = () => selectQuestion(idx);
                 listEl.appendChild(li);
             });
-            document.getElementById("question-count-badge").innerText = `${loadedQuestions.length}/30`;
+            document.getElementById("question-count-badge").innerText = `${loadedQuestions.length} ข้อ`;
         }
 
         function selectQuestion(idx) {
@@ -980,14 +1575,16 @@
             
             document.getElementById("form-editor").style.display = "flex";
             document.getElementById("editor-question-number-title").innerText = `กำลังแก้ไขคำถามข้อที่ ${idx + 1}`;
-            document.getElementById("input-q-text").value = q.q;
+            document.getElementById("input-q-text").value = q.q || "";
             document.getElementById("input-q-img").value = q.img || "";
+            rebuildScenarioSelect();
+            const scenSel = document.getElementById("input-scenario-id");
+            if (scenSel) scenSel.value = q.scenarioId || "";
             
             for (let i = 0; i < 4; i++) {
-                document.getElementById(`input-choice-${i}`).value = q.c[i] || "";
+                document.getElementById(`input-choice-${i}`).value = (q.c && q.c[i]) || "";
             }
 
-            // Set radio button correct index and highlight correct choice wrapper
             const radios = document.getElementsByName("correct-choice-radio");
             radios.forEach((r, i) => {
                 r.checked = (i === q.a);
@@ -1008,6 +1605,7 @@
         }
 
         function updateCurrentQuestionData() {
+            hasUnsavedChanges = true;
             if (!loadedQuestions[selectedIdx]) return;
 
             const text = document.getElementById("input-q-text").value;
@@ -1032,22 +1630,113 @@
             loadedQuestions[selectedIdx].img = img;
             loadedQuestions[selectedIdx].c = choices;
             loadedQuestions[selectedIdx].a = correctAns;
+            const scenSel = document.getElementById("input-scenario-id");
+            loadedQuestions[selectedIdx].scenarioId = (scenSel && scenSel.value) ? scenSel.value : null;
 
             // Sync sidebar text
             const listItems = document.querySelectorAll(".question-item");
             if (listItems[selectedIdx]) {
-                listItems[selectedIdx].innerText = `${selectedIdx + 1}. ${text.replace(/\$/g, "")}`;
+                const preview = sidebarPreviewText(text);
+                listItems[selectedIdx].innerText = `${selectedIdx + 1}. ${preview || "(ยังไม่มีข้อความโจทย์)"}`;
+                listItems[selectedIdx].title = preview;
+                hasUnsavedChanges = false;
             }
 
             // Show save status badge briefly
             const saveBadge = document.getElementById("save-status-text");
             saveBadge.style.opacity = 1;
-            saveBadge.innerText = "💾 บันทึกอัตโนมัติแล้ว";
+            saveBadge.innerText = "💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)";
 
             updatePreview();
         }
 
+        function renderScenarioHtml(raw) {
+            if (!raw) return '';
+            // Keep HTML tags (tables/images). Do NOT inject <br> between tags
+            // or tables break and show empty gaps (esp. bacteria scenario).
+            let s = String(raw);
+            s = s.replace(/>\s+</g, '><');
+            s = s.replace(/\n/g, '<br>');
+            return s;
+        }
+
+        function updateScenarioLivePanel(scenarioHtml, titleHint) {
+            const body = document.getElementById('scenario-live-body');
+            const box = document.getElementById('scenario-live-preview');
+            if (!body) return;
+            if (!scenarioHtml || !String(scenarioHtml).trim()) {
+                body.innerHTML = '<span class="scenario-live-empty">ยังไม่มีสถานการณ์ (เลือกจาก dropdown หรือไปแท็บสถานการณ์)</span>';
+                return;
+            }
+            const title = titleHint ? `<div style="color:#ffd700;font-weight:600;margin-bottom:0.4rem;">${titleHint}</div>` : '';
+            body.innerHTML = title + renderScenarioHtml(scenarioHtml);
+            if (window.renderMathInElement) {
+                try {
+                    renderMathInElement(body, {
+                        delims: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ]
+                    });
+                } catch (e) { /* ignore */ }
+            }
+        }
+
+        function openMockScenarioOverlay() {
+            const overlay = document.getElementById("mock-scenario-overlay");
+            const content = document.getElementById("mock-scroll-content");
+            const text = window.mockCurrentScenario || '';
+            if (!overlay || !content) return;
+            if (!text.trim()) {
+                alert('ยังไม่มีเนื้อหาสถานการณ์สำหรับข้อนี้');
+                return;
+            }
+            content.innerHTML = renderScenarioHtml(text);
+            overlay.classList.add("is-open");
+            overlay.classList.remove("hidden");
+            if (window.renderMathInElement) {
+                try {
+                    renderMathInElement(content, {
+                        delims: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ]
+                    });
+                } catch (e) {
+                    console.warn("Math rendering error in mockup overlay", e);
+                }
+            }
+        }
+
+        function closeMockScenarioOverlay() {
+            const overlay = document.getElementById("mock-scenario-overlay");
+            if (overlay) {
+                overlay.classList.remove("is-open");
+                overlay.classList.add("hidden");
+            }
+        }
+
         function updatePreview() {
+            // When editing scenarios tab, preview that scenario body directly
+            if (adminMode === 'scenarios') {
+                const s = loadedScenarios[selectedScenarioIdx];
+                const body = s ? (s.body || '') : '';
+                window.mockCurrentScenario = body;
+                updateScenarioLivePanel(body, s ? `สถานการณ์: ${s.title || s.id}` : '');
+                const btnScenario = document.getElementById("mock-btn-open-scenario");
+                if (btnScenario) {
+                    if (body.trim()) btnScenario.classList.remove("hidden");
+                    else btnScenario.classList.add("hidden");
+                }
+                const qTextEl = document.getElementById("mock-preview-q-text-el");
+                if (qTextEl) {
+                    qTextEl.innerHTML = body.trim()
+                        ? '<span style="color:#ffd700;">กำลังแก้ไขสถานการณ์ — กด “อ่านสถานการณ์” หรือดูกล่องด้านล่าง</span>'
+                        : 'ยังไม่มีสถานการณ์';
+                }
+                return;
+            }
+
             const q = loadedQuestions[selectedIdx];
             if (!q) return;
 
@@ -1064,6 +1753,32 @@
                 } else {
                     monsterSprite.style.backgroundImage = "url('../assets/images/characters/Monster_Set1/Easy/standard/idle/left/1.png')";
                 }
+            }
+
+            // Update Mock Background Deck & Sky based on subject and scene URL parameters
+            const mockDeck = document.querySelector(".mock-bg-deck");
+            if (mockDeck) {
+                let deckImg = "bg_deck_Math.png";
+                if (subject === "science") {
+                    deckImg = "bg_deck_Sci.png";
+                } else if (subject === "thai") {
+                    deckImg = "bg_deck_Thailang.png";
+                }
+                mockDeck.style.backgroundImage = `url('../assets/images/backgrounds/${deckImg}')`;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const scene = urlParams.get("scene") || urlParams.get("sean") || "morning";
+            const normScene = scene.trim().toLowerCase();
+            let skyImg = "bg_sky_Morning.png";
+            if (normScene === "evening" || normScene === "เย็น") {
+                skyImg = "bg_sky_Evening.png";
+            } else if (normScene === "night" || normScene === "กลางคืน" || normScene === "ค่ำ") {
+                skyImg = "bg_sky_night.png";
+            }
+            const mockSky = document.querySelector(".mock-bg-sky");
+            if (mockSky) {
+                mockSky.style.backgroundImage = `url('../assets/images/backgrounds/${skyImg}')`;
             }
 
             // 2. Update Wave/Subject title
@@ -1090,13 +1805,68 @@
                 imgEl.src = "";
             }
 
-            qTextEl.innerHTML = escapeHtml(q.q).replace(/\n/g, "<br>");
+            // Resolve scenario from system registry (scenarioId) or legacy embedded text
+            let scenario = "";
+            let question = q.q || "";
+            const scenObj = getScenarioById(q.scenarioId);
+            if (scenObj) {
+                scenario = scenObj.body || "";
+                question = q.q || "";
+            } else {
+                const qMatch = (q.q || "").match(/(^|\n|>)\s*(ข้อ\s*\d+\.?)/);
+                if (qMatch) {
+                    const index = qMatch.index + qMatch[1].length;
+                    scenario = q.q.substring(0, index).trim();
+                    question = q.q.substring(index).trim();
+                }
+            }
+
+            // Save scenario on window object so mockup trigger can read it
+            window.mockCurrentScenario = scenario;
+            const scenTitle = scenObj ? `ผูกกับ: ${scenObj.title || scenObj.id}` : (scenario ? 'สถานการณ์ (ฝังในโจทย์แบบเก่า)' : '');
+            updateScenarioLivePanel(scenario, scenTitle);
+
+            const btnScenario = document.getElementById("mock-btn-open-scenario");
+            if (btnScenario) {
+                if (scenario && scenario.trim()) {
+                    btnScenario.classList.remove("hidden");
+                } else {
+                    btnScenario.classList.add("hidden");
+                }
+            }
+            // Keep mock overlay closed unless user opens it
+            closeMockScenarioOverlay();
+
+            // Reset scroll position of mockup question box
+            const mockQuizBox = document.querySelector(".mock-quiz-box");
+            if (mockQuizBox) {
+                mockQuizBox.scrollTop = 0;
+            }
+
+            if (qTextEl) {
+                const qHtml = question
+                    ? String(question).replace(/>\s+</g, '><').replace(/\n/g, '<br>')
+                    : '';
+                qTextEl.innerHTML = qHtml || '<span style="color:#8a92a5;">(ยังไม่มีข้อความโจทย์)</span>';
+            }
+
+            // Detect if mockup choices need 1-column layout
+            let isLongChoice = false;
+            const mockGrid = document.querySelector(".mock-preview-choices-grid");
 
             // 4. Update choice buttons preview inside mockup
             for (let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`mock-choice-${i}`);
-                btn.innerHTML = escapeHtml(q.c[i] || "");
+                btn.innerHTML = q.c[i] || "";
                 btn.classList.toggle("correct", i === q.a);
+                
+                if (q.c[i] && q.c[i].length > 35) {
+                    isLongChoice = true;
+                }
+            }
+
+            if (mockGrid) {
+                mockGrid.classList.toggle("long-choices", isLongChoice);
             }
 
             // 5. Trigger KaTeX rendering on preview elements
@@ -1137,12 +1907,18 @@
             const subject = document.getElementById("subject-select").value;
             const subjectNames = { "math": "คณิตศาสตร์", "science": "วิทยาศาสตร์", "thai": "ภาษาไทย", "exam": "ข้อสอบรวม" };
             const subjName = subjectNames[subject] || "คณิตศาสตร์";
+            const lastScen = loadedQuestions.length
+                ? loadedQuestions[loadedQuestions.length - 1].scenarioId
+                : null;
             loadedQuestions.push({
-                q: `โจทย์วิชา${subjName}จำลองที่ ${loadedQuestions.length + 1}? (แก้ไขโจทย์ที่นี่)`,
+                q: `ข้อ ${loadedQuestions.length + 1}. โจทย์วิชา${subjName} (แก้ไขโจทย์ที่นี่)`,
                 img: "",
                 c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
-                a: 0
+                a: 0,
+                scenarioId: lastScen || null,
+                showImg: false
             });
+            hasUnsavedChanges = true;
             renderSidebarList();
             selectQuestion(loadedQuestions.length - 1);
         }
@@ -1160,17 +1936,90 @@
             }
         }
 
+        // Validate Data before Export/Save
+        function validateQuestions() {
+            if (loadedQuestions.length !== 30) {
+                if (!confirm(`แจ้งเตือน: จำนวนข้อสอบปัจจุบันมี ${loadedQuestions.length} ข้อ (แนะนำ 30 ข้อ) ต้องการดำเนินการต่อหรือไม่?`)) return false;
+            }
+            
+            for (let i = 0; i < loadedQuestions.length; i++) {
+                const q = loadedQuestions[i];
+                if (!q.q || q.q.trim() === "") {
+                    alert(`ข้อผิดพลาด: คำถามข้อที่ ${i+1} ว่างเปล่า กรุณาแก้ไขก่อนเซฟ!`);
+                    return false;
+                }
+                for (let j = 0; j < 4; j++) {
+                    if (!q.c[j] || q.c[j].trim() === "") {
+                        alert(`ข้อผิดพลาด: ตัวเลือกที่ ${j+1} ของคำถามข้อที่ ${i+1} ว่างเปล่า กรุณาแก้ไขก่อนเซฟ!`);
+                        return false;
+                    }
+                }
+                if (q.a === undefined || q.a === null || q.a < 0 || q.a > 3) {
+                    alert(`ข้อผิดพลาด: ข้อที่ ${i+1} ยังไม่ได้กำหนดเฉลยที่ถูกต้อง!`);
+                    return false;
+                }
+                if (q.scenarioId && !getScenarioById(q.scenarioId)) {
+                    alert(`ข้อผิดพลาด: ข้อที่ ${i+1} อ้าง scenarioId "${q.scenarioId}" ที่ไม่มีในระบบ`);
+                    return false;
+                }
+                
+                // Check for Mock/Placeholder in Question
+                if (q.q.includes("Mock") || q.q.includes("คำถามจำลอง") || q.q.includes("รบกวนสร้างแผนที่") || q.q.includes("draft")) {
+                    if (!confirm(`แจ้งเตือน: คำถามข้อที่ ${i+1} ดูเหมือนจะเป็นข้อมูลจำลอง (Mock/Draft) ต้องการดำเนินการต่อหรือไม่?`)) return false;
+                }
+                
+                // Check for generic A B C D / ก ข ค ง only options
+                const genericOptions = ["ก", "ข", "ค", "ง", "A", "B", "C", "D"];
+                const isGenericChoice = q.c.every(c => genericOptions.includes(String(c).trim()));
+                if (isGenericChoice) {
+                    if (!confirm(`แจ้งเตือน: ตัวเลือกของคำถามข้อที่ ${i+1} ดูเหมือนจะเป็นข้อมูลจำลอง (ก,ข,ค,ง) ต้องการดำเนินการต่อหรือไม่?`)) return false;
+                }
+            }
+            // scenario uniqueness
+            const ids = loadedScenarios.map(s => s.id);
+            if (new Set(ids).size !== ids.length) {
+                alert('รหัสสถานการณ์ (id) ซ้ำกัน กรุณาแก้ก่อนเซฟ');
+                return false;
+            }
+            for (const s of loadedScenarios) {
+                if (!s.id || !s.id.trim()) {
+                    alert('มีสถานการณ์ที่ยังไม่มี id');
+                    return false;
+                }
+                if (!s.body || !String(s.body).trim()) {
+                    if (!confirm(`สถานการณ์ "${s.title || s.id}" เนื้อหาว่าง ดำเนินการต่อหรือไม่?`)) return false;
+                }
+            }
+            return true;
+        }
+
+        function downloadJson(filename, data) {
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const a = document.createElement('a');
+            const url = URL.createObjectURL(dataBlob);
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         // Export/Import Files
         function exportJSONFile() {
-            const subject = document.getElementById("subject-select").value;
-            const dataStr = JSON.stringify(loadedQuestions, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(dataBlob);
-            downloadLink.download = `${subject}.json`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+            if (!validateQuestions()) return;
+            const subj = document.getElementById("subject-select").value;
+            downloadJson(`${subj}.json`, loadedQuestions);
+            hasUnsavedChanges = false;
+        }
+
+        function exportScenariosFile() {
+            if (!validateQuestions()) return;
+            const subj = document.getElementById("subject-select").value;
+            downloadJson(`${subj}.scenarios.json`, loadedScenarios);
+            // also suggest placing as scenarios/{subject}.json
+            alert(`ดาวน์โหลดแล้ว: ${subj}.scenarios.json\nให้นำไปวางแทนที่ assets/data/scenarios/${subj}.json`);
         }
 
         function handleFileImport(event) {
@@ -1239,44 +2088,47 @@
             });
         }
 
+        async function saveJsonWithPicker(handleRefName, suggestedName, data) {
+            let handle = handleRefName === 'q' ? fileHandle : scenarioFileHandle;
+            if (!handle) {
+                if (!window.showSaveFilePicker) {
+                    alert("บราวเซอร์ไม่รองรับการเขียนไฟล์โดยตรง — ใช้ปุ่มดาวน์โหลดแทน");
+                    return false;
+                }
+                handle = await window.showSaveFilePicker({
+                    suggestedName,
+                    types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }]
+                });
+                if (handleRefName === 'q') fileHandle = handle;
+                else scenarioFileHandle = handle;
+            }
+            const writable = await handle.createWritable();
+            await writable.write(JSON.stringify(data, null, 2));
+            await writable.close();
+            return true;
+        }
+
         // Direct File System Saving using modern File System Access API
         async function saveToLocalFile() {
+            if (!validateQuestions()) return;
             try {
-                if (!fileHandle) {
-                    const subject = document.getElementById("subject-select").value;
-                    const options = {
-                        suggestedName: `${subject}.json`,
-                        types: [{
-                            description: 'JSON Files',
-                            accept: {
-                                'application/json': ['.json'],
-                            }
-                        }],
-                    };
-                    if (window.showSaveFilePicker) {
-                        fileHandle = await window.showSaveFilePicker(options);
-                    } else if (window.showOpenFilePicker) {
-                        const [handle] = await window.showOpenFilePicker(options);
-                        fileHandle = handle;
-                    } else {
-                        alert("บราวเซอร์ของคุณไม่รองรับการเขียนไฟล์โดยตรงผ่าน API นี้ กรุณาใช้ปุ่มดาวน์โหลด JSON แทน หรือใช้งานผ่าน Google Chrome / Microsoft Edge");
-                        return;
-                    }
+                const subject = document.getElementById("subject-select").value;
+                // Save questions then scenarios
+                const okQ = await saveJsonWithPicker('q', `${subject}.json`, loadedQuestions);
+                if (!okQ) return;
+                // แนะนำ path: assets/data/scenarios/{subject}.json
+                const okS = await saveJsonWithPicker('s', `${subject}.json`, loadedScenarios);
+                if (okS) {
+                    alert(`บันทึกข้อสอบและสถานการณ์แล้ว\n• ข้อสอบ → assets/data/${subject}.json\n• สถานการณ์ → assets/data/scenarios/${subject}.json`);
+                    hasUnsavedChanges = false;
                 }
-
-                // Write the updated JSON questions to the file handle
-                const writable = await fileHandle.createWritable();
-                const dataStr = JSON.stringify(loadedQuestions, null, 2);
-                await writable.write(dataStr);
-                await writable.close();
-
-                alert(`บันทึกทับลงในไฟล์ "${fileHandle.name}" โดยตรงสำเร็จเรียบร้อยแล้ว!`);
             } catch (err) {
-                console.error("Direct save failed", err);
+                console.error(err);
                 if (err.name !== 'AbortError') {
-                    alert(`เกิดข้อผิดพลาดในการบันทึกทับ: ${err.message}\n(คุณสามารถดาวน์โหลดเป็นไฟล์แทนได้)`);
+                    alert(`บันทึกไม่สำเร็จ: ${err.message}`);
                 }
-                fileHandle = null; // reset handle on error
+                fileHandle = null;
+                scenarioFileHandle = null;
             }
         }
     </script>

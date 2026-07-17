@@ -5,7 +5,7 @@ const FPS = 60;
 
 // Font configurations matching the CSS theme
 const FONT_HEADER = "'Cinzel', 'Kanit', serif";
-const FONT_BODY = "'Outfit', 'Kanit', sans-serif";
+const FONT_BODY = "'Kanit', 'Outfit', sans-serif";
 
 // Dimensions matching SIZE_PLAYER, SIZE_MONSTER_SMALL, etc.
 const SIZE_PLAYER = { width: 210, height: 280 };
@@ -25,7 +25,7 @@ const ANIM_FPS = {
 const PLAYER_BASE_DMG = 30;
 
 // Character Floor level (Y coordinate for feet)
-const FLOOR_Y = 560; // Slightly higher as requested (was 600)
+const FLOOR_Y = 500; // Slightly higher as requested (was 560)
 
 // Volume (0.0 to 1.0)
 const VOL_BGM = 0.1;

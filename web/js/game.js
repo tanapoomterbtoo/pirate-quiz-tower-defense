@@ -6,18 +6,41 @@ class Game {
         this.state = STATE_MAIN_MENU;
         this.lastTime = 0;
         
+        // Parse subject and scene/sean parameters to load matching backgrounds
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Subject to deck mapping
+        const sub = urlParams.get("subject") || "math";
+        const normSub = sub.trim().toLowerCase();
+        let deckFile = "bg_deck_Math.png";
+        if (normSub === "science" || normSub === "วิทยาศาสตร์") {
+            deckFile = "bg_deck_Sci.png";
+        } else if (normSub === "thai" || normSub === "ภาษาไทย") {
+            deckFile = "bg_deck_Thailang.png";
+        }
+        
+        // Scene to sky mapping (supporting both 'scene' and 'sean')
+        const scene = urlParams.get("scene") || urlParams.get("sean") || "morning";
+        const normScene = scene.trim().toLowerCase();
+        let skyFile = "bg_sky_Morning.png";
+        if (normScene === "evening" || normScene === "เย็น") {
+            skyFile = "bg_sky_Evening.png";
+        } else if (normScene === "night" || normScene === "กลางคืน" || normScene === "ค่ำ") {
+            skyFile = "bg_sky_night.png";
+        }
+
         // Background images
         this.bgSky = new Image();
-        this.bgSky.src = `${IMG_PATH}/backgrounds/bg_sky.png`;
+        this.bgSky.src = `${IMG_PATH}/backgrounds/${skyFile}`;
         
         this.bgIslands = new Image();
         this.bgIslands.src = `${IMG_PATH}/backgrounds/bg_islands.png`;
         
         this.bgDeck = new Image();
-        this.bgDeck.src = `${IMG_PATH}/backgrounds/bg_deck.png`;
+        this.bgDeck.src = `${IMG_PATH}/backgrounds/${deckFile}`;
         
         // Load Audio Files
-        this.audioBgm = new Audio(`${AUDIO_PATH}/bgm.wav`);
+        this.audioBgm = new Audio(`${AUDIO_PATH}/bgm.mp3`);
         this.audioBgm.loop = true;
         this.audioBgm.volume = VOL_BGM;
         
@@ -98,6 +121,7 @@ class Game {
     resetGame() {
         this.player = new PiratePlayer(250, FLOOR_Y);
         this.playerHpBar = new HealthBar(175, 300, 150, 20); // y coordinates updated relative to player height dynamically in update
+        this.lastSeenScenario = "";
         
         this.currentQIdx = 0;
         this.wave = 1;
@@ -123,7 +147,7 @@ class Game {
         let cannonballCount = 0;
         let reviveCount = 0;
         
-        if (score >= 80 && score <= 100) {
+        if (score >= 80) {
             telescopeCount = 2;
             repairCount = 2;
             cannonballCount = 1;
@@ -292,32 +316,138 @@ class Game {
         this.currentQText = qData.q;
         this.correctAns = qData.c[qData.a];
 
-        // Handle question image display (starts hidden, requiring button click to show)
+        // Resolve scenario from system registry (scenarioId) or legacy embedded text
+        const resolved = (typeof resolveScenarioForQuestion === "function")
+            ? resolveScenarioForQuestion(qData)
+            : { scenario: "", question: qData.q || "", scenarioKey: "" };
+        const scenario = resolved.scenario || "";
+        const question = resolved.question || qData.q || "";
+        const scenarioKey = resolved.scenarioKey || scenario;
+
+        // Handle question image display
+        // - showImg: true  → show immediately
+        // - otherwise hide behind toggle button
+        // - if question HTML already has an <img>, skip the separate container to avoid double display
         const imgContainer = document.getElementById("question-img-container");
         const imgEl = document.getElementById("question-img");
         const btnToggleImg = document.getElementById("btn-toggle-img");
+        const hasInlineQuestionImg = /<img\s/i.test(question);
         if (imgContainer && imgEl) {
-            if (qData.img && qData.img.trim() !== "") {
+            if (qData.img && qData.img.trim() !== "" && !hasInlineQuestionImg) {
                 imgEl.src = qData.img;
-                imgEl.classList.add("hidden"); // always start hidden
-                imgContainer.classList.remove("hidden");
-                if (btnToggleImg) {
-                    btnToggleImg.innerText = "🖼️ แสดงภาพประกอบ";
+                const showNow = qData.showImg === true || qData.showImg === "true";
+                if (showNow) {
+                    imgEl.classList.remove("hidden");
+                    imgContainer.classList.remove("hidden");
+                    if (btnToggleImg) {
+                        btnToggleImg.classList.add("hidden");
+                    }
+                } else {
+                    imgEl.classList.add("hidden");
+                    imgContainer.classList.remove("hidden");
+                    if (btnToggleImg) {
+                        btnToggleImg.classList.remove("hidden");
+                        btnToggleImg.innerText = "🖼️ แสดงภาพประกอบ";
+                    }
                 }
             } else {
                 imgContainer.classList.add("hidden");
                 imgEl.src = "";
+                if (btnToggleImg) btnToggleImg.classList.remove("hidden");
             }
         }
 
-        this.questionText.innerText = this.currentQText;
+        this.currentScenario = scenario;
+        this.currentScenarioKey = scenarioKey;
+        const btnScenario = document.getElementById("btn-open-scenario");
+        if (btnScenario) {
+            if (scenario) {
+                btnScenario.classList.remove("hidden");
+                // Auto-open only when enabled (localStorage) and scenario is new
+                const autoOpen = isAutoScenarioEnabled();
+                if (autoOpen && this.lastSeenScenario !== scenarioKey) {
+                    this.lastSeenScenario = scenarioKey;
+                    setTimeout(() => {
+                        if (typeof openScenarioOverlay === "function") {
+                            openScenarioOverlay();
+                        }
+                    }, 100);
+                } else if (!autoOpen) {
+                    // Still mark as seen so flipping auto-open later mid-run does not spam
+                    this.lastSeenScenario = scenarioKey;
+                }
+            } else {
+                btnScenario.classList.add("hidden");
+                this.lastSeenScenario = "";
+            }
+        }
 
-        // Render answers onto HTML buttons
+        // Render question text as HTML to support tables (do not inject <br> inside tags)
+        this.questionText.innerHTML = (typeof formatHtmlPreserveTags === "function")
+            ? formatHtmlPreserveTags(question)
+            : String(question || "").replace(/>\s+</g, "><").replace(/\n/g, "<br>");
+        // Enable zoom popup for images inside the question stem only
+        if (typeof bindZoomableQuestionImages === "function") {
+            bindZoomableQuestionImages(this.questionText);
+        }
+
+        // Reset scroll position of the question box
+        const quizBox = document.querySelector(".quiz-box");
+        if (quizBox) {
+            quizBox.scrollTop = 0;
+        }
+
+        // Render answers onto HTML buttons and detect if we need a 1-column layout
+        let isLongChoice = false;
+        const grid = document.querySelector(".choices-grid");
+        
         for (let i = 0; i < 4; i++) {
             const btn = document.getElementById(`choice-${i}`);
-            btn.innerText = qData.c[i];
+            const choiceHtml = qData.c[i] || "";
+            btn.innerHTML = choiceHtml;
             btn.disabled = false;
             btn.classList.remove("correct", "wrong");
+            // Answer-choice images must NOT open the zoom popup
+            if (typeof disableZoomOnChoiceImages === "function") {
+                disableZoomOnChoiceImages(btn);
+            }
+            
+            // Long / multi-line answers (e.g. math Q3 with <br>) use 1-column so text is not clipped
+            const plainLen = String(choiceHtml).replace(/<[^>]+>/g, "").length;
+            if (plainLen > 35 || /<br\s*\/?>/i.test(choiceHtml) || /<table/i.test(choiceHtml) || /<img/i.test(choiceHtml)) {
+                isLongChoice = true;
+            }
+        }
+
+        if (grid) {
+            if (isLongChoice) {
+                grid.classList.add("long-choices");
+            } else {
+                grid.classList.remove("long-choices");
+            }
+        }
+
+        // Apply split layout if question is very long or has images
+        let isLongQuestion = false;
+        if (question.length > 250 || (question.match(/<img/g) || []).length >= 1) {
+            isLongQuestion = true;
+        }
+
+        const quizPanel = document.getElementById("quiz-panel");
+        if (quizPanel) {
+            if (isLongQuestion) {
+                quizPanel.classList.add("split-layout");
+            } else {
+                quizPanel.classList.remove("split-layout");
+            }
+            // Roomier/denser layout when answers are multi-line (prevents ง being cut by frame)
+            if (isLongChoice) {
+                quizPanel.classList.add("has-long-choices");
+            } else {
+                quizPanel.classList.remove("has-long-choices");
+            }
+            // Always start scrolled to top for each question
+            quizPanel.scrollTop = 0;
         }
 
         // Render equations using KaTeX if available
@@ -359,19 +489,34 @@ class Game {
 
     updateItemUI() {
         if (!this.items) return;
-        
-        const telescopeNameEl = this.itemButtons["Telescope"].querySelector(".item-name");
-        const repairNameEl = this.itemButtons["Repair Kit"].querySelector(".item-name");
-        const cannonballNameEl = this.itemButtons["Cannonball"].querySelector(".item-name");
-        
-        if (telescopeNameEl) telescopeNameEl.innerText = `กล้องส่องทางไกล (${this.items["Telescope"].count})`;
-        if (repairNameEl) repairNameEl.innerText = `กล่องพยาบาล (${this.items["Repair Kit"].count})`;
-        if (cannonballNameEl) cannonballNameEl.innerText = `กระสุนปืนใหญ่ (${this.items["Cannonball"].count})`;
-        
-        this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
-        this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
-        this.itemButtons["Cannonball"].disabled = (this.items["Cannonball"].count <= 0);
-        
+
+        const setCount = (badgeId, nameElText, count) => {
+            const badge = document.getElementById(badgeId);
+            if (badge) badge.textContent = String(count);
+        };
+
+        // Keep names clean; show quantity on the gold badge (compact HUD on mobile)
+        const telescopeNameEl = this.itemButtons["Telescope"]?.querySelector(".item-name");
+        const repairNameEl = this.itemButtons["Repair Kit"]?.querySelector(".item-name");
+        const cannonballNameEl = this.itemButtons["Cannonball"]?.querySelector(".item-name");
+        if (telescopeNameEl) telescopeNameEl.innerText = "กล้องส่องทางไกล";
+        if (repairNameEl) repairNameEl.innerText = "กล่องพยาบาล";
+        if (cannonballNameEl) cannonballNameEl.innerText = "กระสุนปืนใหญ่";
+
+        setCount("count-telescope", null, this.items["Telescope"].count);
+        setCount("count-repair", null, this.items["Repair Kit"].count);
+        setCount("count-cannonball", null, this.items["Cannonball"].count);
+
+        if (this.itemButtons["Telescope"]) {
+            this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
+        }
+        if (this.itemButtons["Repair Kit"]) {
+            this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
+        }
+        if (this.itemButtons["Cannonball"]) {
+            this.itemButtons["Cannonball"].disabled = (this.items["Cannonball"].count <= 0);
+        }
+
         if (this.btnUseRevive) {
             this.btnUseRevive.innerText = `ชุบชีวิต (เหลืออีก ${this.items["Revive"].count})`;
             this.btnUseRevive.disabled = (this.items["Revive"].count <= 0);
@@ -387,7 +532,7 @@ class Game {
         if (name === "Telescope") {
             const choices = [0, 1, 2, 3];
             const qData = this.questionPool[this.currentQIdx];
-            const wrongIndices = choices.filter(idx => qData.c[idx] !== this.correctAns);
+            const wrongIndices = choices.filter(idx => idx !== qData.a);
             
             const activeWrongIndices = wrongIndices.filter(idx => {
                 const choiceBtn = document.getElementById(`choice-${idx}`);
@@ -407,16 +552,21 @@ class Game {
         else if (name === "Repair Kit") {
             const healAmount = 30;
             const prevHp = this.player.hp;
+            
+            if (prevHp >= this.player.maxHp) {
+                // HP is full, don't consume the item
+                return;
+            }
+            
             this.player.hp = Math.min(this.player.maxHp, this.player.hp + healAmount);
             const actualHealed = this.player.hp - prevHp;
             
             if (actualHealed > 0) {
                 this.dmgTexts.push(new DamageText(this.player.xFloat, this.player.yFloat - 80, -actualHealed, "#4cd964"));
                 this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat + 40 }, 30, "#4cd964", "heal");
+                this.items["Repair Kit"].count -= 1;
+                this.updateItemUI();
             }
-            
-            this.items["Repair Kit"].count -= 1;
-            this.updateItemUI();
         } 
         else if (name === "Cannonball") {
             this.doubleDamage = true;
@@ -451,12 +601,23 @@ class Game {
         this.gameoverOverlay.classList.remove("hidden");
         this.topHud.classList.add("hidden");
         this.quizPanel.classList.add("hidden");
+        
+        // Show submit/redirect button if callback_url is set
+        const btnSubmit = document.getElementById("btn-submit-gameover");
+        if (btnSubmit && window.CALLBACK_URL) {
+            btnSubmit.classList.remove("hidden");
+        }
     }
 
 
 
     selectChoice(choiceIdx) {
         if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+        if (!this.questionPool || this.currentQIdx >= this.questionPool.length) return;
+
+        const selectedBtn = document.getElementById(`choice-${choiceIdx}`);
+        // Ignore clicks on disabled options (e.g. eliminated by Telescope)
+        if (selectedBtn && selectedBtn.disabled) return;
 
         // Log the answer choice index selected by the student
         if (this.answersLog) {
@@ -464,15 +625,13 @@ class Game {
         }
 
         const qData = this.questionPool[this.currentQIdx];
-        const selectedText = qData.c[choiceIdx];
-        const selectedBtn = document.getElementById(`choice-${choiceIdx}`);
 
         // Disable all choices during animation
         for (let i = 0; i < 4; i++) {
             document.getElementById(`choice-${i}`).disabled = true;
         }
 
-        if (selectedText === this.correctAns) {
+        if (choiceIdx === qData.a) {
             selectedBtn.classList.add("correct");
             this.playSound("shoot");
             
@@ -486,21 +645,21 @@ class Game {
             this.player.triggerAttack();
             this.combatState = "player_attack";
             this.hitApplied = false;
-            
-            // Hide UI panel and mute button during player attack
+
+            // Hide quiz during attack animation; keep mute reachable
             this.quizPanel.classList.add("hidden");
-            this.btnMute.classList.add("hidden");
         } else {
             selectedBtn.classList.add("wrong");
             // Highlight the correct one
             for (let i = 0; i < 4; i++) {
-                if (qData.c[i] === this.correctAns) {
+                if (i === qData.a) {
                     document.getElementById(`choice-${i}`).classList.add("correct");
                 }
             }
             
-            this.playSound("wrong");
+            // Keep double-damage buff until the next correct answer (do not waste Cannonball on a wrong answer)
             
+            this.playSound("wrong");
             // Monster deals damage
             const dmgMap = { "small": 10, "big": 20, "boss": 30 };
             this.pendingDmg = dmgMap[this.monster.mType] || 10;
@@ -508,10 +667,9 @@ class Game {
             this.monster.triggerAttack();
             this.combatState = "monster_attack";
             this.hitApplied = false;
-            
-            // Hide UI panel and mute button during monster attack
+
+            // Hide quiz during attack animation; keep mute reachable
             this.quizPanel.classList.add("hidden");
-            this.btnMute.classList.add("hidden");
         }
     }
 
@@ -586,10 +744,11 @@ class Game {
                 this.currentQIdx += 1;
                 this.loadQuestion();
                 this.combatState = "idle";
-                
-                // Restore UI panel and mute button
-                this.quizPanel.classList.remove("hidden");
-                this.btnMute.classList.remove("hidden");
+
+                // Restore quiz only if still playing (not victory / game over)
+                if (this.state === STATE_PLAYING) {
+                    this.quizPanel.classList.remove("hidden");
+                }
             }
         } 
         else if (this.combatState === "monster_attack") {
@@ -631,10 +790,10 @@ class Game {
                     this.currentQIdx += 1;
                     this.combatState = "idle";
                     this.loadQuestion();
-                    
-                    // Restore UI panel and mute button
-                    this.quizPanel.classList.remove("hidden");
-                    this.btnMute.classList.remove("hidden");
+
+                    if (this.state === STATE_PLAYING) {
+                        this.quizPanel.classList.remove("hidden");
+                    }
                 }
             }
         }
@@ -688,7 +847,7 @@ class Game {
             this.ctx.shadowOffsetX = 2;
             this.ctx.shadowOffsetY = 2;
             const subjName = window.SUBJECT_NAME || "คณิตศาสตร์";
-            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${this.currentQIdx + 1}/30`, WIDTH / 2, 45);
+            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${this.currentQIdx + 1}/${this.questionPool.length}`, WIDTH / 2, 45);
             this.ctx.restore();
 
             // 2. Draw Characters
@@ -763,12 +922,64 @@ class Game {
 let gameInstance = null;
 
 async function initWebGame() {
-    await initQuestions();
-    gameInstance = new Game();
+    const btnStart = document.getElementById("btn-start");
+    try {
+        await initQuestions();
+        if (!QUESTIONS || QUESTIONS.length === 0) {
+            throw new Error("ไม่พบคำถามในระบบ");
+        }
+        
+        // Preload heavy background and character images
+        const assetsToPreload = [
+            `${IMG_PATH}/backgrounds/bg_deck_Math.png`,
+            `${IMG_PATH}/backgrounds/bg_sky_Morning.png`,
+            `${IMG_PATH}/characters/player_idle.png`,
+            `${IMG_PATH}/characters/kraken_idle.png`
+        ];
+        
+        await Promise.all(assetsToPreload.map(src => {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = resolve; // Continue on error to avoid soft lock
+                img.src = src;
+            });
+        }));
+        
+        gameInstance = new Game();
+        if (btnStart) {
+            btnStart.disabled = false;
+            btnStart.innerText = "ออกเรือ & เริ่มเล่น";
+        }
+        // Soft warning if residual mock content slipped into the pool
+        const mockCount = QUESTIONS.filter(q => (q.q || "").includes("Mock") || (q.q || "").includes("คำถามจำลอง")).length;
+        if (mockCount > 0) {
+            console.warn(`พบคำถามจำลอง ${mockCount} ข้อ — ควรอัปเดตไฟล์ข้อสอบก่อนใช้งานจริง`);
+            const sub = document.querySelector(".game-subtitle");
+            if (sub) {
+                sub.insertAdjacentHTML(
+                    "afterend",
+                    `<p id="mock-warning" style="color:#ff8a80;margin:0.8rem 0 0;font-size:1rem;">⚠ ชุดข้อสอบนี้ยังมีคำถามจำลอง ${mockCount} ข้อ ควรอัปเดตก่อนสอบจริง</p>`
+                );
+            }
+        }
+    } catch (e) {
+        console.error(e);
+        if (btnStart) {
+            btnStart.disabled = true;
+            btnStart.innerText = "โหลดคำถามไม่สำเร็จ";
+        }
+        alert("ไม่สามารถโหลดคำถามได้: " + (e.message || e));
+    }
 }
 
 function startGame() {
-    if (gameInstance) gameInstance.startGame();
+    if (!gameInstance) return;
+    if (!QUESTIONS || QUESTIONS.length === 0) {
+        alert("ยังไม่มีคำถามในระบบ");
+        return;
+    }
+    gameInstance.startGame();
 }
 
 function restartGame() {
@@ -801,14 +1012,59 @@ function submitExamResults() {
     if (gameInstance) gameInstance.submitExamResults();
 }
 
-function zoomQuestionImage() {
-    const imgEl = document.getElementById("question-img");
+function openImageZoomModal(src) {
     const modal = document.getElementById("image-zoom-modal");
     const modalImg = document.getElementById("zoom-modal-img");
-    if (imgEl && modal && modalImg) {
-        modalImg.src = imgEl.src;
-        modal.classList.add("active");
+    if (!modal || !modalImg || !src) return;
+    modalImg.src = src;
+    modal.classList.add("active");
+}
+
+function zoomQuestionImage() {
+    const imgEl = document.getElementById("question-img");
+    if (imgEl && imgEl.src && !imgEl.classList.contains("hidden")) {
+        openImageZoomModal(imgEl.src);
     }
+}
+
+/** Zoom any question/scenario image (not answer-choice images) */
+function zoomQuestionImageFrom(el) {
+    if (!el || !el.src) return;
+    // Safety: never zoom images that live inside a choice button
+    if (el.closest && el.closest(".btn-choice, .choices-grid, .mock-preview-btn-choice")) {
+        return;
+    }
+    openImageZoomModal(el.src);
+}
+
+/**
+ * Make every <img> inside a question/scenario container zoomable on click.
+ * Skips anything nested under .btn-choice.
+ */
+function bindZoomableQuestionImages(rootEl) {
+    if (!rootEl) return;
+    rootEl.querySelectorAll("img").forEach((img) => {
+        if (img.closest(".btn-choice, .choices-grid")) return;
+        img.classList.add("zoomable-q-img");
+        img.style.cursor = "zoom-in";
+        // Prefer property handler so we don't stack multiple listeners on re-render
+        img.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            zoomQuestionImageFrom(img);
+        };
+    });
+}
+
+/** Ensure answer images cannot open the zoom modal */
+function disableZoomOnChoiceImages(rootEl) {
+    if (!rootEl) return;
+    rootEl.querySelectorAll("img").forEach((img) => {
+        img.onclick = null;
+        img.removeAttribute("onclick");
+        img.style.cursor = "default";
+        img.style.pointerEvents = "none";
+    });
 }
 
 function closeZoomModal() {
@@ -827,6 +1083,111 @@ function toggleQuestionImage() {
     }
 }
 
+const AUTO_SCENARIO_KEY = "autoScenario";
+
+function isAutoScenarioEnabled() {
+    try {
+        // Default ON when key is missing
+        return localStorage.getItem(AUTO_SCENARIO_KEY) !== "0";
+    } catch (e) {
+        return true;
+    }
+}
+
+function setAutoScenarioEnabled(enabled) {
+    try {
+        localStorage.setItem(AUTO_SCENARIO_KEY, enabled ? "1" : "0");
+    } catch (e) {
+        /* ignore quota / private mode */
+    }
+}
+
+function syncAutoScenarioCheckbox() {
+    const chk = document.getElementById("chk-auto-scenario");
+    if (chk) chk.checked = isAutoScenarioEnabled();
+}
+
+function onAutoScenarioToggle(el) {
+    setAutoScenarioEnabled(!!(el && el.checked));
+}
+
+function onScenarioBackdropClick(event) {
+    // Close only when clicking the dimmed backdrop, not the parchment
+    if (event && event.target && event.target.id === "scenario-overlay") {
+        closeScenarioOverlay();
+    }
+}
+
+function openScenarioOverlay() {
+    const overlay = document.getElementById("scenario-overlay");
+    const content = document.getElementById("scroll-content");
+    if (overlay && content && gameInstance && gameInstance.currentScenario) {
+        content.innerHTML = (typeof formatHtmlPreserveTags === "function")
+            ? formatHtmlPreserveTags(gameInstance.currentScenario)
+            : String(gameInstance.currentScenario || "").replace(/>\s+</g, "><").replace(/\n/g, "<br>");
+        overlay.classList.remove("hidden");
+        syncAutoScenarioCheckbox();
+        // Images inside scenario parchment should also zoom (not answer choices)
+        bindZoomableQuestionImages(content);
+        // Trigger KaTeX rendering inside the overlay if present
+        if (window.renderMathInElement) {
+            try {
+                renderMathInElement(content, {
+                    delims: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ]
+                });
+            } catch (e) {
+                console.warn("Math rendering error in overlay", e);
+            }
+        }
+    }
+}
+
+function closeScenarioOverlay() {
+    const overlay = document.getElementById("scenario-overlay");
+    if (overlay) {
+        overlay.classList.add("hidden");
+    }
+}
+
+// Answer hotkeys: 1–4 / numpad 1–4 / A–D (when playing and not typing)
+window.addEventListener("keydown", (e) => {
+    if (!gameInstance || gameInstance.state !== STATE_PLAYING) return;
+    if (gameInstance.combatState !== "idle") return;
+
+    // Ignore when focus is in form fields
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
+    if (tag === "input" || tag === "textarea" || tag === "select" || (e.target && e.target.isContentEditable)) {
+        return;
+    }
+
+    // Escape closes scenario overlay
+    if (e.code === "Escape") {
+        const overlay = document.getElementById("scenario-overlay");
+        if (overlay && !overlay.classList.contains("hidden")) {
+            closeScenarioOverlay();
+            e.preventDefault();
+        }
+        return;
+    }
+
+    // Do not answer while scenario is open
+    const scenarioOpen = document.getElementById("scenario-overlay");
+    if (scenarioOpen && !scenarioOpen.classList.contains("hidden")) return;
+
+    const map = {
+        Digit1: 0, Digit2: 1, Digit3: 2, Digit4: 3,
+        Numpad1: 0, Numpad2: 1, Numpad3: 2, Numpad4: 3,
+        KeyA: 0, KeyB: 1, KeyC: 2, KeyD: 3
+    };
+    if (e.code in map && typeof selectChoice === "function") {
+        e.preventDefault();
+        selectChoice(map[e.code]);
+    }
+});
+
 // Dynamic root font size scaling for perfect responsiveness across computer & mobile screens
 function resizeGame() {
     const container = document.getElementById("game-container");
@@ -839,9 +1200,53 @@ function resizeGame() {
     document.documentElement.style.fontSize = baseFontSize + "px";
 }
 
+/**
+ * Ensure wheel / trackpad scrolls #quiz-panel even when the pointer is over
+ * buttons or nested overflow:hidden choice cards (Q23 pies etc.).
+ */
+function bindQuizPanelScroll() {
+    const panel = document.getElementById("quiz-panel");
+    if (!panel || panel.dataset.scrollBound === "1") return;
+    panel.dataset.scrollBound = "1";
+
+    panel.addEventListener(
+        "wheel",
+        (e) => {
+            if (panel.classList.contains("hidden")) return;
+            const canScroll = panel.scrollHeight > panel.clientHeight + 1;
+            if (!canScroll) return;
+
+            const atTop = panel.scrollTop <= 0;
+            const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 1;
+            // If nested element is trying to scroll, only take over when it can't
+            let target = e.target;
+            while (target && target !== panel) {
+                if (target.scrollHeight > target.clientHeight + 1) {
+                    const tTop = target.scrollTop <= 0;
+                    const tBot = target.scrollTop + target.clientHeight >= target.scrollHeight - 1;
+                    const goingDown = e.deltaY > 0;
+                    if ((goingDown && !tBot) || (!goingDown && !tTop)) {
+                        return; // let nested scroller handle it
+                    }
+                }
+                target = target.parentElement;
+            }
+
+            const goingDown = e.deltaY > 0;
+            if ((goingDown && atBottom) || (!goingDown && atTop)) {
+                return;
+            }
+            panel.scrollTop += e.deltaY;
+            e.preventDefault();
+        },
+        { passive: false }
+    );
+}
+
 // Bind resize and load events
 window.addEventListener("resize", resizeGame);
 window.addEventListener("load", () => {
     resizeGame();
+    bindQuizPanelScroll();
     initWebGame();
 });

@@ -1,10 +1,8 @@
-/* Import Google Fonts - includes Cinzel (English Serif), Kanit (Thai/English Gaming Sans), and Outfit (English Sans) */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Kanit:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
+/* Fonts loaded once from index.html <link> (Cinzel + Kanit + Outfit) */
 :root {
     /* Easily edit fonts here */
     --font-header: 'Cinzel', 'Kanit', serif;
-    --font-body: 'Outfit', 'Kanit', sans-serif;
+    --font-body: 'Kanit', 'Outfit', sans-serif;
 }
 
 /* Game General CSS Reset */
@@ -12,8 +10,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none;
     -webkit-user-drag: none;
+}
+
+/* Prevent accidental text selection on chrome only (questions stay selectable) */
+canvas,
+.btn,
+#top-hud,
+.btn-item,
+.btn-choice,
+.btn-mute {
+    user-select: none;
 }
 
 body {
@@ -79,6 +86,11 @@ canvas {
     outline: none;
     font-family: var(--font-body);
     transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn:focus-visible {
+    outline: 3px solid #ffd700;
+    outline-offset: 3px;
 }
 
 .hidden {
@@ -213,15 +225,18 @@ canvas {
 
 .inventory {
     position: absolute;
-    top: 1.5rem;
-    left: 2.5rem;
+    /* Extra inset so count badges never clip the wood frame edge */
+    top: max(1.25rem, env(safe-area-inset-top));
+    left: max(1.5rem, env(safe-area-inset-left));
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     pointer-events: auto;
+    max-width: min(18rem, 38vw);
+    z-index: 16;
 }
 
-/* Premium RPG Item Slots */
+/* Premium RPG Item slots */
 .btn-item {
     background: linear-gradient(135deg, rgba(20, 26, 48, 0.85) 0%, rgba(13, 17, 33, 0.9) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -230,13 +245,17 @@ canvas {
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    width: 20em;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     color: #ffffff;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    overflow: visible;
 }
 
 .item-icon-wrapper {
+    position: relative;
     width: 44px;
     height: 44px;
     border-radius: 8px;
@@ -249,6 +268,25 @@ canvas {
     transition: all 0.2s ease;
 }
 
+.item-count-badge {
+    position: absolute;
+    /* Keep inside icon so #game-container overflow:hidden does not clip the badge */
+    top: -2px;
+    right: -2px;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    padding: 0 0.25rem;
+    border-radius: 999px;
+    background: #ffd700;
+    color: #0c0e17;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1.15rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+    z-index: 2;
+}
+
 .item-icon {
     width: 24px;
     height: 24px;
@@ -259,6 +297,9 @@ canvas {
     display: flex;
     flex-direction: column;
     text-align: left;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
 }
 
 .item-name {
@@ -266,6 +307,9 @@ canvas {
     font-size: 0.95rem;
     letter-spacing: 0.5px;
     transition: color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .item-desc {
@@ -273,6 +317,9 @@ canvas {
     color: #7b8ea9;
     margin-top: 0.15rem;
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Custom Item Type Hovers (Vibrant Cyan, Green, Gold Theme Glows) */
@@ -339,8 +386,8 @@ canvas {
 /* Sound Settings Toggle Button */
 .btn-mute {
     position: absolute;
-    top: 1.5rem;
-    right: 2.5rem;
+    top: max(1.5rem, env(safe-area-inset-top));
+    right: max(2.5rem, env(safe-area-inset-right));
     pointer-events: auto;
     width: 3.2rem;
     height: 3.2rem;
@@ -382,23 +429,112 @@ canvas {
     transform: none;
 }
 
-/* Bottom HUD Quiz Area */
+/* Bottom HUD Quiz Area
+   IMPORTANT: do NOT use justify-content:flex-end here.
+   With overflow-y:auto, flex-end clips the top and breaks scrolling
+   (classic flexbox bug — content above the fold becomes unreachable). */
 #quiz-panel {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 2.25rem 2.5rem;
+    padding: 0.9rem max(2rem, env(safe-area-inset-right)) max(1.6rem, env(safe-area-inset-bottom)) max(2rem, env(safe-area-inset-left));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    background: linear-gradient(0deg, rgba(6, 7, 12, 0.98) 0%, rgba(6, 7, 12, 0.8) 75%, rgba(6, 7, 12, 0) 100%);
+    justify-content: flex-start;
+    gap: 0.65rem;
+    background: linear-gradient(0deg, rgba(6, 7, 12, 0.98) 0%, rgba(6, 7, 12, 0.85) 70%, rgba(6, 7, 12, 0) 100%);
     z-index: 15;
+    max-height: 62%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    pointer-events: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+    touch-action: pan-y;
+}
+
+/* Never compress question/choices — scroll the panel instead of clipping edges */
+#quiz-panel > * {
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* Tall multi-line / media answers: more height + denser stack + always scrollable */
+#quiz-panel.has-long-choices {
+    max-height: 78%;
+    gap: 0.45rem;
+    padding-top: 0.5rem;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    overflow-y: scroll; /* force scrollport so wheel/trackpad always bind */
+}
+
+#quiz-panel.has-long-choices .quiz-box {
+    min-height: 0;
+    padding: 0.55rem 1.1rem;
+}
+
+#quiz-panel.has-long-choices #question-text {
+    max-height: 12vh;
+    font-size: 1.05rem;
+}
+
+#quiz-panel.has-long-choices .choices-grid {
+    gap: 0.4rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+}
+
+#quiz-panel.has-long-choices .btn-choice {
+    padding: 0.5rem 0.9rem 0.5rem max(3.5rem, 46px);
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+#quiz-panel.has-long-choices .btn-choice::before {
+    top: 0.5rem;
+    transform: none;
+    width: max(1.65rem, 26px);
+    height: max(1.65rem, 26px);
+    font-size: 0.85rem;
+}
+
+/* Q23 dual pies: keep readable but leave room to scroll through ก–ง */
+#quiz-panel.has-long-choices .btn-choice table img[src*="pie_q23_"] {
+    max-height: 120px !important;
+}
+
+/* Thin gold scrollbar so players notice they can scroll long choice lists */
+#quiz-panel::-webkit-scrollbar {
+    width: 8px;
+}
+#quiz-panel::-webkit-scrollbar-track {
+    background: rgba(7, 9, 18, 0.6);
+    border-radius: 4px;
+}
+#quiz-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.55);
+    border-radius: 4px;
+}
+#quiz-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 215, 0, 0.85);
+}
+#quiz-panel {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 215, 0, 0.55) rgba(7, 9, 18, 0.6);
 }
 
 /* Glowing Indicator Badges */
 .badge {
+    position: relative;
+    top: 0;
+    left: auto;
+    transform: none;
+    z-index: 20;
+    align-self: center;
+
     background: linear-gradient(90deg, #ffd700, #ffaa00);
     color: #06070c;
     font-family: var(--font-header);
@@ -412,17 +548,36 @@ canvas {
     animation: badgePulse 0.9s infinite alternate;
 }
 
-/* Grand Scroll/Deck for Question Box */
+/* Grand Scroll/Deck for Question Box (Classic JRPG style) */
 .quiz-box {
     width: 100%;
-    max-width: 960px;
-    text-align: center;
+    max-width: min(960px, 100%);
+    text-align: left; /* Left align for easier reading of passages and tables */
     background: linear-gradient(180deg, #0e1322 0%, #070912 100%);
     border: 2px solid #7c673d;
     border-radius: 4px;
-    padding: 1.8rem 2.5rem;
+    padding: 1rem 1.6rem;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(197, 160, 89, 0.08);
     position: relative;
+    min-height: 0;
+    height: auto;
+    box-sizing: border-box;
+    overflow: hidden; /* keep stem text inside gold frame */
+}
+
+/* Custom Scrollbar for JRPG style */
+.quiz-box::-webkit-scrollbar, .parchment-scroll::-webkit-scrollbar, #question-text::-webkit-scrollbar {
+    width: 8px;
+}
+.quiz-box::-webkit-scrollbar-track, .parchment-scroll::-webkit-scrollbar-track, #question-text::-webkit-scrollbar-track {
+    background: #070912;
+}
+.quiz-box::-webkit-scrollbar-thumb, .parchment-scroll::-webkit-scrollbar-thumb, #question-text::-webkit-scrollbar-thumb {
+    background: #7c673d;
+    border-radius: 4px;
+}
+.quiz-box::-webkit-scrollbar-thumb:hover, .parchment-scroll::-webkit-scrollbar-thumb:hover, #question-text::-webkit-scrollbar-thumb:hover {
+    background: #c5a059;
 }
 
 /* Ornate corner bracket decorations for classic RPG look */
@@ -445,57 +600,324 @@ canvas {
 }
 
 #question-text {
-    font-size: 1.45rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.5;
     color: #e2e8f0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     letter-spacing: 0.2px;
+    white-space: pre-wrap; /* Preserve formatting, spacing, and line breaks */
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    max-height: 26vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 8px;
+    box-sizing: border-box;
+    pointer-events: auto;
+    user-select: text; /* Allow selection so scrolling works on WebKit */
+    -webkit-user-select: text;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+}
+
+/* Beautiful RPG-themed table styles inside questions and scrolls */
+#question-text table, .scroll-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 1.05rem;
+    background: rgba(14, 19, 34, 0.6);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+#question-text th, #question-text td, .scroll-content th, .scroll-content td {
+    border: 1px solid #7c673d;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+#question-text th, .scroll-content th {
+    background: rgba(197, 160, 89, 0.2);
+    color: #ffd700;
+    font-weight: bold;
 }
 
 /* Choices Grid Layout */
 .choices-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: max(0.75rem, 12px);
     width: 100%;
-    max-width: 960px;
+    max-width: min(960px, 100%);
+    min-width: 0;
+    box-sizing: border-box;
 }
 
-/* JRPG Styled choice cards */
+/* Long Choices Grid (1 column stack) */
+.choices-grid.long-choices {
+    grid-template-columns: minmax(0, 1fr);
+    gap: max(0.7rem, 12px);
+}
+
+/* JRPG Styled choice cards
+   Left padding must clear the ก/ข/ค/ง badge even when rem is scaled down
+   (badge uses rem size + min px floor so it never overlaps text / clips edge). */
 .btn-choice {
     position: relative;
     background: #111526;
     border: 1px solid #5d4e33;
     color: #cad8ee;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    padding: 1.15rem 1.5rem 1.15rem 4.5rem; /* Indent text to fit the prefix badge on the left */
+    padding: 0.85rem 1.1rem 0.85rem max(3.9rem, 52px);
     border-radius: 4px;
     text-align: left;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
     transition: all 0.2s ease-in-out;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    box-sizing: border-box;
+    overflow: hidden; /* prevent media tables from spilling past the button edge */
 }
 
-/* Choice badges (A, B, C, D) prefixes inside the buttons - Styled as stamped coin/stone plates */
+/* Adjust button styles when inside a long-choice layout */
+.choices-grid.long-choices .btn-choice {
+    padding: 0.75rem 1.1rem 0.75rem max(3.9rem, 52px);
+    font-size: 1.05rem;
+    overflow: visible;
+}
+
+/* Tables inside choice buttons (multi-view options) stay within the button */
+.btn-choice table {
+    width: 100% !important;
+    max-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.btn-choice table td,
+.btn-choice table th {
+    padding: 1px 2px;
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Parchment Scroll Overlay — full-screen within game frame */
+.parchment-scroll {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    background: linear-gradient(160deg, #161e33 0%, #0d1220 55%, #0a0e1a 100%);
+    border: 3px solid #ffd700;
+    border-radius: 0;
+    padding: 2rem 2.4rem 1.4rem;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    animation: scrollFadeIn 0.3s ease-out;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.parchment-scroll::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    pointer-events: none;
+    /* full-bleed frame corners */
+    clip-path: polygon(
+        0 0, 20px 0, 20px 2px, 2px 2px, 2px 20px, 0 20px, 0 0,
+        100% 0, 100% 20px, calc(100% - 2px) 20px, calc(100% - 2px) 2px, calc(100% - 20px) 2px, calc(100% - 20px) 0, 100% 0,
+        100% 100%, calc(100% - 20px) 100%, calc(100% - 20px) calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100% - 20px), 100% calc(100% - 20px), 100% 100%,
+        0 100%, 0 calc(100% - 20px), 2px calc(100% - 20px), 2px calc(100% - 2px), 20px calc(100% - 2px), 20px 100%, 0 100%
+    );
+}
+
+.scroll-content {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0; /* critical so flex child can scroll inside full-screen panel */
+    padding: 0.5rem 1rem 0.5rem 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 215, 0, 0.55) transparent;
+}
+.scroll-content::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.5);
+    border-radius: 4px;
+}
+
+.btn-close-scroll {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    border: 2px solid #ffd700;
+    background: #0d1220;
+    color: #ffd700;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    z-index: 2;
+    pointer-events: auto;
+}
+.btn-close-scroll:hover {
+    background: #ffd700;
+    color: #0d1220;
+    transform: scale(1.1);
+}
+.btn-close-scroll:focus-visible {
+    outline: 3px solid #ffd700;
+    outline-offset: 3px;
+}
+
+.scenario-overlay-panel {
+    background: rgba(0, 0, 0, 0.92) !important;
+    z-index: 30;
+    /* fill entire game container */
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.scenario-footer-actions {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+}
+
+.btn-close-scenario-main {
+    min-height: 48px;
+    min-width: min(320px, 80%);
+    padding: 0.75rem 1.8rem !important;
+    font-size: 1.05rem !important;
+}
+
+.scenario-auto-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: #a4b3c6;
+    cursor: pointer;
+    user-select: none;
+}
+
+.scenario-auto-toggle input {
+    width: 16px;
+    height: 16px;
+    accent-color: #ffd700;
+}
+
+/* Gold pulsing Scenario Trigger button */
+.btn-scenario-trigger {
+    background: linear-gradient(90deg, #c5a059, #7c673d);
+    color: #0c0e17;
+    border: 1.5px solid #ffd700;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+    animation: goldPulse 1.5s infinite alternate;
+}
+.btn-scenario-trigger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.55);
+    background: #ffd700;
+    color: #0c0e17;
+}
+
+@keyframes scrollFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes goldPulse {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+        border-color: #a38245;
+    }
+    100% {
+        box-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
+        border-color: #ffd700;
+    }
+}
+
+/* Choice badges (ก ข ค ง) — size tracks rem so it stays inside padding on all scales */
 .btn-choice::before {
     position: absolute;
-    left: 1.25rem;
+    left: max(0.7rem, 10px);
     top: 50%;
     transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
+    width: max(1.85rem, 28px);
+    height: max(1.85rem, 28px);
     border-radius: 2px;
     background: #171d33;
     border: 1.5px solid #a38245;
     color: #c5a059;
     font-family: var(--font-header);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 800;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Tall multi-line choices (e.g. math Q3): pin letter badge to top */
+.choices-grid.long-choices .btn-choice::before {
+    top: 0.75rem;
+    transform: none;
 }
 
 /* Apply specific letters based on choice IDs */
@@ -571,8 +993,8 @@ canvas {
 }
 
 @keyframes badgePulse {
-    0% { transform: scale(1); box-shadow: 0 0 12px rgba(255, 170, 0, 0.3); }
-    100% { transform: scale(1.04); box-shadow: 0 0 25px rgba(255, 170, 0, 0.55); }
+    0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 12px rgba(255, 170, 0, 0.3); }
+    100% { transform: translateX(-50%) scale(1.04); box-shadow: 0 0 25px rgba(255, 170, 0, 0.55); }
 }
 
 .screen-shake {
@@ -724,6 +1146,14 @@ canvas {
 .rotate-icon {
     font-size: 5rem;
     margin-bottom: 1.5rem;
+    display: inline-block;
+    animation: rotatePhone 2s infinite ease-in-out;
+}
+
+@keyframes rotatePhone {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg); }
+    100% { transform: rotate(0deg); }
 }
 
 #rotate-device-overlay h2 {
@@ -775,13 +1205,86 @@ canvas {
     border-radius: 4px;
     cursor: zoom-in;
     transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.2s ease;
-    background-color: rgba(0, 0, 0, 0.3);
+    /* Light plate so black line-art diagrams stay visible on dark UI */
+    background-color: #ffffff;
+    padding: 6px;
     object-fit: contain;
 }
 
+/* Inline images embedded in question / scenario HTML (not answer choices) */
+#question-text img,
+.scroll-content img {
+    max-width: 100%;
+    max-height: 220px;
+    height: auto;
+    display: block;
+    margin: 0.6rem auto;
+    border: 2px solid #7c673d;
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 6px;
+    object-fit: contain;
+    cursor: zoom-in;
+}
+
+#question-text img:hover,
+.scroll-content img:hover,
 .question-img:hover {
-    transform: scale(1.04);
+    transform: scale(1.02);
     border-color: #ffd700;
+}
+
+/* Choice-button images (e.g. math Q9 orthographic views): light plate, no zoom cursor */
+.btn-choice img {
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: 56px !important;
+    object-fit: contain;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 1px !important;
+    background-color: #ffffff !important;
+    padding: 3px !important;
+    border-radius: 3px;
+    border: 1px solid rgba(124, 103, 61, 0.45);
+    cursor: default !important;
+    pointer-events: none; /* do not open zoom popup from answer images */
+}
+
+/* Larger pie charts in multi-image answer tables (math Q23) */
+.btn-choice table img[src*="pie_q23_"] {
+    max-height: 200px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 4px auto !important;
+    display: block !important;
+}
+
+#quiz-panel.split-layout .choices-grid .btn-choice table img[src*="pie_q23_"] {
+    max-height: 160px !important;
+}
+
+/* Text/labels inside choice tables must stay dark on white cells
+   (btn-choice inherits light #cad8ee which becomes invisible on white) */
+.btn-choice table {
+    color: #1a1a1a !important;
+}
+.btn-choice table td,
+.btn-choice table th,
+.btn-choice table div,
+.btn-choice table span {
+    color: #1a1a1a !important;
+}
+
+/* Allow tall media choices (images + captions) to fully show */
+.choices-grid.long-choices .btn-choice {
+    overflow: visible;
+    min-height: auto;
+}
+
+#quiz-panel.split-layout .choices-grid .btn-choice img {
+    max-height: 48px !important;
 }
 
 /* Image Zoom Modal */
@@ -812,6 +1315,9 @@ canvas {
     max-height: 85%;
     border: 3px double #c5a059;
     border-radius: 4px;
+    background-color: #ffffff;
+    padding: 12px;
+    object-fit: contain;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
     transform: scale(0.9);
     transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -835,3 +1341,113 @@ canvas {
     color: #ffd700;
 }
 
+
+/* Split layout for long questions (Desktop only) */
+@media (min-width: 1024px) {
+    #quiz-panel.split-layout {
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 2rem 4rem 2.5rem 4rem;
+        height: 50vh; 
+        max-height: 500px;
+    }
+
+    #quiz-panel.split-layout .quiz-box {
+        flex: 1.2;
+        max-width: 60%;
+        height: 100%;
+        max-height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #quiz-panel.split-layout #question-text {
+        max-height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        flex: 1;
+        padding-right: 15px;
+        padding-bottom: 1rem; /* Prevent text from touching the bottom border */
+    }
+
+    #quiz-panel.split-layout .choices-grid {
+        flex: 1;
+        max-width: 40%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-y: auto;
+        padding: 5px 10px 10px 5px; /* Added padding so top/bottom choices aren't cut off */
+        gap: 1rem;
+        margin-bottom: 0;
+    }
+    
+    #quiz-panel.split-layout .choices-grid .btn-choice {
+        padding: 0.85rem 1.1rem 0.85rem max(3.9rem, 52px);
+    }
+}
+
+/* Fallback for small height screens to prevent overflow */
+@media (max-height: 600px) {
+    .choices-grid .btn-choice {
+        padding: 0.7rem 1rem 0.7rem max(3.6rem, 48px);
+        font-size: 1rem;
+    }
+}
+
+/* Compact inventory on narrow / short screens (icon + count badge only) */
+@media (max-width: 900px), (max-height: 500px) {
+    .btn-item {
+        width: auto;
+        min-width: 3rem;
+        max-width: none;
+        padding: 0.4rem;
+        gap: 0;
+    }
+    .item-info {
+        display: none;
+    }
+    .inventory {
+        gap: 0.45rem;
+        left: max(0.65rem, env(safe-area-inset-left));
+        top: max(0.65rem, env(safe-area-inset-top));
+        max-width: none;
+        /* Room for count badge so it is not clipped by the frame */
+        padding: 4px 6px 0 0;
+    }
+    .item-count-badge {
+        top: -1px;
+        right: -1px;
+    }
+    .btn-choice table img[src*="pie_q23_"] {
+        max-height: 120px !important;
+    }
+    #quiz-panel.split-layout .choices-grid .btn-choice table img[src*="pie_q23_"] {
+        max-height: 100px !important;
+    }
+    #question-text {
+        max-height: 20vh;
+        font-size: 1.1rem;
+    }
+}
+
+/* Scenario + image toolbar wraps on narrow panels */
+.quiz-box > div:first-child {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+    .quiz-box > div:first-child {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+    .btn-scenario-trigger,
+    .btn-toggle-img {
+        width: 100%;
+        justify-content: center;
+    }
+}

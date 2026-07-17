@@ -1,302 +1,392 @@
 [
   {
-    "q": "Mock Question 1?",
+    "q": "ข้อ 1. ถ้าวินต้องการใช้บริการฟิตเนสแห่งนี้เป็นระยะเวลา 1 ปี แล้ววินควรเลือก PLAN ใดจึงเสียค่าบริการถูกกว่า และถูกกว่ากี่บาท",
     "c": [
-      "Choice A 1",
-      "Choice B 1",
-      "Choice C 1",
-      "Choice D 1"
+      "PLAN A เพราะ ประหยัดกว่า PLAN B 8,400 บาท",
+      "PLAN A เพราะ ประหยัดกว่า PLAN B 7,400 บาท",
+      "PLAN B เพราะ ประหยัดกว่า PLAN A 8,400 บาท",
+      "PLAN B เพราะ ประหยัดกว่า PLAN A 7,400 บาท"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "fitd-fitness"
   },
   {
-    "q": "Mock Question 2?",
+    "q": "ข้อ 2. ถ้าวินไม่ต้องการสมัครสมาชิกรายปี แล้ววินควรใช้บริการอย่างมากกี่เดือน จึงจะคุ้มค่า",
     "c": [
-      "Choice A 2",
-      "Choice B 2",
-      "Choice C 2",
-      "Choice D 2"
+      "3 เดือน",
+      "4 เดือน",
+      "5 เดือน",
+      "6 เดือน"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "fitd-fitness"
   },
   {
-    "q": "Mock Question 3?",
+    "q": "ข้อ 3. การบริการของเทรนเนอร์ทั้ง 2 PLAN มีความเหมาะสมกับจำนวนชั่วโมงให้บริการ ตรงกับข้อใด",
     "c": [
-      "Choice A 3",
-      "Choice B 3",
-      "Choice C 3",
-      "Choice D 3"
+      "PLAN A เหมาะกับการให้บริการ มากกว่า 6 ชั่วโมงขึ้นไป<br>PLAN B เหมาะกับการให้บริการ ไม่เกิน 5 ชั่วโมงแรก",
+      "PLAN A เหมาะกับการให้บริการ ไม่เกิน 5 ชั่วโมงแรก<br>PLAN B เหมาะกับการให้บริการ มากกว่า 6 ชั่วโมงขึ้นไป",
+      "PLAN A เหมาะกับการให้บริการ ตั้งแต่ 6 ชั่วโมงขึ้นไป<br>PLAN B เหมาะกับการให้บริการ น้อยกว่า 5 ชั่วโมงแรก",
+      "PLAN A เหมาะกับการให้บริการ น้อยกว่า 5 ชั่วโมงแรก<br>PLAN B เหมาะกับการให้บริการ ตั้งแต่ 6 ชั่วโมงขึ้นไป"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "fitd-fitness"
   },
   {
-    "q": "Mock Question 4?",
+    "q": "ข้อ 4. นักวิจัยคนใดเขียนรายงานสรุปจำนวนแบคทีเรียในชั่วโมงที่ 4 ไม่ถูกต้อง",
     "c": [
-      "Choice A 4",
-      "Choice B 4",
-      "Choice C 4",
-      "Choice D 4"
+      "อัลเบิร์ตรายงานว่าจำนวนแบคทีเรียสายพันธุ์ A น้อยกว่าสายพันธุ์ C อยู่ 28 เซลล์",
+      "ชาร์ลรายงานว่าจำนวนแบคทีเรียสายพันธุ์ A และสายพันธุ์ B มีจำนวนเท่ากัน",
+      "มารีรายงานว่าจำนวนแบคทีเรียสายพันธุ์ C มีจำนวนมากที่สุด",
+      "โรซาลินด์รายงานว่าจำนวนแบคทีเรียรวมทุกสายพันธ์มีจำนวน 13,600 เซลล์"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "bacteria"
   },
   {
-    "q": "Mock Question 5?",
+    "q": "ข้อ 5. หากแบคทีเรียทั้ง 3 สายพันธุ์มีลักษณะการแพร่พันธุ์ที่คงตามรูปแบบข้างต้นต่อไปเรื่อย ๆ แล้วต้องใช้เวลาอย่างน้อยกี่ชั่วโมงแบคทีเรียทุกสายพันธุ์จึงจะมีจำนวนเกิน 5,000 เซลล์",
     "c": [
-      "Choice A 5",
-      "Choice B 5",
-      "Choice C 5",
-      "Choice D 5"
+      "5 ชั่วโมง",
+      "6 ชั่วโมง",
+      "7 ชั่วโมง",
+      "8 ชั่วโมง"
     ],
-    "a": 0
+    "a": 1,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "bacteria"
   },
   {
-    "q": "Mock Question 6?",
+    "q": "ข้อ 6. หากเริ่มเพาะแบคทีเรียแต่ละสายพันธุ์จำนวน 400 เซลล์ที่เวลาต่างกัน ดังนี้\n- แบคทีเรียสายพันธุ์ A เริ่มเพาะเมื่อ 12:00\n- แบคทีเรียสายพันธุ์ B เริ่มเพาะเมื่อ 13:00\n- แบคทีเรียสายพันธุ์ C เริ่มเพาะเมื่อ 15:00\nถ้าต้องการใช้แบคทีเรียในการศึกษาอย่างน้อยสายพันธุ์ละ 10,000 เซลล์ ณ เวลาดังข้อใดจะมีจำนวนแบคทีเรียในแต่ละสายพันธุ์เพียงพอสำหรับศึกษาตามที่ระบุ",
     "c": [
-      "Choice A 6",
-      "Choice B 6",
-      "Choice C 6",
-      "Choice D 6"
+      "เวลา 18:00 มีเพียงสายพันธุ์ A ที่มีจำนวนเพียงพอสำหรับศึกษา",
+      "เวลา 20:00 มีเพียงสายพันธุ์ B ที่มีจำนวนเพียงพอสำหรับศึกษา",
+      "เวลา 22:00 เฉพาะสายพันธุ์ B และสายพันธุ์ C ที่มีจำนวนเพียงพอสำหรับศึกษา",
+      "เวลา 00:00 เฉพาะสายพันธุ์ A และสายพันธุ์ C ที่มีจำนวนเพียงพอสำหรับศึกษา"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "bacteria"
   },
   {
-    "q": "Mock Question 7?",
+    "q": "ข้อ 7. ถ้าคุณเต้ต้องการปูกระเบื้องพื้นที่บริเวณสีขาว ต้องใช้กระเบื้องอย่างน้อยกี่แผ่น หากกระเบื้องมีขนาด50 เซนติเมตร x 50 เซนติเมตร",
     "c": [
-      "Choice A 7",
-      "Choice B 7",
-      "Choice C 7",
-      "Choice D 7"
+      "33 แผ่น",
+      "82 แผ่น",
+      "324 แผ่น",
+      "819 แผ่น"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "gelato"
   },
   {
-    "q": "Mock Question 8?",
+    "q": "ข้อ 8. จากแบบการวางโต๊ะเดิมในร้านมีลักษณะ ดังรูป\n<img src=\"../assets/images/questions/math/image3.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nถ้าคุณเต้ต้องการจัดผังการวางโต๊ะใหม่ โดยมีเงื่อนไข ดังนี้\n - มีโต๊ะคู่เหลือเพียงคู่เดียว ส่วนที่เหลือแยกเป็นโต๊ะเดี่ยว\n - โต๊ะเดี่ยวแต่ละตัวต้องอยู่ห่างจากโต๊ะตัวอื่น อย่างน้อย 1.5 เมตร\nแล้วคุณเต้ต้องจัดโต๊ะตามขั้นตอนในข้อใดต่อไปนี้ จึงจะสอดคล้องกับเงื่อนไขข้างต้น",
     "c": [
-      "Choice A 8",
-      "Choice B 8",
-      "Choice C 8",
-      "Choice D 8"
+      "โต๊ะ B เลื่อนไปทางซ้าย 1.5 เมตร โต๊ะ E เลื่อนไปทางขวา 1.5 เมตร    และโต๊ะ F เลื่อนไปทางซ้าย 1.5 เมตร",
+      "โต๊ะ C เลื่อนไปลง 1.5 เมตร โต๊ะ E เลื่อนไปทางขวา 1.5 เมตร          และโต๊ะ F เลื่อนไปทางซ้าย 3 เมตร",
+      "โต๊ะ B เลื่อนไปทางซ้าย 3 เมตร โต๊ะ E เลื่อนไปทางขวา 3 เมตร    และโต๊ะ F เลื่อนไปทางซ้าย 1.5 เมตร",
+      "โต๊ะ B เลื่อนไปทางซ้าย 1.5 เมตร   และโต๊ะ F เลื่อนไปทางซ้าย 1.5 เมตรแล้วเลื่อนขึ้น 1.5 เมตร"
     ],
-    "a": 0
+    "a": 2,
+    "img": "../assets/images/questions/math/image3.png",
+    "showImg": false,
+    "scenarioId": "gelato"
   },
   {
-    "q": "Mock Question 9?",
+    "q": "ข้อ 9. จากภาพมุมมอง 3 มิติ ของเคาน์เตอร์ ที่กำหนดให้\n<img src=\"../assets/images/questions/math/image5.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nข้อใดแสดงภาพมุมมองต่าง ๆ ได้ถูกต้อง",
     "c": [
-      "Choice A 9",
-      "Choice B 9",
-      "Choice C 9",
-      "Choice D 9"
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;\"><tr><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image6.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านบน</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image7.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านหน้า</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image8.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านข้าง</div></td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;\"><tr><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image9.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านบน</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image7.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านหน้า</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image8.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านข้าง</div></td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;\"><tr><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image9.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านบน</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image7.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านหน้า</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image10.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านข้าง</div></td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;\"><tr><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image6.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านบน</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image11.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านหน้า</div></td><td style=\"border:1px solid #7c673d;padding:4px 2px;text-align:center;vertical-align:top;background:#ffffff;\"><img src=\"../assets/images/questions/math/image10.png\" style=\"max-height:72px;max-width:100%;vertical-align:middle;margin:2px auto;background:#fff;padding:2px;border-radius:3px;display:block;\" /><div style=\"font-size:12px;line-height:1.25;color:#1a1a1a;font-weight:600;margin-top:2px;white-space:normal;\">มุมมองด้านข้าง</div></td></tr></table>"
     ],
-    "a": 0
+    "a": 0,
+    "img": "../assets/images/questions/math/image5.png",
+    "showImg": false,
+    "scenarioId": "gelato"
   },
   {
-    "q": "Mock Question 10?",
+    "q": "ข้อ 10. ถ้าสมชายติดตั้งแผงโซลาร์เซลล์บนหลังคาบ้านให้ได้จำนวนมากที่สุด ตามเงื่อนไขที่วิศวกรกำหนด นายสมชายจะต้องใช้เวลาประมาณกี่เดือน จึงจะประหยัดค่าไฟฟ้าสะสมได้เท่ากับเงินที่จ่ายสำหรับการติดตั้งแผงโซลาร์เซลล์\n<img src=\"../assets/images/questions/math/image12.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />",
     "c": [
-      "Choice A 10",
-      "Choice B 10",
-      "Choice C 10",
-      "Choice D 10"
+      "ประมาณ 29 เดือน",
+      "ประมาณ 31 เดือน",
+      "ประมาณ 33 เดือน",
+      "ประมาณ 35 เดือน"
     ],
-    "a": 0
+    "a": 1,
+    "img": "../assets/images/questions/math/image12.png",
+    "showImg": false,
+    "scenarioId": "solar"
   },
   {
-    "q": "Mock Question 11?",
+    "q": "ข้อ 11. นายสมชายต้องการซื้อที่ดินเพื่อปลูกบ้าน โดยต้องการที่ดินที่มีพื้นที่ใช้สอยมากที่สุด ถ้านายหน้าขายที่ดินแห่งหนึ่งได้ทำการเสนอขายที่ดิน 3 แปลง ในราคาเดียวกัน ซึ่งจัดทำแผนผังที่ดินโดยใช้มาตราส่วนเดียวกับแผนผังหลังคา และที่ดินแต่ละแปลงมีรูปร่างดังนี้\n<img src=\"../assets/images/questions/math/image13.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">A</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">B</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">C</td></tr></table>\nกำหนดให้ แต่ละช่องเป็นสี่เหลี่ยมจัตุรัสยาวด้านละ 1 เซนติเมตร\nแล้วนายสมชายควรซื้อที่ดินแปลงใดมากที่สุด เพราะเหตุใด",
     "c": [
-      "Choice A 11",
-      "Choice B 11",
-      "Choice C 11",
-      "Choice D 11"
+      "แปลง A เพราะมีขนาดพื้นที่มากที่สุด คือ 90 ตารางเมตร",
+      "แปลง B เพราะมีขนาดพื้นที่มากที่สุด คือ 86 ตารางเมตร",
+      "แปลง C เพราะมีขนาดพื้นที่มากที่สุด คือ 92 ตารางเมตร",
+      "แปลงใดก็ได้ เพราะมีขนาดพื้นที่เท่ากัน คือ 86 ตารางเมตร"
     ],
-    "a": 0
+    "a": 0,
+    "img": "../assets/images/questions/math/image13.png",
+    "showImg": false,
+    "scenarioId": "solar"
   },
   {
-    "q": "Mock Question 12?",
+    "q": "ข้อ 12. ระยะทางที่สั้นที่สุดจากบ้านไปโรงเรียนตรงกับข้อใด",
     "c": [
-      "Choice A 12",
-      "Choice B 12",
-      "Choice C 12",
-      "Choice D 12"
+      "10 กิโลเมตร",
+      "12 กิโลเมตร",
+      "14 กิโลเมตร",
+      "16 กิโลเมตร"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "shortest-path"
   },
   {
-    "q": "Mock Question 13?",
+    "q": "ข้อ 13. ถ้าครูท่านหนึ่งต้องเติมน้ำมันเพื่อไป – กลับระหว่างบ้านและโรงเรียนเป็นจำนวน 5 วัน ควรเติมน้ำมันอย่างน้อยกี่ลิตร (น้ำมัน 1 ลิตร ต่อระยะทาง 8 กิโลเมตร)",
     "c": [
-      "Choice A 13",
-      "Choice B 13",
-      "Choice C 13",
-      "Choice D 13"
+      "5 ลิตร",
+      "10 ลิตร",
+      "15 ลิตร",
+      "20 ลิตร"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "shortest-path"
   },
   {
-    "q": "Mock Question 14?",
+    "q": "ข้อ 14. จากปริมาตรอากาศต่อ 1 คน อยู่ที่ประมาณ 6 ลิตรต่อนาที ถ้ารถไฟฟ้าใช้ระยะเวลาเดินทางจากต้นทางไปยังปลายทาง 30 นาที แล้วปริมาตรอากาศในรถไฟฟ้า 1 ตู้ จะเพียงพอต่อผู้โดยสารมากที่สุดกี่คน",
     "c": [
-      "Choice A 14",
-      "Choice B 14",
-      "Choice C 14",
-      "Choice D 14"
+      "750 คน",
+      "1,000 คน",
+      "1,250 คน",
+      "1,500 คน"
     ],
-    "a": 0
+    "a": 1,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "train"
   },
   {
-    "q": "Mock Question 15?",
+    "q": "ข้อ 15. ถ้านักเรียนและเพื่อนอีก 5 คน เดินทางโดยรถไฟฟ้าขบวนนี้ แต่ที่ว่างเหลืออยู่เพียง 3 ตู้ ตู้ละ 2 คน\nแล้วจะมีวิธีการจับคู่ทั้งหมดกี่วิธี",
     "c": [
-      "Choice A 15",
-      "Choice B 15",
-      "Choice C 15",
-      "Choice D 15"
+      "3 วิธี",
+      "6 วิธี",
+      "12 วิธี",
+      "15 วิธี"
     ],
-    "a": 0
+    "a": 3,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "train"
   },
   {
-    "q": "Mock Question 16?",
+    "q": "ข้อ 16. ถ้ากิจกรรมพิเศษ World Boss: Ancient Dragon จะเปิดให้เข้าร่วมอีก 20 วัน แล้วผู้เล่นคนใดสามารถเตรียมอุปกรณ์ได้ครบตามที่กำหนด",
     "c": [
-      "Choice A 16",
-      "Choice B 16",
-      "Choice C 16",
-      "Choice D 16"
+      "ปองและปรายสามารถเตรียมอุปกรณ์ได้ครบทั้งคู่",
+      "ปองเตรียมอุปกรณ์ได้ครบ แต่ปรายเตรียมไม่ครบ",
+      "ปรายเตรียมอุปกรณ์ได้ครบ แต่ปองเตรียมไม่ครบ",
+      "ปองและปรายไม่สามารถเตรียมอุปกรณ์ได้ครบทั้งคู่"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "boss-quest"
   },
   {
-    "q": "Mock Question 17?",
+    "q": "ข้อ 17. นนท์เป็นผู้เล่นใหม่เลือกเล่นอาชีพ Mage ซึ่งเหลือเวลาอีก 15 วันเท่านั้น ถ้านนท์ได้คริสตัลจากภารกิจรายวัน 300 เม็ด แล้วนนท์ควรเติมเงินอย่างน้อยที่สุดกี่บาท จึงสามารถเข้าร่วมล่าบอสระดับตำนานได้",
     "c": [
-      "Choice A 17",
-      "Choice B 17",
-      "Choice C 17",
-      "Choice D 17"
+      "นนท์ต้องเติมเงินอย่างน้อย 200 บาท ก่อนช่วงเวลากิจกรรม World Boss: Ancient Dragon",
+      "นนท์ต้องเติมเงินอย่างน้อย 350 บาท ก่อนช่วงเวลากิจกรรม World Boss: Ancient Dragon",
+      "นนท์ต้องเติมเงินอย่างน้อย 120 บาท ในช่วงเวลากิจกรรม World Boss: Ancient Dragon",
+      "นนท์ต้องเติมเงินอย่างน้อย 160 บาท ในช่วงเวลากิจกรรม World Boss: Ancient Dragon"
     ],
-    "a": 0
+    "a": 3,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "boss-quest"
   },
   {
-    "q": "Mock Question 18?",
+    "q": "ข้อ 18. ปองควรเลือกดาบราชันสงครามในข้อใด ถ้าปองโจมตีทั้งหมด 70 ครั้ง แล้วจะโจมตีพลาดน้อยที่สุด",
     "c": [
-      "Choice A 18",
-      "Choice B 18",
-      "Choice C 18",
-      "Choice D 18"
+      "ดาบราชันสงครามสีแดง มีโอกาสโจมตีเข้าเป้า 80%",
+      "ดาบราชันสงครามสีน้ำเงิน ทุก ๆ การโจมตี 6 ครั้ง จะโจมตีเข้าเป้า 5 ครั้งเสมอ",
+      "ดาบราชันสงครามสีเขียว การโจมตี 50 ครั้งแรก เข้าเป้าแน่นอน    แต่การโจมตีหลังจากนั้นจะเข้าเป้า 50%",
+      "ดาบราชันสงครามสีเหลือง ทุก ๆ การโจมตีครั้งที่ 10, 20, 30, 40, …     จะเข้าเป้า 10, 9, 8, 7, …  ครั้งตามลำดับ"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "boss-quest"
   },
   {
-    "q": "Mock Question 19?",
+    "q": "ข้อ 19. ถ้าแพลตฟอร์มซื้อขายออนไลน์ ShopStar จัดประกวด \"ShopStar Excellence Award\"เพื่อมอบรางวัลให้กับร้านค้าที่ให้บริการได้ยอดเยี่ยมที่สุดแห่งปี และมีการพัฒนาคุณภาพการบริการอย่างต่อเนื่อง โดยร้านค้าที่มีสิทธิ์เข้าชิงรางวัลนี้ต้องได้รับตรา ShopStar Silver หรือ ShopStar Gold แล้วร้านค้าใดควรได้รับรางวัล \"ShopStar Excellence Award\" และมีคะแนนรีวิวสุทธิเฉลี่ยต่อเดือนเท่าใด\n(คะแนนรีวิวสุทธิ = ผลรวมของคะแนนโพสต์รีวิวทั้งหมด)",
     "c": [
-      "Choice A 19",
-      "Choice B 19",
-      "Choice C 19",
-      "Choice D 19"
+      "Sweet Bloom ควรได้รับรางวัล และมีคะแนนเฉลี่ย +13.33 ต่อเดือน",
+      "Cake Cottage ควรได้รับรางวัล และมีคะแนนเฉลี่ย +14.33 ต่อเดือน",
+      "Cloud Cake ควรได้รับรางวัล และมีคะแนนเฉลี่ย +11.67 ต่อเดือน",
+      "Sugar House ควรได้รับรางวัล และมีคะแนนเฉลี่ย +9.67 ต่อเดือน"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "product-review"
   },
   {
-    "q": "Mock Question 20?",
+    "q": "ข้อ 20. ร้านเค้ก Sweet Bloom ทำการเชิญชวนให้ลูกค้าเข้าร่วมกิจกรรม \"Review & Save\" ซึ่งเป็นกิจกรรมสำหรับลูกค้าที่รีวิวสินค้าเพื่อสะสม Review Point แลกรับส่วนลดในการซื้อครั้งถัดไป โดยทุก ๆ 100 Review Point สามารถแลกเป็น ส่วนลด 20 บาท ซึ่งให้ Review Point จากการรีวิวสินค้า ดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">กิจกรรม</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">Review Point</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ส่งรีวิวสินค้า</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"รสชาติดี\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"ตรงปก\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"บรรจุภัณฑ์ดี\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"จัดส่งรวดเร็ว\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แนบรูปภาพ</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">10</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แนบวิดีโอ</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td></tr></table>\nวินต้องการซื้อเค้กวันเกิดราคา 460 บาท และมี Review Point สะสมอยู่แล้ว 320 คะแนน ถ้าวินมีเงิน 400 บาท และรีวิวสินค้า ทุกครั้ง ครบทุกกิจกรรม ตามตารางข้างต้น แล้ววินต้องรีวิวสินค้า อย่างน้อยกี่ครั้ง จึงจะสามารถใช้ส่วนลดซื้อเค้กได้โดยไม่ต้องเพิ่มเงินสด",
     "c": [
-      "Choice A 20",
-      "Choice B 20",
-      "Choice C 20",
-      "Choice D 20"
+      "3 ครั้ง",
+      "4 ครั้ง",
+      "5 ครั้ง",
+      "6 ครั้ง"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "product-review"
   },
   {
-    "q": "Mock Question 21?",
+    "q": "ข้อ 21. ร้าน Sweet Bloom ขายเค้ก 3 ขนาด ดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ขนาดเค้ก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เส้นผ่านศูนย์กลาง</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ราคาปกติ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เล็ก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">12 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">379 บาท</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">กลาง</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">18 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">629 บาท</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ใหญ่</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">24 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">899 บาท</td></tr></table>\nหมายเหตุเค้กทุกขนาดมี ความสูงเท่ากัน\nบาสต้องการซื้อเค้กขนาดใหญ่ จากร้าน Sweet Bloom แต่ทางร้านแจ้งว่าเค้กขนาดใหญ่หมด ทางร้าน Sweet Bloom จึงเสนอทางเลือกเป็น “เค้กขนาดกลาง 1 ก้อน และเค้กขนาดเล็ก 1 ก้อน”ถ้าบาสต้องการได้รับปริมาณเค้กมากที่สุด โดยไม่ต้องจ่ายเงินเพิ่ม บาสควรตัดสินใจอย่างไร",
     "c": [
-      "Choice A 21",
-      "Choice B 21",
-      "Choice C 21",
-      "Choice D 21"
+      "รับข้อเสนอของร้าน เพราะราคาปกติของเค้กที่ได้รับรวมกัน สูงกว่าราคาที่จ่าย",
+      "รับข้อเสนอของร้าน เพราะเส้นผ่านศูนย์กลางรวมของเค้กทั้งสองก้อนมากกว่าเค้กขนาดใหญ่",
+      "ปฏิเสธข้อเสนอ เพราะปริมาณเค้กที่ได้รับน้อยกว่าเค้กขนาดใหญ่ 1 ถาด",
+      "ปฏิเสธข้อเสนอ เพราะเค้กแต่ละก้อนที่เสนอมาราคาไม่เท่ากับเค้กขนาดใหญ่    จึงไม่คุ้มที่จะเปลี่ยนสินค้า"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "product-review"
   },
   {
-    "q": "Mock Question 22?",
+    "q": "ข้อ 22. ถ้านักเรียนได้รับผลประเมินจาก สถาบัน A ว่าสอบติด และจากสถาบัน B ว่าสอบไม่ติดแล้วนักเรียนควรเชื่อสถาบันใด",
     "c": [
-      "Choice A 22",
-      "Choice B 22",
-      "Choice C 22",
-      "Choice D 22"
+      "เชื่อสถาบัน A เพราะ โอกาสของผลประเมินว่าสอบติด แล้วสอบติดจริงของสถาบัน A คือ 90%     สูงกว่า โอกาสของผลประเมินว่าสอบไม่ติด แล้วสอบไม่ติดจริงของสถาบัน B คือ 85%",
+      "เชื่อสถาบัน A เพราะ โอกาสของผลประเมินว่าสอบติด แล้วสอบติดจริงของสถาบัน A คือ 80%     สูงกว่า โอกาสของผลประเมินว่าสอบไม่ติด แล้วสอบไม่ติดจริงของสถาบัน B คือ 72.5%",
+      "เชื่อสถาบัน B เพราะ โอกาสของผลประเมินว่าสอบไม่ติด แล้วสอบไม่ติดจริงของสถาบัน B คือ    85% สูงกว่า โอกาสของผลประเมินว่าสอบติด แล้วสอบติดจริงของสถาบัน A คือ 80%",
+      "เชื่อสถาบัน B เพราะ โอกาสของผลประเมินว่าสอบไม่ติด แล้วสอบไม่ติดจริงของสถาบัน B คือ    95% สูงกว่า โอกาสของผลประเมินว่าสอบติด แล้วสอบติดจริงของสถาบัน A คือ 80%"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "tutoring-institute"
   },
   {
-    "q": "Mock Question 23?",
+    "q": "ข้อ 23. ถ้าสถาบัน A ต้องการสร้างแผนภูมิวงกลมแสดงสัดส่วนนักเรียนที่ได้รับผลประเมินว่าสอบติดและสอบไม่ติดเทียบกับการสอบติดจริงและสอบไม่ติดจริง แล้วแผนภูมิวงกลมในข้อใดถูกต้อง",
     "c": [
-      "Choice A 23",
-      "Choice B 23",
-      "Choice C 23",
-      "Choice D 23"
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;background:#fff;\"><tr><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_a_left.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_a_right.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td></tr><tr><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบติด”</td><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบไม่ติด”</td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;background:#fff;\"><tr><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_b_left.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_b_right.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td></tr><tr><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบติด”</td><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบไม่ติด”</td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;background:#fff;\"><tr><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_c_left.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_c_right.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td></tr><tr><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบติด”</td><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบไม่ติด”</td></tr></table>",
+      "<table style=\"width:100%;border-collapse:collapse;margin:0;table-layout:fixed;background:#fff;\"><tr><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_d_left.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td><td style=\"border:1px solid #7c673d;padding:8px;text-align:center;vertical-align:middle;background:#fff;\"><img src=\"../assets/images/questions/math/pie_q23_d_right.png\" style=\"max-width:100%;max-height:220px;display:block;margin:0 auto;background:#fff;\" /></td></tr><tr><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบติด”</td><td style=\"border:1px solid #7c673d;padding:4px;text-align:center;color:#1a1a1a;font-weight:600;font-size:12px;background:#fff;\">ผลประเมิน “สอบไม่ติด”</td></tr></table>"
     ],
-    "a": 0
+    "a": 0,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "tutoring-institute"
   },
   {
-    "q": "Mock Question 24?",
+    "q": "ข้อ 24. วินเข้าร่วมงานมหกรรมของเล่น และพบว่าในตู้หมุนกาชาปองเหลือไข่กาชาปองอยู่เพียง 10 ลูกแต่ยังไม่มีผู้ใดได้รับฟิกเกอร์ทองคำ ถ้าวินมีเงิน 50 บาท วินควรเลือกช่องทางใดจึงจะมีโอกาสได้รับฟิกเกอร์ทองคำมากที่สุด และสมเหตุสมผลที่สุด",
     "c": [
-      "Choice A 24",
-      "Choice B 24",
-      "Choice C 24",
-      "Choice D 24"
+      "หมุนผ่านระบบออนไลน์ เพราะ เสียเงินน้อยกว่า 10 บาท",
+      "หมุนผ่านระบบออนไลน์ เพราะ หมุนจากตู้หน้างาน มีผู้เล่นหมุนไปแล้ว 90 ครั้ง แต่ยังไม่มีผู้ใด    ได้รับฟิกเกอร์ทองคำ แสดงว่าโอกาสที่วินจะหมุนแล้วไม่ได้ฟิกเกอร์ทองคำต้องเท่ากับ    ผู้เล่นก่อนหน้าแน่นอน",
+      "หมุนตู้หน้าร้าน เพราะ มีโอกาสได้รับฟิกเกอร์ทองคำในการหมุนครั้งถัดไป 10% ซึ่งสูงกว่า     หมุนผ่านระบบออนไลน์ ที่มีโอกาส 1%",
+      "หมุนตู้หน้าร้าน เพราะ มีโอกาสได้รับฟิกเกอร์ทองคำในการหมุนครั้งถัดไป 90% ซึ่งสูงกว่า    หมุนผ่านระบบออนไลน์ ที่มีโอกาส 1%"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "gacha"
   },
   {
-    "q": "Mock Question 25?",
+    "q": "ข้อ 25. ถ้านัทกล่าวกับนักเรียนว่า “เลือกหมุนผ่านระบบออนไลน์ดีกว่า เพราะหมุนครบ 100 ครั้ง เท่ากับว่ามีโอกาสได้รับฟิกเกอร์ทองคำครบ 100% แน่นอน และเสียเงินเพียง 4,000 บาท” แล้วนักเรียนเห็นด้วยหรือไม่",
     "c": [
-      "Choice A 25",
-      "Choice B 25",
-      "Choice C 25",
-      "Choice D 25"
+      "เห็นด้วย เพราะ หมุนผ่านระบบออนไลน์ ยิ่งหมุนมาก โอกาสที่ได้ฟิกเกอร์ทองคำยิ่งมีมากขึ้น",
+      "เห็นด้วย เพราะ หมุนผ่านระบบออนไลน์ มีโอกาสได้รับฟิกเกอร์ทองคำ 1% เมื่อหมุน 100 ครั้ง     โอกาสจะรวมกันได้ 100% พอดี",
+      "ไม่เห็นด้วย เพราะ หมุนผ่านระบบออนไลน์แต่ละครั้ง เป็นอิสระต่อกัน โอกาสได้รับฟิกเกอร์ทองคำ    ในแต่ละครั้ง จึงเท่ากับร้อยละ 1 เสมอ",
+      "ไม่เห็นด้วย เพราะ หมุนผ่านระบบออนไลน์แต่ละครั้ง ไม่เป็นอิสระต่อกัน โอกาสได้รับฟิกเกอร์    ทองคำในแต่ละครั้ง จึงเท่ากับร้อยละ 1 เสมอ"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "gacha"
   },
   {
-    "q": "Mock Question 26?",
+    "q": "ข้อ 26. หากตู้หมุนไข่กาชาปองหน้างานมีไข่สีต่าง ๆ ได้แก่ สีขาว สีเขียว สีเหลือง และสีแดงถ้าเกรทสุ่มไข่กาชาปองมา 2 ลูก โดยอาจได้ไข่สีเดียวกันหรือต่างกันได้ ซึ่งจากการจดบันทึกสีที่เกรทเคยสุ่มได้มาเป็นดังนี้ ขาวกับขาว, ขาวกับเขียว, ขาวกับแดง, เขียวกับเหลือง, เขียวกับแดง แล้วยังมีวิธีสุ่มสีไข่กาชาปองอีกกี่วิธีที่เกรทยังไม่เคยได้รับ",
     "c": [
-      "Choice A 26",
-      "Choice B 26",
-      "Choice C 26",
-      "Choice D 26"
+      "2 วิธี ได้แก่ ขาวกับเหลือง, เหลืองกับแดง",
+      "5 วิธี ได้แก่ ขาวกับเหลือง, เขียวกับเขียว, เหลืองกับเหลือง, เหลืองกับแดง, แดงกับแดง",
+      "8 วิธี ได้แก่ ขาวกับเหลือง, เขียวกับขาว, เหลืองกับขาว, เหลืองกับเขียว, เหลืองกับแดง, แดงกับขาว,     แดงกับเขียว, แดงกับเหลือง",
+      "11 วิธี ขาวกับเหลือง, เขียวกับขาว, เขียวกับเขียว, เหลืองกับขาว, เหลืองกับเขียว, เหลืองกับเหลือง,    เหลืองกับแดง, แดงกับขาว, แดงกับเขียว, แดงกับเหลือง, แดงกับแดง"
     ],
-    "a": 0
+    "a": 1,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "gacha"
   },
   {
-    "q": "Mock Question 27?",
+    "q": "ข้อ 27. ถ้าไข่กาชาปองสีต่าง ๆ มีจำนวนดังนี้ สีขาว 50 ลูก สีเขียว 30 ลูก สีเหลือง 10 ลูก และสีแดง 10 ลูก โดยฟิกเกอร์ทองคำอยู่ในไข่กาชาปองสีแดงเท่านั้น แล้วคนใดมีโอกาสสุ่มได้ฟิกเกอร์ทองคำมากที่สุด",
     "c": [
-      "Choice A 27",
-      "Choice B 27",
-      "Choice C 27",
-      "Choice D 27"
+      "เคนสุ่มได้กาชาปองสีขาว สีเขียว และสีเหลืองอย่างละลูก",
+      "ป๊อปสุ่มได้กาชาปองสีเหลือง 2 ลูก และสีแดง 1 ลูก",
+      "โจอี้สุ่มได้กาชาปองสีเขียว สีเหลือง และสีแดงอย่างละลูก",
+      "พอร์ชสุ่มได้กาชาปองสีขาว 1 ลูก และสีแดง 2 ลูก"
     ],
-    "a": 0
+    "a": 3,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "gacha"
   },
   {
-    "q": "Mock Question 28?",
+    "q": "ข้อ 28. ประเทศใดเสี่ยงต่อการเกิดภัยพิบัติมากที่สุด",
     "c": [
-      "Choice A 28",
-      "Choice B 28",
-      "Choice C 28",
-      "Choice D 28"
+      "ประเทศ A",
+      "ประเทศ B",
+      "ประเทศ C",
+      "ประเทศ D"
     ],
-    "a": 0
+    "a": 2,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "cell-broadcast"
   },
   {
-    "q": "Mock Question 29?",
+    "q": "ข้อ 29. ค่าเฉลี่ยของเปอร์เซ็นต์จำนวนการเตือนภัยเกี่ยวกับสถานการณ์แผ่นดินไหวที่ส่งให้ประชาชนครบทุกคนของทั้ง 4 ประเทศตรงกับข้อใด",
     "c": [
-      "Choice A 29",
-      "Choice B 29",
-      "Choice C 29",
-      "Choice D 29"
+      "75.5%",
+      "77.5%",
+      "79.5%",
+      "81.5%"
     ],
-    "a": 0
+    "a": 1,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "cell-broadcast"
   },
   {
-    "q": "Mock Question 30?",
+    "q": "ข้อ 30. ถ้าต้องการเพิ่มเปอร์เซ็นต์จำนวนการเตือนภัยเกี่ยวกับสถานการณ์แผ่นดินไหวที่ส่งให้ประชาชนครบทุกคนของทั้ง 4 ประเทศเป็น 90% ควรเพิ่มจำนวนการเตือนภัยที่ถูกต้องรวมกันประมาณกี่ครั้ง",
     "c": [
-      "Choice A 30",
-      "Choice B 30",
-      "Choice C 30",
-      "Choice D 30"
+      "124 ครั้ง",
+      "125 ครั้ง",
+      "129 ครั้ง",
+      "130 ครั้ง"
     ],
-    "a": 0
+    "a": 3,
+    "img": "",
+    "showImg": false,
+    "scenarioId": "cell-broadcast"
   }
 ]
