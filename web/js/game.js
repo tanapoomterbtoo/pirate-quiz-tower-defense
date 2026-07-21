@@ -1292,15 +1292,41 @@ function onScenarioBackdropClick(event) {
     }
 }
 
+function isShortestPathScenario() {
+    if (!gameInstance) return false;
+    const key = (gameInstance.currentScenarioKey || "").toString().toLowerCase();
+    return key === "shortest-path" || key.includes("shortest") || key.includes("ระยะทางที่สั้น");
+}
+
+function syncShortestPathMinigameButton() {
+    const btn = document.getElementById("btn-play-shortest-path");
+    if (!btn) return;
+    if (isShortestPathScenario() && typeof openShortestPathMiniGame === "function") {
+        btn.classList.remove("hidden");
+    } else {
+        btn.classList.add("hidden");
+    }
+}
+
 function openScenarioOverlay() {
     const overlay = document.getElementById("scenario-overlay");
     const content = document.getElementById("scroll-content");
     if (overlay && content && gameInstance && gameInstance.currentScenario) {
+        // สถานการณ์ระยะทางสั้นสุด → เปิด Mini Game ทันที (แทน parchment)
+        if (isShortestPathScenario() && typeof openShortestPathMiniGame === "function") {
+            overlay.classList.add("hidden");
+            syncAutoScenarioCheckbox();
+            syncShortestPathMinigameButton();
+            openShortestPathMiniGame();
+            return;
+        }
+
         content.innerHTML = (typeof formatHtmlPreserveTags === "function")
             ? formatHtmlPreserveTags(gameInstance.currentScenario)
             : String(gameInstance.currentScenario || "").replace(/>\s+</g, "><").replace(/\n/g, "<br>");
         overlay.classList.remove("hidden");
         syncAutoScenarioCheckbox();
+        syncShortestPathMinigameButton();
         // Images inside scenario parchment should also zoom (not answer choices)
         bindZoomableQuestionImages(content);
         // Trigger KaTeX rendering inside the overlay if present
@@ -1320,6 +1346,9 @@ function openScenarioOverlay() {
 }
 
 function closeScenarioOverlay() {
+    if (typeof closeShortestPathMiniGame === "function" && typeof isShortestPathMiniGameOpen === "function") {
+        if (isShortestPathMiniGameOpen()) closeShortestPathMiniGame();
+    }
     const overlay = document.getElementById("scenario-overlay");
     if (overlay) {
         overlay.classList.add("hidden");
@@ -1337,8 +1366,13 @@ window.addEventListener("keydown", (e) => {
         return;
     }
 
-    // Escape closes scenario overlay
+    // Escape: close mini-game / scenario
     if (e.code === "Escape") {
+        if (typeof isShortestPathMiniGameOpen === "function" && isShortestPathMiniGameOpen()) {
+            // minigame จัดการ Escape เอง (ปิดแล้วไปตอบคำถาม)
+            e.preventDefault();
+            return;
+        }
         const overlay = document.getElementById("scenario-overlay");
         if (overlay && !overlay.classList.contains("hidden")) {
             closeScenarioOverlay();
@@ -1347,7 +1381,8 @@ window.addEventListener("keydown", (e) => {
         return;
     }
 
-    // Do not answer while scenario is open
+    // Do not answer while mini-game or scenario is open
+    if (typeof isShortestPathMiniGameOpen === "function" && isShortestPathMiniGameOpen()) return;
     const scenarioOpen = document.getElementById("scenario-overlay");
     if (scenarioOpen && !scenarioOpen.classList.contains("hidden")) return;
 

@@ -15,7 +15,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=20">
     <style>
         /* Admin iframe preview: lock design canvas so parent can scale 1:1 with game */
         html.admin-preview, html.admin-preview body {
@@ -157,6 +157,7 @@
                             <!-- Dynamic scenario content goes here -->
                         </div>
                         <div class="scenario-footer-actions">
+                            <button type="button" id="btn-play-shortest-path" class="btn btn-play-minigame hidden" onclick="openShortestPathMiniGame()">🚗 เล่น Mini Game (กดทีละจุด)</button>
                             <button type="button" class="btn btn-primary btn-close-scenario-main" onclick="closeScenarioOverlay()">ปิดและไปตอบคำถาม</button>
                             <label class="scenario-auto-toggle" title="จำค่าไว้ในเครื่องนี้">
                                 <input type="checkbox" id="chk-auto-scenario" onchange="onAutoScenarioToggle(this)">
@@ -234,6 +235,7 @@
     <script src="js/config.js"></script>
     <script src="js/quiz.js"></script>
     <script src="js/entities.js"></script>
+    <script src="js/minigame-shortest-path.js"></script>
     <script src="js/game.js"></script>
 </body>
 </html>

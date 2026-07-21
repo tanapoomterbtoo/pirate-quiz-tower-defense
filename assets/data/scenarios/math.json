@@ -32,7 +32,7 @@
     {
         "id": "shortest-path",
         "title": "ระยะทางที่สั้นที่สุด",
-        "body": "สถานการณ์ “ระยะทางที่สั้นที่สุด”\n<img src=\"../assets/images/questions/math/image14.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nจากแผนภาพที่กำหนดให้",
+        "body": "สถานการณ์ “ระยะทางที่สั้นที่สุด”\n<img src=\"../assets/images/questions/math/image14.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nจากแผนภาพที่กำหนดให้ — เส้นทางจาก<strong>บ้าน</strong>ไป<strong>โรงเรียน</strong>มีหลายเส้น ถนนเป็น <strong>2 เลน</strong> และสามารถวิ่งสวนทางกันได้\n\n<div style=\"margin:12px 0;padding:10px 12px;background:rgba(30,144,255,0.12);border:1.5px solid #1e90ff;border-radius:8px;color:#0c0e17;\"><strong>🚗 Mini Game:</strong> เมื่อเปิดสถานการณ์นี้ เกมจะเข้า <em>Mini Game กดทีละจุด</em> อัตโนมัติ (แผนที่ซ้าย · ปุ่มทิศขวา) เพื่อหาเส้นทางสั้นสุดจากบ้านไปโรงเรียน</div>",
         "images": [
             "../assets/images/questions/math/image14.png"
         ],
