@@ -142,6 +142,7 @@ canvas {
 .game-title .highlight {
     color: #ffd700;
     background: linear-gradient(90deg, #ffd700, #ffaa00);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 20px rgba(255, 170, 0, 0.35));
@@ -174,6 +175,7 @@ canvas {
 .red-glow {
     color: #ff3b30;
     background: linear-gradient(180deg, #ff6b6b, #e60000);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 25px rgba(230, 0, 0, 0.55));
@@ -182,6 +184,7 @@ canvas {
 .green-glow {
     color: #4cd964;
     background: linear-gradient(180deg, #8effa3, #22b13c);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 25px rgba(34, 177, 60, 0.55));
