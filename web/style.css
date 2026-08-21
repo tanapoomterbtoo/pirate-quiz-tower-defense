@@ -127,6 +127,117 @@ canvas {
     animation: slideUp 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+/* Post-test start menu — denser so title + literacies + pass rule fit 720p */
+.overlay-content.menu-content {
+    padding: 1.45rem 2.1rem 1.55rem;
+    max-width: 680px;
+    max-height: 92%;
+    overflow-y: auto;
+}
+
+.overlay-content.menu-content .game-title {
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+}
+
+.literacy-list {
+    list-style: none;
+    margin: 0 auto 1.15rem;
+    padding: 0.7rem 1.1rem;
+    max-width: 34rem;
+    text-align: left;
+    color: #cad8ee;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    font-weight: 500;
+    background: rgba(255, 215, 0, 0.04);
+    border: 1px solid rgba(197, 160, 89, 0.28);
+    border-radius: 8px;
+}
+
+.literacy-list li {
+    position: relative;
+    padding-left: 1.15rem;
+}
+
+.literacy-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffd700;
+}
+
+.literacy-list.literacy-list-single {
+    text-align: center;
+}
+
+.literacy-list.literacy-list-single li {
+    padding-left: 0;
+}
+
+.literacy-list.literacy-list-single li::before {
+    display: none;
+}
+
+.score-info-box {
+    display: inline-block;
+    margin: 0 auto 0.9rem;
+    font-size: 1.05rem;
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.05);
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: 1px dashed rgba(255, 215, 0, 0.25);
+}
+
+.score-line {
+    font-size: 1.15rem;
+    text-align: center;
+    margin: 0;
+}
+
+#user-score-display {
+    font-weight: 800;
+    font-size: 1.35rem;
+}
+
+.pass-rule {
+    display: block;
+    margin: 0 auto 1.25rem;
+    max-width: 34rem;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #c5d0e4;
+    text-align: center;
+}
+
+@media (max-height: 620px) {
+    .overlay-content.menu-content {
+        padding: 1.1rem 1.4rem 1.2rem;
+    }
+    .overlay-content.menu-content .game-title {
+        font-size: 1.85rem;
+        margin-bottom: 0.55rem;
+    }
+    .literacy-list {
+        font-size: 0.92rem;
+        padding: 0.5rem 0.85rem;
+        margin-bottom: 0.75rem;
+    }
+    .score-info-box {
+        margin-bottom: 0.85rem;
+        padding: 0.55rem 0.9rem 0.65rem;
+    }
+    .pass-rule {
+        font-size: 0.8rem;
+    }
+}
+
 /* Typography styles */
 .game-title {
     font-family: var(--font-header);
@@ -154,6 +265,10 @@ canvas {
     margin-bottom: 3rem;
     line-height: 1.7;
     font-weight: 300;
+}
+
+.overlay-content.menu-content .game-subtitle {
+    margin-bottom: 1.15rem;
 }
 
 .state-title {

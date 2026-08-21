@@ -15,7 +15,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=20">
+    <link rel="stylesheet" href="style.css?v=24">
     <style>
         /* Admin iframe preview: lock design canvas so parent can scale 1:1 with game */
         html.admin-preview, html.admin-preview body {
@@ -115,13 +115,15 @@
 
                 <!-- MAIN MENU OVERLAY -->
                 <div id="menu-overlay" class="overlay-panel">
-                    <div class="overlay-content">
-                        <h1 class="game-title">โจรสลัดประลองปัญญา<br><span class="highlight">ป้องกันหอคอย</span></h1>
-                        <p class="game-subtitle">ตอบคำถามให้ถูกต้องเพื่อยิงปืนใหญ่และปกป้องเรือของคุณ!</p>
-                        <div id="score-info-box" style="margin-bottom: 2.2rem; font-size: 1.15rem; color: #ffd700; background: rgba(255, 215, 0, 0.05); padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px dashed rgba(255, 215, 0, 0.25); display: inline-block;">
-                            คะแนนที่ได้รับ: <span id="user-score-display" style="font-weight: bold; font-size: 1.3rem;">100</span>
+                    <div class="overlay-content menu-content">
+                        <h1 class="game-title">ความฉลาดรู้<br><span class="highlight">(แบบทดสอบหลังเรียน)</span></h1>
+                        <ul class="literacy-list game-subtitle literacy-list-single">
+                            <li>ด้านคณิตศาสตร์ (Mathematical Literacy)</li>
+                        </ul>
+                        <div id="score-info-box" class="score-info-box">
+                            <div class="score-line">คะแนนที่ได้รับ: <span id="user-score-display">100</span></div>
                         </div>
-                        <br>
+                        <p class="pass-rule">ผู้เรียนต้องทำแบบทดสอบให้ได้คะแนนมากกว่าร้อยละ 60 จึงจะผ่านภารกิจและได้รับเกียรติบัตร โดยสามารถใช้ไอเท็มตัวช่วยที่สะสมได้ระหว่างการเรียนเพื่อช่วยในการทำแบบทดสอบ</p>
                         <button id="btn-start" class="btn btn-primary" onclick="startGame()" disabled>กำลังโหลด...</button>
                     </div>
                 </div>
@@ -232,10 +234,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/config.js"></script>
-    <script src="js/quiz.js"></script>
-    <script src="js/entities.js"></script>
-    <script src="js/minigame-shortest-path.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/config.js?v=22"></script>
+    <script src="js/quiz.js?v=22"></script>
+    <script src="js/entities.js?v=22"></script>
+    <script src="js/minigame-shortest-path.js?v=22"></script>
+    <script src="js/game.js?v=22"></script>
 </body>
 </html>

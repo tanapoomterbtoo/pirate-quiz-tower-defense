@@ -1059,19 +1059,57 @@ function getSubjectConfig() {
     const norm = sub.trim().toLowerCase();
     
     if (norm === "science" || norm === "วิทยาศาสตร์") {
-        return { file: "science.json", set: "Monster_Set2", name: "วิทยาศาสตร์", fallback: FALLBACK_SCIENCE };
+        return {
+            file: "science.json",
+            set: "Monster_Set2",
+            name: "วิทยาศาสตร์",
+            fallback: FALLBACK_SCIENCE,
+            literacy: ["ด้านวิทยาศาสตร์ (Science Competency)"]
+        };
     } else if (norm === "thai" || norm === "ภาษาไทย") {
-        return { file: "thai.json", set: "Monster_Set3", name: "ภาษาไทย", fallback: FALLBACK_THAI };
+        return {
+            file: "thai.json",
+            set: "Monster_Set3",
+            name: "ภาษาไทย",
+            fallback: FALLBACK_THAI,
+            literacy: ["ด้านการอ่าน (Reading Literacy)"]
+        };
     } else if (norm === "exam" || norm === "สอบรวม" || norm === "รวมวิชา") {
-        return { file: "exam.json", set: "mixed", name: "สอบรวม", fallback: FALLBACK_EXAM };
+        return {
+            file: "exam.json",
+            set: "mixed",
+            name: "สอบรวม",
+            fallback: FALLBACK_EXAM,
+            literacy: [
+                "ด้านการอ่าน (Reading Literacy)",
+                "ด้านคณิตศาสตร์ (Mathematical Literacy)",
+                "ด้านวิทยาศาสตร์ (Science Competency)"
+            ]
+        };
     } else {
-        return { file: "math.json", set: "Monster_Set1", name: "คณิตศาสตร์", fallback: FALLBACK_MATH };
+        return {
+            file: "math.json",
+            set: "Monster_Set1",
+            name: "คณิตศาสตร์",
+            fallback: FALLBACK_MATH,
+            literacy: ["ด้านคณิตศาสตร์ (Mathematical Literacy)"]
+        };
     }
 }
 
 const subjectConfig = getSubjectConfig();
 window.MONSTER_SET = subjectConfig.set;
 window.SUBJECT_NAME = subjectConfig.name;
+
+function applyMenuLiteracy() {
+    const list = document.querySelector(".literacy-list");
+    if (!list) return;
+    const items = Array.isArray(subjectConfig.literacy) ? subjectConfig.literacy : [];
+    list.innerHTML = items.map((label) => `<li>${label}</li>`).join("");
+    list.classList.toggle("literacy-list-single", items.length === 1);
+}
+window.applyMenuLiteracy = applyMenuLiteracy;
+applyMenuLiteracy();
 
 function indexScenarios(list) {
     SCENARIOS = Array.isArray(list) ? list : [];

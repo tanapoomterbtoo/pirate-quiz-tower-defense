@@ -1083,6 +1083,7 @@ async function initWebGame() {
         }));
         
         gameInstance = new Game();
+        if (typeof applyMenuLiteracy === "function") applyMenuLiteracy();
         if (btnStart) {
             btnStart.disabled = false;
             btnStart.innerText = "ออกเรือ & เริ่มเล่น";
