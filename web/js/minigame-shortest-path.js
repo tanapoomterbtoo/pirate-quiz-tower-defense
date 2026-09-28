@@ -314,7 +314,6 @@
             this.canvas = null;
             this.ctx = null;
             this.hudDist = null;
-            this.hudStatus = null;
             this.btnFinish = null;
             this.dirBar = null;
             this.hintEl = null;
@@ -372,10 +371,6 @@
                                 <span class="sp-stat-label">ระยะทางสะสม</span>
                                 <span class="sp-stat-value" id="sp-dist">0 กม.</span>
                             </div>
-                            <div class="sp-stat">
-                                <span class="sp-stat-label">สถานะ</span>
-                                <span class="sp-stat-value" id="sp-status">ที่บ้าน</span>
-                            </div>
                         </div>
                         <button type="button" class="btn btn-secondary sp-btn-close" id="sp-close" title="ปิด">✕</button>
                     </header>
@@ -404,7 +399,6 @@
             this.canvas = el.querySelector("#sp-canvas");
             this.ctx = this.canvas.getContext("2d");
             this.hudDist = el.querySelector("#sp-dist");
-            this.hudStatus = el.querySelector("#sp-status");
             this.btnFinish = el.querySelector("#sp-finish");
             this.dirBar = el.querySelector("#sp-dirbar");
             this.hintEl = el.querySelector("#sp-hint");
@@ -433,12 +427,11 @@
             if (this.btnFinish) this.btnFinish.classList.add("hidden");
 
             if (!this.mapImg) {
-                if (this.hudStatus) this.hudStatus.textContent = "กำลังโหลด...";
                 try {
                     this.mapImg = await this._loadImage(MAP_SRC);
                 } catch (err) {
                     console.error(err);
-                    if (this.hudStatus) this.hudStatus.textContent = "โหลดแผนที่ไม่สำเร็จ";
+                    if (this.hintEl) this.hintEl.textContent = "โหลดแผนที่ไม่สำเร็จ";
                     return;
                 }
             }
@@ -738,7 +731,6 @@
                 // โค้งเยอะ → ใช้ ease น้อยลง (ความเร็วคงที่กว่า หันทัน)
                 linearMix: Math.min(0.85, turnBudget / Math.PI)
             };
-            if (this.hudStatus) this.hudStatus.textContent = "กำลังไป...";
             this._renderDirButtons();
         }
 
@@ -788,9 +780,6 @@
             this.finished = true;
             this._refreshHud();
             const isShortest = this.distanceKm === TARGET_SHORTEST_KM;
-            if (this.hudStatus) {
-                this.hudStatus.textContent = isShortest ? "พบเส้นทางสั้นที่สุด!" : "ยังไม่ใช่ทางสั้นที่สุด";
-            }
             if (this.hintEl) {
                 this.hintEl.innerHTML = isShortest
                     ? `🎉 พบเส้นทางสั้นที่สุด <strong>${this.distanceKm} กม.</strong> — กด «ไปตอบคำถาม»`
@@ -802,16 +791,6 @@
 
         _refreshHud() {
             if (this.hudDist) this.hudDist.textContent = this.distanceKm + " กม.";
-            if (this.hudStatus && !this.finished) {
-                const opts = this._neighborOptions();
-                if (this.currentId === "home") this.hudStatus.textContent = "ที่บ้าน — เลือกทางออก";
-                else if (opts.length >= 3) this.hudStatus.textContent = "ทางแยก — เลือกเลี้ยวได้";
-                else if (opts.length === 2) this.hudStatus.textContent = "เลือกทางตรงหรือเลี้ยว";
-                else {
-                    const n = NODES[this.currentId];
-                    this.hudStatus.textContent = (n && n.label) || "เลือกจุดถัดไป";
-                }
-            }
         }
 
         _destName(opt) {
