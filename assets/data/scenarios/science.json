@@ -1,1 +1,224 @@
-[]
+[
+  {
+    "id": "science-01",
+    "title": "สถานการณ์ 1",
+    "body": "ในการเข้าค่ายลูกเสือกลุ่มนักเรียนกลุ่มหนึ่งต้มน้ำเปล่าเพื่อชงกาแฟ และอีกกลุ่มหนึ่งต้มน้ำที่ผสมเกลือเพื่อทำอาหารทะเล ที่ความดันบรรยากาศเดียวกัน พบว่าน้ำเปล่าเดือดที่อุณหภูมิ 100 องศาเซลเซียส ส่วนน้ำเกลือเดือดที่อุณหภูมิ 102 องศาเซลเซียส",
+    "order": 1,
+    "images": []
+  },
+  {
+    "id": "science-02",
+    "title": "สถานการณ์ 2",
+    "body": "วิศวกรออกแบบรางรถไฟให้เว้นช่องว่างเล็ก ๆ ระหว่างท่อนราง และมักขึงสายไฟฟ้าแรงสูงระหว่างเสาไฟฟ้าให้หย่อนเล็กน้อยแทนที่จะขึงตึง",
+    "order": 2,
+    "images": []
+  },
+  {
+    "id": "science-03",
+    "title": "สถานการณ์ 3",
+    "body": "เมื่อเปิดขวดน้ำอัดลมที่แช่เย็น\nจะเห็นฟองก๊าซคาร์บอนไดออกไซด์ผุดขึ้นน้อยกว่าเมื่อเปิดขวดน้ำอัดลมที่วางไว้ที่อุณหภูมิห้อง\nและเมื่อเปิดฝาขวด ก็จะเห็นฟองก๊าซผุดขึ้นทันที",
+    "order": 3,
+    "images": []
+  },
+  {
+    "id": "science-04",
+    "title": "สถานการณ์ 4",
+    "body": "นักเรียนทำการทดลองแยกน้ำด้วยไฟฟ้า โดยต่อแบตเตอรี่เข้ากับขั้วโลหะสองขั้ว สมมติเรียกว่าขั้ว A และขั้ว B ที่จุ่มอยู่ในน้ำผสมกรดซัลฟิวริกเจือจาง พบว่ามีฟองแก๊สเกิดขึ้นที่ขั้วทั้งสอง ได้ผลดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ขั้วไฟฟ้า</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปริมาตรแก๊สที่เก็บได้</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ผลการทดสอบ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">A</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2 ส่วน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมื่อนำไม้ขีดไฟที่มีเปลวไฟเข้าใกล้ปากหลอดเก็บแก๊ส เกิดเสียงปุ๊ และเปลวไฟดับ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">B</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1 ส่วน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมื่อนำธูปที่มีถ่านแดงเข้าใกล้ปากหลอดเก็บแก๊ส ถ่านแดงลุกเป็นเปลวไฟสว่างขึ้น</td></tr></table>",
+    "order": 4,
+    "images": []
+  },
+  {
+    "id": "science-05",
+    "title": "สถานการณ์ 5",
+    "body": "นักเรียนใช้น้ำกะหล่ำปลีม่วงเป็นอินดิเคเตอร์ธรรมชาติทดสอบสารละลาย 4 ชนิด เช่น น้ำมะนาว น้ำสบู่ น้ำอัดลม และน้ำยาทำความสะอาดกระจก พบว่าน้ำกะหล่ำปลีม่วงเปลี่ยนเป็นสีแดงในสารละลายที่เป็นกรด และเปลี่ยนเป็นสีเขียวในสารละลายที่เป็นเบส",
+    "order": 5,
+    "images": []
+  },
+  {
+    "id": "science-06",
+    "title": "สถานการณ์ 6",
+    "body": "นักเรียนตั้งสมมติฐานว่า พื้นผิวที่ขรุขระมีแรงเสียดทานมากกว่าพื้นผิวเรียบและต้องการออกแบบการทดลองเพื่อทดสอบสมมติฐานนี้ โดยมีอุปกรณ์ให้เลือกใช้ ได้แก่ กล่องพลาสติก 2 ใบ ใบหนึ่งหนัก 500 กรัม อีกใบหนัก 1,000 กรัม เครื่องชั่งสปริงสำหรับวัดแรงลาก พื้นกระเบื้องเรียบ และพื้นปูยางกันลื่นที่มีผิวขรุขระ",
+    "order": 6,
+    "images": []
+  },
+  {
+    "id": "science-07",
+    "title": "สถานการณ์ 7",
+    "body": "เรือบรรทุกสินค้าขนาดใหญ่สร้างจากแผ่นเหล็กหนา ซึ่งโดยทั่วไปแล้วก้อนเหล็กตันจะจมลงสู่ก้นน้ำทันทีเมื่อปล่อยลงในน้ำ เพราะเหล็กมีความหนาแน่นมากกว่าน้ำ แต่เรือที่สร้างจากเหล็กชนิดเดียวกันกลับลอยน้ำได้ และยังสามารถบรรทุกสินค้าหนักได้อีกหลายพันตันโดยไม่จม วิศวกรออกแบบให้ตัวเรือมีลักษณะเป็นโพรงกลวงขนาดใหญ่ ไม่ใช่เป็นก้อนตันเหมือนเหล็กแท่ง",
+    "order": 7,
+    "images": []
+  },
+  {
+    "id": "science-08",
+    "title": "สถานการณ์ 8",
+    "body": "นักเรียนกลุ่มหนึ่งทดลองใช้ไม้กระดกที่มีจุดหมุนอยู่ตรงกลาง โดยแขวนตุ้มน้ำหนักที่ตำแหน่งต่าง ๆ ทั้งสองด้าน แล้วบันทึกผลว่าไม้กระดกสมดุลหรือไม่ ได้ผลดังตาราง\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ครั้งที่</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">น้ำหนักด้านซ้าย (kg)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ระยะจากจุดหมุน (m)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">น้ำหนักด้านขวา (kg)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ระยะจากจุดหมุน (m)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ผลการทดลอง</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">40</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สมดุล</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">30</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">3</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สมดุล</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">3</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">25</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">25</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สมดุล</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">4</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">40</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ไม่สมดุล</td></tr></table>",
+    "order": 8,
+    "images": []
+  },
+  {
+    "id": "science-09",
+    "title": "สถานการณ์ 9",
+    "body": "เมื่อนักเรียนใส่หลอดดูดน้ำลงในแก้วที่มีน้ำใส จะมองเห็นหลอดดูดน้ำดูเหมือนหักงอตรงบริเวณผิวน้ำ ทั้งที่ในความเป็นจริงหลอดดูดน้ำยังคงตรงอยู่เช่นเดิม",
+    "order": 9,
+    "images": []
+  },
+  {
+    "id": "science-10",
+    "title": "สถานการณ์ 10",
+    "body": "นักเรียนต่อหลอดไฟ 2 ดวงเข้ากับแบตเตอรี่ก้อนเดียวกัน วงจรที่ 1 ต่อแบบเรียงต่อกันเป็นเส้นเดียว วงจรที่ 2 ต่อแบบแยกเป็นสองทางแล้วกลับมาบรรจบกัน เมื่อถอดหลอดไฟดวงหนึ่งออกจากวงจรที่ 1 หลอดไฟอีกดวงดับทันที แต่เมื่อถอดหลอดไฟดวงหนึ่งออกจากวงจรที่ 2 หลอดไฟอีกดวงยังคงสว่างอยู่ตามปกติ",
+    "order": 10,
+    "images": []
+  },
+  {
+    "id": "science-11",
+    "title": "สถานการณ์ 11",
+    "body": "แบคทีเรียที่อยู่ในแหล่งน้ำเป็นสาเหตุของการเกิด \"ไบโอฟิล์ม\" (Biofilm) หรือคราบเมือกชีวภาพที่อุดตันตามท่อน้ำ ไบโอฟิล์มเป็นปัญหาใหญ่ในระดับอุตสาหกรรมมาตั้งแต่ช่วงปี ค.ศ. 1900 นับตั้งแต่มีการขยายตัวของระบบท่อส่งน้ำและหอหล่อเย็นในโรงงาน ปัจจุบันนี้ เรามีความรู้มากเกี่ยวกับกระบวนการเกิดไบโอฟิล์ม ตัวอย่างเช่น:\nแบคทีเรียที่ก่อตัวเป็นไบโอฟิล์ม ใช้อินทรียวัตถุในน้ำเป็นอาหาร\nแบคทีเรียปล่อยสารเมือกเหนียวออกมาเพื่อยึดเกาะกับผิวของท่อน้ำ\nสารเมือกนี้จะสะสมตัวจนทำให้ท่ออุดตัน และสารเคมีบางอย่างในเมือกยังทำให้โลหะเกิดการกัดกร่อน\nการใช้สารทำความสะอาดและการฉีดน้ำแรงดันสูง ช่วยป้องกันการสะสมของไบโอฟิล์ม\nและมีการศึกษาความสัมพัธ์ปริมาณอินทรียวัตถุ กับความหนาของไบโอฟิล์ม ได้ผลดังแผนภาพ\n<img src=\"../assets/images/questions/science/image1.jpeg\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 11,
+    "images": [
+      "../assets/images/questions/science/image1.jpeg"
+    ]
+  },
+  {
+    "id": "science-12",
+    "title": "สถานการณ์ 12",
+    "body": "อินซูลินที่เห็นในขวดสกัดในปัจจุบัน ไม่ใช่อินซูลินที่สกัดจากตับอ่อนของหมูหรือวัวแบบในอดีต แต่อินซูลินเหล่านี้เป็นผลผลิตจากแบคทีเรีย การสร้างอินซูลินด้วยพันธุวิศวกรรม (Genetic Engineering) หมายถึง การตัดต่อและถ่ายทอดรหัสพันธุกรรม นักวิทยาศาสตร์ประสบผลสำเร็จในการสร้างแบคทีเรียที่สามารถผลิตอินซูลินได้เหมือนกับที่ร่างกายมนุษย์ผลิตทุกประการ นักวิทยาศาสตร์ได้ออกแบบกระบวนการนี้ โดยเขานำสารพันธุกรรมสายยาวๆ จากเซลล์ของมนุษย์ (แหล่งที่ 1) จากสายยาวๆ นี้ เขาตัดเอา \"ชิ้นส่วนเล็กๆ\" ที่ทำหน้าที่กำหนดลักษณะการสร้างอินซูลินออกมา แล้วก็นำชิ้นส่วนนี้ไปเชื่อมต่อเข้ากับดีเอ็นเอวงแหวนของแบคทีเรีย (แหล่งที่ 2) ที่ถูกตัดเปิดออกเพื่อเตรียมเป็นตัวพา จากนั้นจึงนำดีเอ็นเอวงแหวนที่เชื่อมต่อสมบูรณ์แล้วนี้ ไปใส่กลับเข้าไปในแบคทีเรียอีกตัวหนึ่ง (แหล่งที่ 3) แบคทีเรียตัวที่ 3 จะแบ่งตัวเพิ่มจำนวนอย่างรวดเร็วและทำหน้าที่เป็นโรงงานผลิตอินซูลินของมนุษย์ออกมา\nนักวิทยาศาสตร์บางคนคิดว่า ภายในอนาคตอันใกล้ เป็นไปได้ที่จะมีการดัดแปรพันธุกรรมสิ่งมีชีวิตเพื่อผลิตยาหรือโปรตีนชนิดอื่นได้อีกมากมาย แต่รัฐบาลและหน่วยงานสาธารณสุขหลายประเทศได้ตัดสินใจออกกฎหมายควบคุมการทดลองและห้ามการปล่อยสิ่งมีชีวิตดัดแปรพันธุกรรมเหล่านี้ออกสู่สิ่งแวดล้อมอย่างเข้มงวด",
+    "order": 12,
+    "images": []
+  },
+  {
+    "id": "science-13",
+    "title": "สถานการณ์ 13",
+    "body": "กลุ่มอนุรักษ์สิ่งแวดล้อมบางกลุ่มกำลังแสดงความกังวลเกี่ยวกับการปลูก \"ฝ้ายดัดแปลงพันธุกรรม (GM)\" หรือที่รู้จักกันในชื่อ ฝ้ายบีที (Bt Cotton)\nฝ้ายดัดแปลงพันธุกรรมชนิดนี้ถูกสร้างขึ้นมาเพื่อให้สามารถผลิตสารชีวภาพที่ทำลาย \"หนอนเจาะสมอฝ้าย\" ซึ่งเป็นศัตรูพืชตัวฉกาจที่คอยกัดกินผลผลิต การปลูกฝ้ายชนิดนี้ทำให้เกษตรกรแทบไม่ต้องฉีดพ่นสารเคมีกำจัดแมลงเลย  อย่างไรก็ตาม นักอนุรักษ์แย้งว่า สารที่ฝ้ายดัดแปลงพันธุกรรมผลิตขึ้นมานั้น อาจส่งผลกระทบต่อแมลงชนิดอื่น ๆ ที่มีประโยชน์ในระบบนิเวศด้วย เช่น ผึ้ง หรือ เต่าทอง ซึ่งจะทำให้สมดุลธรรมชาติเสียไป\nแต่กลุ่มนักวิทยาศาสตร์และผู้สนับสนุนการใช้ฝ้ายดัดแปลงพันธุกรรมยืนยันว่า การศึกษาทางวิทยาศาสตร์ได้พิสูจน์แล้วว่าข้อกังวลดังกล่าวไม่เป็นความจริง\nซึ่งมีรายละเอียดของการศึกษาทางวิทยาศาสตร์ที่กล่าวถึงในบทความข้างต้น ดังนี้\nมีการทดลองปลูกฝ้ายในพื้นที่เกษตรกรรม 150 แปลงในภูมิภาคต่างๆ\nแต่ละแปลงถูกแบ่งออกเป็นสองส่วน ครึ่งหนึ่งปลูกฝ้ายดัดแปลงพันธุกรรม (GM) โดยไม่มีการฉีดพ่นสารเคมีกำจัดแมลง ส่วนอีกครึ่งหนึ่งปลูกฝ้ายพันธุ์เดิมและมีการฉีดพ่นสารเคมีกำจัดแมลงตามปกติ\nผลการสำรวจพบว่า จำนวนของแมลงที่มีประโยชน์ (เช่น ผึ้ง และ เต่าทอง) ที่พบในแปลงฝ้ายดัดแปลงพันธุกรรม มีจำนวน มากกว่า แมลงที่มีประโยชน์ในแปลงที่ปลูกฝ้ายพันธุ์เดิมอย่างชัดเจน",
+    "order": 13,
+    "images": []
+  },
+  {
+    "id": "science-14",
+    "title": "สถานการณ์ 14",
+    "body": "การทำน้ำผลไม้หมัก (ไซเดอร์) คนที่ทำจะผสมผลไม้บด (ซึ่งมีน้ำตาลตามธรรมชาติ) น้ำ เกลือเล็กน้อย และยีสต์เข้าด้วยกันในขวดพลาสติก หลังจากผสมแล้วจะปิดฝาหลวมๆ และเก็บขวดทิ้งไว้หลายวันเพื่อให้เกิดการหมัก ในระหว่างหมักมีการเปลี่ยนแปลงทางเคมีเกิดขึ้นในขวด โดยยีสต์ (สิ่งมีชีวิตเซลล์เดียว) จะช่วยเปลี่ยนน้ำตาลในผลไม้ให้กลายเป็นก๊าซคาร์บอนไดออกไซด์และแอลกอฮอล์",
+    "order": 14,
+    "images": []
+  },
+  {
+    "id": "science-15",
+    "title": "สถานการณ์ 15",
+    "body": "การตรวจสุขภาพประจำปีหรือการวินิจฉัยโรคหลายชนิด จำเป็นต้องมีการใช้เข็มฉีดยาเจาะดูดเลือดไปตรวจหาค่าทางเคมีในห้องปฏิบัติการ ก่อนเจาะเลือด แพทย์มักสั่งให้ผู้ป่วย \"งดอาหารและเครื่องดื่มทุกชนิด\" (ยกเว้นน้ำเปล่า) เป็นเวลา 8-12 ชั่วโมง เพื่อไม่ให้สารอาหารที่เพิ่งกินเข้าไปรบกวนผลการตรวจ หากผู้ป่วยเผลอดื่มน้ำหวาน สารอาหารจะถูกดูดซึมและถูกส่งไปตามส่วนต่าง ๆ ของร่างกาย\nและพิจารณากราฟแสดงจำนวนผู้ป่วยที่ตรวจพบความผิดปกติจากผลเลือด แบ่งตามประเภทของโรค\n<img src=\"../assets/images/questions/science/image2.jpeg\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 15,
+    "images": [
+      "../assets/images/questions/science/image2.jpeg"
+    ]
+  },
+  {
+    "id": "science-16",
+    "title": "สถานการณ์ 16",
+    "body": "ปัจจุบันมีการนำกัญชามาใช้ในหลายรูปแบบ ทั้งเพื่อสันทนาการและทางการแพทย์ โดยวิธีการที่ได้รับความนิยมมากที่สุดคือการสูบผ่านมวนบุหรี่หรือบ้องกัญชา งานวิจัยทางการแพทย์ระบุว่าการสูบกัญชาส่งผลกระทบต่อระบบทางเดินหายใจและระบบประสาท ควันจากการเผาไหม้กัญชามีสารเคมีมากกว่า 400 ชนิด โดยสารสำคัญที่ส่งผลต่อร่างกายคือ THC (Tetrahydrocannabinol) ซึ่งส่งผลต่อจิตประสาท และ CBD (Cannabidiol) รวมถึงสารที่เป็นอันตรายจากการเผาไหม้ เช่น น้ำมันดิน (Tar) และก๊าซคาร์บอนมอนอกไซด์ ซึ่งไม่ต่างจากควันบุหรี่\nเมื่อสูบกัญชา ควันจะถูกสูดเข้าไปในปอด สารน้ำมันดิน (Tar) ที่เกิดจากการเผาไหม้ใบกัญชาจะเข้าไปเกาะติดอยู่ที่ถุงลมปอดและเนื้อเยื่อปอด ส่งผลให้ปอดทำงานได้ไม่เต็มประสิทธิภาพ",
+    "order": 16,
+    "images": []
+  },
+  {
+    "id": "science-17",
+    "title": "สถานการณ์ 17",
+    "body": "สมมติว่า นักเรียนอาศัยอยู่ใกล้ฟาร์มปศุสัตว์เลี้ยงสุกร (หมู) ขนาดใหญ่ เมื่อไม่กี่เดือนมานี้มีคนพบว่า ปลาและสัตว์น้ำในลำคลองสาธารณะหลังฟาร์มลอยตายเป็นจำนวนมาก และน้ำมีกลิ่นเหม็นเน่า คนในท้องถิ่นเชื่อว่าเหตุการณ์นี้เกิดจาก การแอบปล่อยน้ำเสียและมูลสัตว์ที่ไม่ได้บำบัด ลงสู่คลองของฟาร์มแห่งนี้\nชาวบ้านมาประชุมกันเพื่ออภิปรายถึงอันตรายที่เกิดขึ้นจากฟาร์มปศุสัตว์ ต่อสิ่งแวดล้อมในท้องถิ่น นักวิทยาศาสตร์ได้เสนอข้อสรุปต่อที่ประชุมดังต่อไปนี้\nคำกล่าวของนักวิทยาศาสตร์ที่ทำงานให้กับฟาร์มปศุสัตว์ “เราได้ทำการสุ่มตรวจเนื้อหมูและผลิตภัณฑ์ทั้งหมดที่ออกจากฟาร์มของเรา เราไม่พบหลักฐานของเชื้อโรคติดต่อ หรือสารเร่งเนื้อแดงที่เป็นอันตรายต่อผู้บริโภคเลย”\nคำกล่าวของนักวิทยาศาสตร์ที่ห่วงใยชุมชนในท้องถิ่น “เราได้ศึกษาค่าปริมาณออกซิเจนที่ละลายในน้ำ (ค่า DO) และเก็บตัวอย่างซากปลาที่ตายในลำคลองหลายกรณี...”",
+    "order": 17,
+    "images": []
+  },
+  {
+    "id": "science-18",
+    "title": "สถานการณ์ 18",
+    "body": "คนนำแอลกอฮอล์มาบริโภคในรูปของเบียร์ ไวน์ และสุรากลั่น การวิจัยแสดงว่าโรคที่เกี่ยวข้องกับการดื่มสุรา ทำให้ทั่วโลกมีผู้เสียชีวิตประมาณ 8,000 คนในแต่ละวัน และมีการทำนายว่าในทศวรรษหน้า โรคที่เกี่ยวข้องกับแอลกอฮอล์จะทำให้คนตายเพิ่มขึ้นเป็น 6% ของการตายทั้งหมดในโลก เครื่องดื่มแอลกอฮอล์มีสารที่ส่งผลกระทบต่อร่างกาย ส่วนที่เป็นอันตรายมากที่สุดเมื่อบริโภคเกินขนาดคือ เอทานอล (Ethanol) และสารอะเซทัลดีไฮด์ (Acetaldehyde)",
+    "order": 18,
+    "images": []
+  },
+  {
+    "id": "science-19",
+    "title": "สถานการณ์ 19",
+    "body": "ปัจจุบัน นกฟินช์บนเกาะกาลาปากอสมีหลายสปีชีส์ แต่ละสปีชีส์มีลักษณะของจะงอยปากที่แตกต่างกันอย่างชัดเจน ซึ่งเหมาะสมกับประเภทของอาหารที่พวกมันกิน (เช่น เมล็ดพืช แมลง หรือน้ำหวาน)  นักวิทยาศาสตร์ได้ค้นพบซากดึกดำบรรพ์ (ฟอสซิล) และหลักฐานทางดีเอ็นเอของนกที่มีลักษณะคล้ายคลึงกับนกฟินช์ในปัจจุบัน พวกเขาเชื่อว่าหลักฐานเหล่านั้นคือบรรพบุรุษของนกฟินช์ที่อพยพมาจากแผ่นดินใหญ่ นักวิทยาศาสตร์ยังสามารถตรวจสอบช่วงเวลาที่บรรพบุรุษนกเหล่านั้นมีชีวิตอยู่ได้ด้วย\nตารางข้างล่างนี้ แสดงข้อสนเทศของบรรพบุรุษนกฟินช์สามระยะ และนกฟินช์ในยุคปัจจุบัน\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สัตว์</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงเวลาที่มีชีวิตอยู่</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ลักษณะของจะงอยปาก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ชนิดอาหารหลักที่กิน</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">บรรพบุรุษระยะที่ 1</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ประมาณ 3 ล้านปีก่อน (บนแผ่นดินใหญ่)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปากเรียวเล็กและสั้น</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แมลงขนาดเล็ก</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">บรรพบุรุษระยะที่ 2</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ประมาณ 2 ล้านปีก่อน (เริ่มมาถึงเกาะ)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปากเริ่มหนาและกว้างขึ้นเล็กน้อย</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แมลง และเมล็ดพืชขนาดเล็ก</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">บรรพบุรุษระยะที่ 3</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ประมาณ 1 ล้านปีก่อน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปากหนา แข็งแรงขึ้น</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมล็ดพืชเปลือกแข็งปานกลาง</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปัจจุบัน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปัจจุบัน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ปากหนาใหญ่ แข็งแรงมาก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมล็ดพืชเปลือกแข็งขนาดใหญ่</td></tr></table>",
+    "order": 19,
+    "images": []
+  },
+  {
+    "id": "science-20",
+    "title": "สถานการณ์ 20",
+    "body": "พฤติกรรมของปลาหมอคางดำ ปลาหมอคางดำ เป็นชนิดพันธุ์ต่างถิ่น (Alien Species) ที่หลุดรอดลงสู่แหล่งน้ำธรรมชาติของไทย จากการสำรวจของนักวิชาการประมงพบว่า ปลาชนิดนี้มีพฤติกรรมที่ส่งผลกระทบรุนแรงต่อสิ่งมีชีวิตอื่นในแหล่งน้ำ โดยเฉพาะกับปลาพื้นเมือง ปลาหมอคางดำมีนิสัยก้าวร้าว หวงถิ่น และเป็นสัตว์กินพืชและสัตว์ (Omnivore) แต่พฤติกรรมที่น่ากลัวที่สุดคือ \"การไล่ล่ากินไข่ปลาและลูกปลาวัยอ่อนของปลาชนิดอื่น\" อย่างตะกละตะกลาม นอกจากนี้ พวกมันยังมีการรวมฝูงกันไล่ต้อนปลาขนาดเล็ก และแย่งชิงอาหารจากปลาพื้นเมืองที่มีขนาดไล่เลี่ยกัน ด้วยความที่มันทนทานต่อสภาพน้ำได้หลากหลายและขยายพันธุ์ได้รวดเร็วมาก (ตัวเมียอมไข่ไว้ในปากเพื่อปกป้องลูก) ทำให้ในแหล่งน้ำที่ปลาหมอคางดำระบาด ประชากรปลาพื้นเมืองจะลดลงอย่างรวดเร็วจนเสี่ยงต่อการสูญพันธุ์ในท้องถิ่นนั้นๆ\nชาวประมงในพื้นที่ระบาดสังเกตว่า \"ปลาช่อนและปลาชะโด (ซึ่งเป็นปลากินเนื้อขนาดใหญ่ที่สามารถกินปลาหมอคางดำตัวเต็มวัยได้) ก็มีจำนวนลดลงอย่างมากเช่นกัน\"",
+    "order": 20,
+    "images": []
+  },
+  {
+    "id": "science-21",
+    "title": "สถานการณ์ 21",
+    "body": "ในประเทศไทย ลักษณะลมฟ้าอากาศในแต่ละช่วงปีได้รับอิทธิพลอย่างมากจากระบบมรสุมระดับภูมิภาค นักอุตุนิยมวิทยาได้บันทึกทิศทางลมหลักและสภาพอากาศเฉลี่ยของจังหวัดหนึ่งในภาคตะวันออกเฉียงเหนือไว้ดังตาราง\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงเดือน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สภาพอากาศและผลกระทบ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงที่ 1 (พ.ย.-ก.พ.)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">อากาศแห้ง ท้องฟ้าโปร่ง อุณหภูมิลดต่ำลง ปริมาณฝนน้อยกว่า 10 มม./เดือน</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงที่ 2 (พ.ค.-ต.ค.)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมฆมาก ฝนตกต่อเนื่อง คลื่นลมแรง<br>ปริมาณฝนเฉลี่ย &gt; 200 มม./เดือน</td></tr></table>",
+    "order": 21,
+    "images": []
+  },
+  {
+    "id": "science-22",
+    "title": "สถานการณ์ 22",
+    "body": "ชมรมดาราศาสตร์โรงเรียนแห่งหนึ่งได้ทำกิจกรรมสังเกตตำแหน่งและความสว่างของดวงจันทร์บนท้องฟ้า ณ เวลา 19.00 น. ของคืนวันหนึ่ง พบว่าดวงจันทร์สว่างอยู่ครึ่งดวง โดยซีกสว่างปรากฏอยู่ทางฝั่งทิศตะวันออก (ซีกซ้ายเมื่อหันหน้าไปทางทิศเหนือ) และดวงจันทร์ลอยตระหง่านอยู่สูงกลางท้องฟ้าพอดี ดังภาพ\n<img src=\"../assets/images/questions/science/image3.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 22,
+    "images": [
+      "../assets/images/questions/science/image3.png"
+    ]
+  },
+  {
+    "id": "science-23",
+    "title": "สถานการณ์ 23",
+    "body": "เฟยยืนอยู่ ณ ละติจูด 15 ∘เหนือ ในช่วงเวลา 08.00 น. เขาก้าวออกไปยืนกลางแจ้งและยืนหันหลังให้ดวงอาทิตย์ พอดี เพื่อสังเกตเงาของตนเองที่ทอดยาวไปบนพื้น",
+    "order": 23,
+    "images": []
+  },
+  {
+    "id": "science-24",
+    "title": "สถานการณ์ 24",
+    "body": "พิจารณากราฟแสดงความสัมพันธ์ระหว่าง ระยะห่างจากดวงอาทิตย์ (หน่วย AU) กับ อุณหภูมิผิวดาวเฉลี่ย (∘C) ของดาวเคราะห์หิน 4 ดวงแรกในระบบสุริยะ\n<img src=\"../assets/images/questions/science/image4.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 24,
+    "images": [
+      "../assets/images/questions/science/image4.png"
+    ]
+  },
+  {
+    "id": "science-25",
+    "title": "สถานการณ์ 25",
+    "body": "พิจารณากราฟแสดงความสัมพันธ์ระหว่าง ระยะห่างจากดวงอาทิตย์ (หน่วย AU) กับ อุณหภูมิผิวดาวเฉลี่ย (∘C) ของดาวเคราะห์หิน 4 ดวงแรกในระบบสุริยะ\n<img src=\"../assets/images/questions/science/image4.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 25,
+    "images": [
+      "../assets/images/questions/science/image4.png"
+    ]
+  },
+  {
+    "id": "science-26",
+    "title": "สถานการณ์ 26",
+    "body": "พิจารณาข้อมูลคุณสมบัติของวงโคจรที่ใช้ในการส่งเทคโนโลยีอวกาศชนิดต่างๆ ขึ้นไปปฏิบัติภารกิจ ดังนี้\nวงโคจร A     อยู่ใกล้โลกที่สุด เคลื่อนที่รอบโลกเร็วมาก (ประมาณ 90 นาทีต่อรอบ) ได้ภาพ\n             รายละเอียดผิวดินสูง\nวงโคจร B     ครอบคลุมพื้นที่กว้าง ใช้เวลาโคจรประมาณ 12 ชั่วโมงต่อรอบ\nวงโคจร C      มีความเร็วในการโคจรรอบโลกเท่ากับความเร็วในการหมุนรอบตัวเองของโลกพอดี ทำให้\n             ดูเหมือนหยุดนิ่งอยู่เหนือตำแหน่งเดิมตลอดเวลา",
+    "order": 26,
+    "images": []
+  },
+  {
+    "id": "science-27",
+    "title": "สถานการณ์ 27",
+    "body": "ในปีหนึ่ง นักวิทยาศาสตร์ตรวจวัดความผิดปกติของอุณหภูมิน้ำทะเลบริเวณมหาสมุทรแปซิฟิกเขตศูนย์สูตร พบว่า ลมค้ามีกำลังอ่อนลงมาก ทำให้น้ำอุ่นไหลย้อนไปสะสมทางฝั่งตะวันออกของแปซิฟิก (ชายฝั่งเปรู/อเมริกาใต้) ส่งผลให้ฝั่งตะวันตก (เอเชีย) มีมวลอากาศจมตัวลง",
+    "order": 27,
+    "images": []
+  },
+  {
+    "id": "science-28",
+    "title": "สถานการณ์ 28",
+    "body": "พิจารณาตารางแสดงแหล่งที่มาของแก๊สเรือนกระจกจากกิจกรรมต่างๆ ของมนุษย์\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แก๊สเรือนกระจก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">กิจกรรมหลักที่ปลดปล่อยสู่ชั้นบรรยากาศ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แก๊ส A</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">การเผาไหม้เชื้อเพลิงซากดึกดำบรรพ์ การตัดไม้ทำลายป่า</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แก๊ส B</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">การปศุสัตว์ การหมักในนาข้าว</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แก๊ส C</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">การใช้สารทำความเย็นในตู้เย็น แอร์ และกระป๋องสเปรย์</td></tr></table>",
+    "order": 28,
+    "images": []
+  },
+  {
+    "id": "science-29",
+    "title": "สถานการณ์ 29",
+    "body": "ชาวบ้านในเมืองอุตสาหกรรมแห่งหนึ่งสังเกตเห็นว่า รูปปั้นหินปูน (แคลเซียมคาร์บอเนต) และหลังคาสังกะสีเกิดการกัดกร่อนชำรุดอย่างรวดเร็ว เมื่อนักวิทยาศาสตร์เก็บตัวอย่างน้ำฝนไปวัดค่าความเป็นกรด-เบส พบว่ามีค่า pH=4.2 เนื่องจากแก๊สซัลเฟอร์ไดออกไซด์จากโรงงาน",
+    "order": 29,
+    "images": []
+  },
+  {
+    "id": "science-30",
+    "title": "สถานการณ์ 30",
+    "body": "ในพื้นที่เทือกเขาสูงที่มีภูมิอากาศหนาวเย็นจัด รอยแยกของหินตามธรรมชาติต่างๆ จะมีน้ำฝนซึมลงไปสะสมอยู่ เมื่อถึงเวลากลางคืนอุณหภูมิอากาศลดลงต่ำกว่า 0∘C น้ำในรอยแยกจะเปลี่ยนสถานะกลายเป็นน้ำแข็ง เมื่อเวลาผ่านไปสลับกันระหว่างกลางวันและกลางคืนหลายปี หินก้อนใหญ่เกิดการแตกปริออกจากกัน ดังแผนภาพ\n<img src=\"../assets/images/questions/science/image5.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;\" />",
+    "order": 30,
+    "images": [
+      "../assets/images/questions/science/image5.png"
+    ]
+  }
+]

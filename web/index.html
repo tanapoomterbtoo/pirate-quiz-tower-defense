@@ -15,7 +15,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=24">
+    <link rel="stylesheet" href="style.css?v=34">
     <style>
         /* Admin iframe preview: lock design canvas so parent can scale 1:1 with game */
         html.admin-preview, html.admin-preview body {
@@ -52,19 +52,30 @@
     <div id="game-wrapper">
         <div id="game-container">
             <!-- Canvas for Game World (Parallax background, Characters, Particles, Damage text) -->
-            <canvas id="gameCanvas" width="1280" height="720"></canvas>
+            <canvas id="gameCanvas" width="1280" height="720" aria-hidden="true"></canvas>
 
             <!-- HTML/CSS UI Overlay -->
             <div id="ui-overlay">
                 
                 <!-- TOP HUD (Active during PLAYING state) -->
                 <div id="top-hud" class="hud-layer hidden">
+                    <div class="game-progress" aria-label="ความคืบหน้าของแบบทดสอบ">
+                        <div class="game-progress-row">
+                            <span id="hud-subject">คณิตศาสตร์</span>
+                            <span id="hud-question">ข้อ 1 จาก 30</span>
+                        </div>
+                        <div class="game-progress-track"><span id="hud-progress-fill"></span></div>
+                    </div>
                     <div class="inventory">
                         <button id="item-telescope" class="btn btn-item" onclick="useItem('Telescope')" title="กล้องส่องทางไกล — ตัดตัวเลือกที่ผิด 2 ข้อ">
                             <div class="item-icon-wrapper">
-                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18.5 5.5L13.5 10.5M10.5 7.5L5.5 12.5M15.5 2.5L21.5 8.5M3 21l3-3M3 17l4 4" />
-                                    <circle cx="17" cy="7" r="3" />
+                                <svg class="item-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <g transform="rotate(-38 16 16)">
+                                        <path d="M10 13h13v6H10z" fill="currentColor" fill-opacity=".18" />
+                                        <path d="M7 12h3v8H7zM23 11h4v10h-4z" fill="currentColor" fill-opacity=".28" />
+                                        <path d="M5 13v6M27 12v8M12 16h9" />
+                                    </g>
+                                    <path d="M6 26l3-2M24 6l2-2" stroke-width="1.3" opacity=".7" />
                                 </svg>
                                 <span class="item-count-badge" id="count-telescope">0</span>
                             </div>
@@ -72,27 +83,29 @@
                                 <span class="item-name">กล้องส่องทางไกล</span>
                                 <span class="item-desc">ตัดตัวเลือกที่ผิด 2 ข้อ</span>
                             </div>
+                            <span class="item-mobile-label">ตัด 2 ข้อ</span>
                         </button>
-                        <button id="item-repair" class="btn btn-item" onclick="useItem('Repair Kit')" title="กล่องพยาบาล — ฟื้นฟู +30 HP">
+                        <button id="item-repair" class="btn btn-item" onclick="useItem('Repair Kit')" title="ชุดปฐมพยาบาล — ฟื้นฟูพลังชีวิต 30 หน่วย">
                             <div class="item-icon-wrapper">
-                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#4cd964" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="9" width="18" height="12" rx="2" />
-                                    <path d="M7 9V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" />
-                                    <path d="M12 12v6M9 15h6" />
+                                <svg class="item-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M6 11h20a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V13a2 2 0 0 1 2-2Z" fill="currentColor" fill-opacity=".18" />
+                                    <path d="M11 11V8a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v3M4 17h24M16 17v7M12.5 20.5h7" />
+                                    <path d="M7 25h2M23 25h2" opacity=".65" />
                                 </svg>
                                 <span class="item-count-badge" id="count-repair">0</span>
                             </div>
                             <div class="item-info">
-                                <span class="item-name">กล่องพยาบาล</span>
-                                <span class="item-desc">ฟื้นฟูพลังชีวิต +30 HP</span>
+                                <span class="item-name">ชุดปฐมพยาบาล</span>
+                                <span class="item-desc">ฟื้นฟูพลังชีวิต 30 หน่วย</span>
                             </div>
+                            <span class="item-mobile-label">ฟื้น +30</span>
                         </button>
                         <button id="item-cannonball" class="btn btn-item" onclick="useItem('Cannonball')" title="กระสุนปืนใหญ่ — ดาเมจ 2 เท่า">
                             <div class="item-icon-wrapper">
-                                <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="11" cy="13" r="7" />
-                                    <path d="M16.5 7.5L19 5M19 5h3M19 5V2" />
-                                    <path d="M9 10a2 2 0 0 1 2 2" />
+                                <svg class="item-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="14" cy="18" r="9" fill="currentColor" fill-opacity=".2" />
+                                    <path d="M17 10l3-5 4 2-2 5M23 4l1-2M27 7l2-1M25 10l2 2" />
+                                    <path d="M9 15a6 6 0 0 1 4-3M9 21a6 6 0 0 0 3 3" opacity=".75" />
                                 </svg>
                                 <span class="item-count-badge" id="count-cannonball">0</span>
                             </div>
@@ -100,11 +113,14 @@
                                 <span class="item-name">กระสุนปืนใหญ่</span>
                                 <span class="item-desc">ความเสียหาย 2 เท่าในเทิร์นถัดไป</span>
                             </div>
+                            <span class="item-mobile-label">โจมตี ×2</span>
                         </button>
                     </div>
 
+                    <div id="answer-feedback" class="sr-only hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
+                    <div id="combat-status-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
-                    <button id="btn-mute" class="btn btn-mute" onclick="toggleMute()" title="เปิด/ปิดเสียง">
+                    <button id="btn-mute" class="btn btn-mute" onclick="toggleMute()" title="เปิด/ปิดเสียง" aria-label="ปิดเสียง" aria-pressed="false">
                         <svg id="mute-icon" class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
                             <path id="sound-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path>
@@ -116,14 +132,14 @@
                 <!-- MAIN MENU OVERLAY -->
                 <div id="menu-overlay" class="overlay-panel">
                     <div class="overlay-content menu-content">
-                        <h1 class="game-title">ความฉลาดรู้<br><span class="highlight">(แบบทดสอบหลังเรียน)</span></h1>
-                        <ul class="literacy-list game-subtitle literacy-list-single">
+                        <h1 class="game-title">ความฉลาดรู้<br><span class="title-subtitle">(แบบทดสอบหลังเรียน)</span></h1>
+                        <ul class="literacy-list literacy-list-single" aria-label="ด้านความฉลาดรู้">
                             <li>ด้านคณิตศาสตร์ (Mathematical Literacy)</li>
                         </ul>
+                        <p class="pass-rule">ผู้เรียนต้องทำแบบทดสอบให้ได้คะแนนมากกว่าร้อยละ 60 จึงจะผ่านภารกิจและได้รับเกียรติบัตร โดยสามารถใช้ไอเท็มตัวช่วยที่สะสมได้ระหว่างการเรียนเพื่อช่วยในการทำแบบทดสอบ</p>
                         <div id="score-info-box" class="score-info-box">
                             <div class="score-line">คะแนนที่ได้รับ: <span id="user-score-display">100</span></div>
                         </div>
-                        <p class="pass-rule">ผู้เรียนต้องทำแบบทดสอบให้ได้คะแนนมากกว่าร้อยละ 60 จึงจะผ่านภารกิจและได้รับเกียรติบัตร โดยสามารถใช้ไอเท็มตัวช่วยที่สะสมได้ระหว่างการเรียนเพื่อช่วยในการทำแบบทดสอบ</p>
                         <button id="btn-start" class="btn btn-primary" onclick="startGame()" disabled>กำลังโหลด...</button>
                     </div>
                 </div>
@@ -152,8 +168,9 @@
                 </div>
 
                 <!-- PARCHMENT SCROLL OVERLAY FOR SCENARIOS -->
-                <div id="scenario-overlay" class="overlay-panel scenario-overlay-panel hidden" onclick="onScenarioBackdropClick(event)">
+                <div id="scenario-overlay" class="overlay-panel scenario-overlay-panel hidden" role="dialog" aria-modal="true" aria-labelledby="scenario-dialog-title" onclick="onScenarioBackdropClick(event)">
                     <div class="parchment-scroll" onclick="event.stopPropagation()">
+                        <h2 id="scenario-dialog-title" class="sr-only">สถานการณ์ประกอบคำถาม</h2>
                         <button type="button" class="btn-close-scroll" onclick="closeScenarioOverlay()" aria-label="ปิดสถานการณ์">✕</button>
                         <div id="scroll-content" class="scroll-content">
                             <!-- Dynamic scenario content goes here -->
@@ -172,9 +189,10 @@
                 <!-- REVIVE OVERLAY -->
                 <div id="revive-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
-                        <h1 class="state-title gold-glow" style="color: #ffd700; filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.55));">ชุบชีวิตที่สามารถใช้งานได้</h1>
-                        <p class="state-desc">เรือของคุณถูกทำลาย! คุณต้องการใช้สิทธิ์ชุบชีวิตเพื่อฟื้นฟู HP เต็มและเล่นต่อหรือไม่?</p>
-                        <div style="display: flex; gap: 20px; justify-content: center;">
+                        <span class="state-symbol state-symbol-revive" aria-hidden="true">✚</span>
+                        <h1 class="state-title">ชุบชีวิตที่สามารถใช้งานได้</h1>
+                        <p class="state-desc">ตัวละครของคุณหมดพลังชีวิต ต้องการใช้สิทธิ์ชุบชีวิตเพื่อฟื้นฟูพลังชีวิตให้เต็มและเล่นต่อหรือไม่?</p>
+                        <div class="state-actions">
                             <button id="btn-use-revive" class="btn btn-primary" onclick="useRevive()">ชุบชีวิต (เหลืออีก 1)</button>
                             <button class="btn btn-secondary" onclick="declineRevive()">ยอมแพ้</button>
                         </div>
@@ -184,9 +202,11 @@
                 <!-- GAME OVER OVERLAY -->
                 <div id="gameover-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
+                        <span class="state-symbol state-symbol-error" aria-hidden="true">✕</span>
                         <h1 class="state-title red-glow">เกมจบแล้ว</h1>
-                        <p class="state-desc">เรือของคุณถูกทำลายโดยสัตว์ประหลาดแห่งท้องทะเล!</p>
-                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <p class="state-desc">ตัวละครของคุณหมดพลังชีวิตจากการต่อสู้กับสัตว์ประหลาดแห่งท้องทะเล</p>
+                        <p id="gameover-summary" class="result-summary"></p>
+                        <div class="state-actions">
                             <button id="btn-submit-gameover" class="btn btn-primary hidden" onclick="submitExamResults()">ส่งผลสอบ</button>
                             <button class="btn btn-secondary btn-retry" onclick="restartGame()">ลองอีกครั้ง</button>
                         </div>
@@ -196,9 +216,11 @@
                 <!-- VICTORY OVERLAY -->
                 <div id="victory-overlay" class="overlay-panel hidden">
                     <div class="overlay-content">
+                        <span class="state-symbol state-symbol-success" aria-hidden="true">✓</span>
                         <h1 class="state-title green-glow">ชัยชนะ!</h1>
-                        <p class="state-desc">คุณปกป้องเรือสำเร็จและผ่านการป้องกันทั้ง 3 ระลอกแล้ว!</p>
-                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <p class="state-desc">คุณเอาชนะศัตรูและผ่านการต่อสู้ทั้ง 3 ระลอกแล้ว!</p>
+                        <p id="victory-summary" class="result-summary"></p>
+                        <div class="state-actions">
                             <button id="btn-submit-victory" class="btn btn-primary hidden" onclick="submitExamResults()">ส่งผลสอบและรับเกียรติบัตร</button>
                             <button class="btn btn-secondary btn-retry" onclick="restartGame()">เล่นอีกครั้ง</button>
                         </div>
@@ -235,9 +257,9 @@
 
     <!-- Scripts -->
     <script src="js/config.js?v=22"></script>
-    <script src="js/quiz.js?v=22"></script>
-    <script src="js/entities.js?v=22"></script>
-    <script src="js/minigame-shortest-path.js?v=22"></script>
-    <script src="js/game.js?v=22"></script>
+    <script src="js/quiz.js?v=24"></script>
+    <script src="js/entities.js?v=27"></script>
+    <script src="js/minigame-shortest-path.js?v=31"></script>
+    <script src="js/game.js?v=32"></script>
 </body>
 </html>

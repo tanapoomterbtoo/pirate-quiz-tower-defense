@@ -80,62 +80,21 @@ class HealthBar {
             if (this.currentHp > hp) this.currentHp = hp;
         }
 
-        const WOOD_COLOR = "#5c4033";
-        const GOLD_COLOR = "#daa520";
-        const INNER_BG = "#281414";
-
         ctx.save();
-        const padX = 8;
-        const padY = 8;
-
-        // 1. Draw Wooden Backboard
-        ctx.fillStyle = WOOD_COLOR;
-        drawRoundRect(ctx, this.x - padX, this.y - padY, this.w + padX * 2, this.h + padY * 2, 4, true, false);
-
-        // 2. Draw Gold Outer Border
-        ctx.strokeStyle = GOLD_COLOR;
-        ctx.lineWidth = 3;
-        drawRoundRect(ctx, this.x - padX, this.y - padY, this.w + padX * 2, this.h + padY * 2, 4, false, true);
-
-        // 3. Draw Iron Rivets
-        ctx.fillStyle = "#323232";
-        ctx.strokeStyle = "#141414";
-        ctx.lineWidth = 1;
-        const corners = [
-            { x: this.x - padX + 5, y: this.y - padY + 5 },
-            { x: this.x + this.w + padX - 5, y: this.y - padY + 5 },
-            { x: this.x - padX + 5, y: this.y + this.h + padY - 5 },
-            { x: this.x + this.w + padX - 5, y: this.y + this.h + padY - 5 }
-        ];
-        corners.forEach(c => {
-            ctx.beginPath();
-            ctx.arc(c.x, c.y, 3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-        });
-
-        // 4. Draw Inner Background (Empty Bar)
-        ctx.fillStyle = INNER_BG;
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-
-        // 5. Draw Health Fill
-        if (this.currentHp > 0) {
-            const ratio = this.currentHp / maxHp;
-            const fillW = this.w * ratio;
-            const color = ratio > 0.5 ? "#32cd32" : (ratio > 0.25 ? "#ffd700" : "#dc143c");
-            
+        const width = this.w + 4;
+        const height = Math.min(this.h, 14);
+        const x = this.x - 2;
+        const y = this.y + (this.h - height) / 2;
+        const ratio = Math.max(0, Math.min(1, this.currentHp / maxHp));
+        const color = ratio > 0.5 ? "#54d98c" : (ratio > 0.25 ? "#f4c95d" : "#ff6b6b");
+        ctx.fillStyle = "rgba(7, 13, 25, 0.85)";
+        drawRoundRect(ctx, x - 3, y - 3, width + 6, height + 6, 10, true, false);
+        ctx.fillStyle = "rgba(191, 208, 231, 0.22)";
+        drawRoundRect(ctx, x, y, width, height, 7, true, false);
+        if (ratio > 0) {
             ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, fillW, this.h);
-
-            // Gloss highlight
-            ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
-            ctx.fillRect(this.x, this.y, fillW, this.h / 2);
+            drawRoundRect(ctx, x, y, Math.max(7, width * ratio), height, 7, true, false);
         }
-
-        // 6. Draw Inner Gold Border
-        ctx.strokeStyle = GOLD_COLOR;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(this.x, this.y, this.w, this.h);
         ctx.restore();
     }
 }

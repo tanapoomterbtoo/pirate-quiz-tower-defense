@@ -22,7 +22,7 @@
         school: { x: 620, y: 175, label: "โรงเรียน", kind: "school" },
         topR: { x: 809, y: 175, label: "แยกใกล้โรงเรียน" },
         rTop: { x: 960, y: 200, label: "วงขวา-บน" },
-        rOut: { x: 985, y: 360, label: "วงขวา-กลาง" },
+        rOut: { x: 993, y: 360, label: "วงขวา-กลาง" },
         rBot: { x: 920, y: 556, label: "วงขวา-ล่าง" },
     };
 
@@ -40,34 +40,50 @@
         { a: "school", b: "topR", px: 189.0, mids: [[627,175],[634,175],[641,175],[648,175],[655,175],[662,175],[669,175],[676,175],[683,175],[690,175],[697,175],[704,175],[711,175],[718,175],[725,175],[732,175],[739,175],[746,175],[753,175],[760,175],[767,175],[774,175],[781,175],[788,175],[795,175],[802,175]] },
         { a: "topR", b: "upR", px: 192.0, mids: [[809,182],[809,189],[809,196],[809,203],[809,210],[809,217],[809,224],[809,231],[809,238],[809,245],[809,252],[809,259],[809,266],[809,273],[809,280],[809,287],[809,294],[809,301],[809,308],[809,315],[809,322],[809,329],[809,336],[809,343],[809,350],[809,357],[809,364]] },
         { a: "topR", b: "rTop", px: 157.8, mids: [[814,175],[819,175],[824,175],[829,175],[834,175],[839,175],[844,175],[848,175],[853,175],[858,175],[863,175],[868,175],[873,175],[878,175],[883,175],[888,175],[893,175],[898,175],[903,175],[908,176],[912,176],[917,177],[922,178],[927,179],[932,181],[936,183],[940,185],[945,188],[949,191],[952,194],[956,197]] },
-        { a: "rTop", b: "rOut", px: 168.6, mids: [[962,204],[964,209],[967,213],[970,217],[973,221],[975,225],[978,230],[980,234],[982,239],[984,243],[986,248],[987,252],[988,257],[989,262],[990,267],[991,272],[992,277],[993,282],[993,287],[993,292],[993,297],[993,301],[993,306],[992,311],[992,316],[991,321],[990,326],[989,331],[987,336],[986,340],[985,345],[985,350],[985,355]] },
-        { a: "rOut", b: "rBot", px: 232.2, mids: [[986,365],[988,370],[989,375],[990,380],[991,385],[992,389],[992,394],[993,399],[993,405],[993,410],[993,415],[993,420],[993,425],[993,430],[993,435],[993,440],[993,445],[993,450],[993,455],[993,460],[993,465],[993,470],[992,475],[992,480],[991,485],[990,490],[989,495],[988,500],[986,505],[984,509],[981,513],[978,517],[975,521],[971,525],[968,528],[964,531],[960,535],[956,537],[952,540],[947,543],[943,545],[938,548],[934,550],[929,552],[925,554]] },
-        { a: "upR", b: "rOut", px: 176.9, mids: [[814,367],[819,367],[824,367],[829,367],[834,367],[839,367],[844,367],[849,367],[854,367],[859,367],[865,367],[870,367],[875,367],[880,367],[885,367],[890,367],[895,367],[900,367],[905,367],[910,367],[915,367],[920,367],[925,367],[930,367],[935,366],[940,366],[945,366],[950,365],[955,364],[960,363],[965,361],[970,360],[975,360],[980,360]] },
+        { a: "rTop", b: "rOut", px: 168.6, mids: [[962,204],[964,209],[967,213],[970,217],[973,221],[975,225],[978,230],[980,234],[982,239],[984,243],[986,248],[987,252],[988,257],[989,262],[990,267],[991,272],[992,277],[993,282],[993,287],[993,292],[993,297],[993,301],[993,306],[993,311],[993,316],[993,321],[993,326],[993,331],[993,336],[993,340],[993,345],[993,350],[993,355]] },
+        { a: "rOut", b: "rBot", px: 232.2, mids: [[993,365],[993,370],[993,375],[993,380],[993,385],[993,389],[993,394],[993,399],[993,405],[993,410],[993,415],[993,420],[993,425],[993,430],[993,435],[993,440],[993,445],[993,450],[993,455],[993,460],[993,465],[993,470],[992,475],[992,480],[991,485],[990,490],[989,495],[988,500],[986,505],[984,509],[981,513],[978,517],[975,521],[971,525],[968,528],[964,531],[960,535],[956,537],[952,540],[947,543],[943,545],[938,548],[934,550],[929,552],[925,554]] },
         { a: "rBot", b: "midR", px: 111.0, mids: [[913,556],[906,556],[899,556],[892,556],[885,556],[878,556],[871,556],[864,556],[857,556],[850,556],[843,556],[836,556],[829,556],[822,556],[815,556]] },
     ];
-    const SHORTEST_PATH_PX = 1201.4;
-
-    const KM_PER_PX = TARGET_SHORTEST_KM / SHORTEST_PATH_PX;
+    // The illustration has no map scale. Use whole-kilometer road lengths for this exercise.
+    // The shortest route sums to 10 km; every other route to school is longer.
+    const ROAD_KM = {
+        "home:botL": 1,
+        "botL:midL": 2,
+        "botL:midR": 4,
+        "midL:spur": 2,
+        "midL:midR": 3,
+        "midL:upL": 2,
+        "midR:upR": 2,
+        "upL:upR": 3,
+        "upL:topL": 4,
+        "topL:school": 3,
+        "school:topR": 1,
+        "topR:upR": 2,
+        "topR:rTop": 1,
+        "rTop:rOut": 1,
+        "rOut:rBot": 2,
+        "rBot:midR": 1
+    };
 
     function buildAdj() {
         const adj = {};
         Object.keys(NODES).forEach((id) => { adj[id] = []; });
         for (const e of EDGE_DEFS) {
             if (!NODES[e.a] || !NODES[e.b]) continue;
-            const km = Math.round(e.px * KM_PER_PX * 10) / 10;
-            // เก็บ centerline ดิบ — ตอนขับค่อย offset เลน + ต่อจากรถ
-            const polyAB = polyFromEdge(e, false);
-            const polyBA = polyFromEdge(e, true);
+            const km = ROAD_KM[`${e.a}:${e.b}`];
+            if (!Number.isInteger(km) || km < 1) {
+                throw new Error(`Missing distance for road ${e.a}:${e.b}`);
+            }
+            // ใช้เส้นประกลางถนนแนวเดียวกันสำหรับรถ เส้นทางที่วิ่งแล้ว และเส้นทางตัวอย่าง
+            const polyAB = centerlineFromEdge(e, false);
+            const polyBA = polyAB.slice().reverse();
             adj[e.a].push({ to: e.b, km, px: e.px, centerline: polyAB });
             adj[e.b].push({ to: e.a, km, px: e.px, centerline: polyBA });
         }
         return adj;
     }
 
-    /**
-     * วิ่งตาม **เส้นกลางถนนจริง** (medial axis จาก mask ภาพ)
-     * ไม่ offset · ไม่ Bezier · ไม่ smooth หนัก
-     */
+    /** แนวกลางถนนที่ลากจากภาพ ใช้เป็นฐานสำหรับแนวเลนขับรถ */
     function centerlineFromEdge(e, reverse) {
         const a = NODES[e.a];
         const b = NODES[e.b];
@@ -82,10 +98,6 @@
         if (Math.hypot(b.x - p.x, b.y - p.y) > 0.5) pts.push({ x: b.x, y: b.y });
         if (reverse) pts.reverse();
         return pts;
-    }
-
-    function polyFromEdge(e, reverse) {
-        return centerlineFromEdge(e, reverse);
     }
 
     function polyLength(pts) {
@@ -108,31 +120,6 @@
 
     function lerpAngle(a, b, t) {
         return a + angleDiff(a, b) * t;
-    }
-
-    /** หาจุดบน polyline ที่ใกล้ (x,y) ที่สุด */
-    function nearestOnPoly(pts, x, y) {
-        let bestD = Infinity;
-        let best = { x: pts[0].x, y: pts[0].y, idx: 1, t: 0, dist: 0 };
-        for (let i = 1; i < pts.length; i++) {
-            const ax = pts[i - 1].x;
-            const ay = pts[i - 1].y;
-            const bx = pts[i].x;
-            const by = pts[i].y;
-            const abx = bx - ax;
-            const aby = by - ay;
-            const ab2 = abx * abx + aby * aby || 1;
-            let t = ((x - ax) * abx + (y - ay) * aby) / ab2;
-            t = Math.max(0, Math.min(1, t));
-            const px = ax + abx * t;
-            const py = ay + aby * t;
-            const d = Math.hypot(x - px, y - py);
-            if (d < bestD) {
-                bestD = d;
-                best = { x: px, y: py, idx: i, t, dist: d };
-            }
-        }
-        return best;
     }
 
     /**
@@ -263,27 +250,11 @@
         }
 
         const pts = centerline.map((p) => ({ x: p.x, y: p.y }));
-        const dStart = Math.hypot(carX - pts[0].x, carY - pts[0].y);
-        const dEnd = Math.hypot(carX - pts[pts.length - 1].x, carY - pts[pts.length - 1].y);
-
         const path = [{ x: carX, y: carY }];
-        if (dStart <= 36 || dStart <= dEnd + 8) {
-            if (dStart > 1.5) path.push({ x: pts[0].x, y: pts[0].y });
-            for (let i = 1; i < pts.length; i++) {
-                const p = pts[i];
-                const last = path[path.length - 1];
-                if (Math.hypot(p.x - last.x, p.y - last.y) > 0.5) path.push(p);
-            }
-        } else {
-            const near = nearestOnPoly(pts, carX, carY);
-            if (Math.hypot(near.x - carX, near.y - carY) > 1.5) {
-                path.push({ x: near.x, y: near.y });
-            }
-            for (let i = near.idx; i < pts.length; i++) {
-                const p = pts[i];
-                const last = path[path.length - 1];
-                if (Math.hypot(p.x - last.x, p.y - last.y) > 0.5) path.push(p);
-            }
+        // ต่อจากตำแหน่งรถเข้าสู่ต้นเลนของช่วงใหม่ แล้ววิ่งตามทุกจุดของถนน
+        for (const p of pts) {
+            const last = path[path.length - 1];
+            if (Math.hypot(p.x - last.x, p.y - last.y) > 0.5) path.push(p);
         }
 
         if (path.length < 2) return enrichPolyHeadings(pts);
@@ -399,7 +370,7 @@
                         <div class="sp-stats">
                             <div class="sp-stat">
                                 <span class="sp-stat-label">ระยะทางสะสม</span>
-                                <span class="sp-stat-value" id="sp-dist">0.0 กม.</span>
+                                <span class="sp-stat-value" id="sp-dist">0 กม.</span>
                             </div>
                             <div class="sp-stat">
                                 <span class="sp-stat-label">สถานะ</span>
@@ -524,8 +495,9 @@
             const prev = this.path[this.path.length - 2];
             const cur = this.path[this.path.length - 1];
             const edge = (this.adj[cur] || []).find((e) => e.to === prev);
-            if (edge) this.distanceKm = Math.max(0, Math.round((this.distanceKm - edge.km) * 10) / 10);
+            if (edge) this.distanceKm = Math.max(0, this.distanceKm - edge.km);
             this.path.pop();
+            if (this.path.length === 1) this.distanceKm = 0;
             // ตัด trail กลับไป mark ก่อนหน้า
             if (this.trailMarks.length) {
                 const mark = this.trailMarks.pop();
@@ -774,7 +746,7 @@
             if (!this.anim) return;
             const { toId, km, poly } = this.anim;
             this.currentId = toId;
-            this.distanceKm = Math.round((this.distanceKm + km) * 10) / 10;
+            this.distanceKm += km;
             this.path.push(toId);
 
             // ต่อ trailPoints เป็นเส้นเดียว — ข้ามจุดแรกถ้าชนกับปลายเดิม
@@ -815,18 +787,21 @@
         _onArrive() {
             this.finished = true;
             this._refreshHud();
-            if (this.hudStatus) this.hudStatus.textContent = "ถึงโรงเรียนแล้ว!";
-            const rounded = Math.round(this.distanceKm * 10) / 10;
-            if (this.hintEl) {
-                this.hintEl.innerHTML =
-                    `🎉 ถึงโรงเรียนแล้ว! ระยะทางสะสม <strong>${rounded.toFixed(1)} กม.</strong> — กด «ไปตอบคำถาม» หรือลองเส้นทางอื่นด้วย «เริ่มใหม่»`;
+            const isShortest = this.distanceKm === TARGET_SHORTEST_KM;
+            if (this.hudStatus) {
+                this.hudStatus.textContent = isShortest ? "พบเส้นทางสั้นที่สุด!" : "ยังไม่ใช่ทางสั้นที่สุด";
             }
-            if (this.btnFinish) this.btnFinish.classList.remove("hidden");
+            if (this.hintEl) {
+                this.hintEl.innerHTML = isShortest
+                    ? `🎉 พบเส้นทางสั้นที่สุด <strong>${this.distanceKm} กม.</strong> — กด «ไปตอบคำถาม»`
+                    : `ถึงโรงเรียนแล้ว ระยะทาง <strong>${this.distanceKm} กม.</strong> ยาวกว่าเส้นทางสั้นที่สุด <strong>${this.distanceKm - TARGET_SHORTEST_KM} กม.</strong> — กด «ถอย 1 จุด» หรือ «เริ่มใหม่»`;
+            }
+            if (this.btnFinish) this.btnFinish.classList.toggle("hidden", !isShortest);
             this._renderDirButtons();
         }
 
         _refreshHud() {
-            if (this.hudDist) this.hudDist.textContent = this.distanceKm.toFixed(1) + " กม.";
+            if (this.hudDist) this.hudDist.textContent = this.distanceKm + " กม.";
             if (this.hudStatus && !this.finished) {
                 const opts = this._neighborOptions();
                 if (this.currentId === "home") this.hudStatus.textContent = "ที่บ้าน — เลือกทางออก";
@@ -855,7 +830,8 @@
             this.dirBar.className = "sp-dirbar sp-dirbar-side sp-dir-list";
 
             if (this.finished) {
-                this.dirBar.innerHTML = `<div class="sp-dir-empty">ถึงโรงเรียนแล้ว — กด «เริ่มใหม่» หรือ «ไปตอบคำถาม»</div>`;
+                const isShortest = this.distanceKm === TARGET_SHORTEST_KM;
+                this.dirBar.innerHTML = `<div class="sp-dir-empty">${isShortest ? "พบทางสั้นที่สุด — ไปตอบคำถามได้" : "ยังมีทางสั้นกว่านี้ — ถอย 1 จุด หรือเริ่มใหม่"}</div>`;
                 this._slotOpts = [];
                 return;
             }
@@ -894,10 +870,10 @@
                     <span class="sp-dir-key">${i + 1}</span>
                     <span class="sp-dir-main">
                         <span class="sp-dir-arrow">ไป ${dest}</span>
-                        <span class="sp-dir-meta">${arrow} · ${o.km.toFixed(1)} กม.</span>
+                        <span class="sp-dir-meta">${arrow} · ${o.km} กม.</span>
                     </span>
                 `;
-                btn.title = `กดแล้วรถจะไปที่ «${dest}» (${o.km.toFixed(1)} กม.)`;
+                btn.title = `กดแล้วรถจะไปที่ «${dest}» (${o.km} กม.)`;
                 btn.addEventListener("click", () => this._moveTo(o));
                 this.dirBar.appendChild(btn);
             });
@@ -997,8 +973,10 @@
             }
             if (this.animating && this.anim) {
                 const t = Math.min(1, this.anim.t);
-                const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-                const partial = this._partialPoly(this.anim.poly, e);
+                const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+                const linearMix = this.anim.linearMix || 0;
+                const progress = ease * (1 - linearMix) + t * linearMix;
+                const partial = this._partialPoly(this.anim.poly, progress);
                 if (partial && partial.length) {
                     for (let i = 0; i < partial.length; i++) {
                         if (!started) {
@@ -1061,7 +1039,7 @@
                     ctx.fillText(String(i + 1), n.x, n.y);
 
                     // ป้าย: ไปที่ไหน · ระยะ
-                    const label = `ไป ${dest} · ${o.km.toFixed(1)}กม.`;
+                    const label = `ไป ${dest} · ${o.km}กม.`;
                     ctx.font = "bold 12px Kanit, sans-serif";
                     ctx.lineWidth = 3;
                     ctx.strokeStyle = "rgba(255,255,255,0.92)";

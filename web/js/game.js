@@ -69,8 +69,12 @@ class Game {
         this.muteWaves = document.getElementById("sound-waves");
         this.muteX = document.getElementById("mute-x");
         this.badgeDoubleDamage = document.getElementById("double-damage-badge");
+        this.answerFeedback = document.getElementById("answer-feedback");
+        this.combatStatusLive = document.getElementById("combat-status-live");
         this.gameContainer = document.getElementById("game-container");
         this.isMuted = false;
+        this.reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        this.lastCombatStatus = "";
         
         // Revive DOM elements cache
         this.reviveOverlay = document.getElementById("revive-overlay");
@@ -105,6 +109,51 @@ class Game {
         }
     }
 
+    showAnswerFeedback(type, message) {
+        if (!this.answerFeedback) return;
+        this.answerFeedback.classList.remove("hidden", "is-correct", "is-wrong");
+        this.answerFeedback.classList.add(type === "correct" ? "is-correct" : "is-wrong");
+        this.answerFeedback.textContent = message;
+    }
+
+    clearAnswerFeedback() {
+        if (!this.answerFeedback) return;
+        this.answerFeedback.classList.add("hidden");
+        this.answerFeedback.classList.remove("is-correct", "is-wrong");
+        this.answerFeedback.textContent = "";
+    }
+
+    syncCombatStatus(force = false) {
+        if (!this.player || !this.monster || !this.combatStatusLive) return;
+        const playerHp = Math.max(0, Math.ceil(this.player.hp));
+        const monsterHp = Math.max(0, Math.ceil(this.monster.hp));
+        const status = `พลังชีวิตผู้เล่น ${playerHp} จาก ${this.player.maxHp} พลังชีวิตศัตรู ${monsterHp} จาก ${this.monster.maxHp}`;
+        if (force || status !== this.lastCombatStatus) {
+            this.combatStatusLive.textContent = status;
+            this.lastCombatStatus = status;
+        }
+    }
+
+    updateProgress() {
+        const subject = document.getElementById("hud-subject");
+        const question = document.getElementById("hud-question");
+        const fill = document.getElementById("hud-progress-fill");
+        const total = this.previewDisplayTotal || this.questionPool.length;
+        const index = this.previewDisplayIndex ?? this.currentQIdx;
+        const number = Math.min(index + 1, total);
+        if (subject) subject.textContent = window.SUBJECT_NAME || "คณิตศาสตร์";
+        if (question) question.textContent = `ข้อ ${number} จาก ${total}`;
+        if (fill) fill.style.width = `${total ? (index / total) * 100 : 0}%`;
+    }
+
+    updateResultSummary(kind) {
+        const summary = document.getElementById(`${kind}-summary`);
+        if (!summary) return;
+        const correct = this.answersLog.reduce((count, answer, index) =>
+            count + Number(answer === this.questionPool[index]?.a), 0);
+        summary.textContent = `ตอบถูก ${correct} ข้อ · ตอบผิด ${this.answersLog.length - correct} ข้อ · ทำแล้ว ${this.answersLog.length} จาก ${this.questionPool.length} ข้อ`;
+    }
+
     toggleMute() {
         this.isMuted = !this.isMuted;
         this.audioBgm.muted = this.isMuted;
@@ -115,6 +164,10 @@ class Game {
         } else {
             this.muteWaves.classList.remove("hidden");
             this.muteX.classList.add("hidden");
+        }
+        if (this.btnMute) {
+            this.btnMute.setAttribute("aria-pressed", String(this.isMuted));
+            this.btnMute.setAttribute("aria-label", this.isMuted ? "เปิดเสียง" : "ปิดเสียง");
         }
     }
 
@@ -181,6 +234,8 @@ class Game {
         this.monsterHpBar = new HealthBar(0, 0, 150, 20);
         
         this.combatState = "idle";
+        this.answerRevealTimer = 0;
+        this.pendingAttack = null;
         this.pendingDmg = 0;
         this.hitApplied = false;
         
@@ -189,6 +244,7 @@ class Game {
         this.screenShake = 0.0;
         this.bossWarningTriggered = false;
         this.answersLog = [];
+        this.clearAnswerFeedback();
         
         // Hide revive overlay if showing
         if (this.reviveOverlay) {
@@ -246,13 +302,15 @@ class Game {
         if (warningEl) {
             warningEl.classList.remove("hidden");
             this.playSound("wrong");
-            this.screenShake = 15.0;
-            this.spawnParticles({ x: WIDTH / 2, y: HEIGHT / 2 }, 40, "#ff3b30");
+            this.screenShake = this.reducedMotion ? 0 : 15.0;
+            if (!this.reducedMotion) {
+                this.spawnParticles({ x: WIDTH / 2, y: HEIGHT / 2 }, 40, "#ff3b30");
+            }
             
             // Play pulsing siren sounds
             let flashCount = 0;
             const flashInterval = setInterval(() => {
-                this.screenShake = 8.0;
+                this.screenShake = this.reducedMotion ? 0 : 8.0;
                 this.playSound("shoot");
                 flashCount++;
                 if (flashCount >= 4) clearInterval(flashInterval);
@@ -285,8 +343,10 @@ class Game {
     }
 
     loadQuestion() {
+        this.clearAnswerFeedback();
         if (this.currentQIdx >= this.questionPool.length) {
             this.state = STATE_VICTORY;
+            this.updateResultSummary("victory");
             this.victoryOverlay.classList.remove("hidden");
             this.topHud.classList.add("hidden");
             this.quizPanel.classList.add("hidden");
@@ -311,6 +371,7 @@ class Game {
         }
 
         this.wave = Math.floor(this.currentQIdx / 10) + 1;
+        this.updateProgress();
 
         const qData = this.questionPool[this.currentQIdx];
         this.currentQText = qData.q;
@@ -500,7 +561,7 @@ class Game {
         const repairNameEl = this.itemButtons["Repair Kit"]?.querySelector(".item-name");
         const cannonballNameEl = this.itemButtons["Cannonball"]?.querySelector(".item-name");
         if (telescopeNameEl) telescopeNameEl.innerText = "กล้องส่องทางไกล";
-        if (repairNameEl) repairNameEl.innerText = "กล่องพยาบาล";
+        if (repairNameEl) repairNameEl.innerText = "ชุดปฐมพยาบาล";
         if (cannonballNameEl) cannonballNameEl.innerText = "กระสุนปืนใหญ่";
 
         setCount("count-telescope", null, this.items["Telescope"].count);
@@ -509,12 +570,15 @@ class Game {
 
         if (this.itemButtons["Telescope"]) {
             this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
+            this.itemButtons["Telescope"].setAttribute("aria-label", `กล้องส่องทางไกล ตัดตัวเลือกที่ผิด 2 ข้อ เหลือ ${this.items["Telescope"].count}`);
         }
         if (this.itemButtons["Repair Kit"]) {
             this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
+            this.itemButtons["Repair Kit"].setAttribute("aria-label", `ชุดปฐมพยาบาล ฟื้นฟูพลังชีวิต 30 หน่วย เหลือ ${this.items["Repair Kit"].count}`);
         }
         if (this.itemButtons["Cannonball"]) {
             this.itemButtons["Cannonball"].disabled = (this.items["Cannonball"].count <= 0);
+            this.itemButtons["Cannonball"].setAttribute("aria-label", `กระสุนปืนใหญ่ เพิ่มความเสียหายเป็น 2 เท่า เหลือ ${this.items["Cannonball"].count}`);
         }
 
         if (this.btnUseRevive) {
@@ -566,6 +630,7 @@ class Game {
                 this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat + 40 }, 30, "#4cd964", "heal");
                 this.items["Repair Kit"].count -= 1;
                 this.updateItemUI();
+                this.syncCombatStatus(true);
             }
         } 
         else if (name === "Cannonball") {
@@ -581,6 +646,7 @@ class Game {
         
         this.items["Revive"].count -= 1;
         this.player.hp = this.player.maxHp;
+        this.syncCombatStatus(true);
         
         this.dmgTexts.push(new DamageText(this.player.xFloat, this.player.yFloat - 80, -this.player.maxHp, "#4cd964"));
         this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat }, 50, "#4cd964");
@@ -598,6 +664,7 @@ class Game {
     declineRevive() {
         this.reviveOverlay.classList.add("hidden");
         this.state = STATE_GAME_OVER;
+        this.updateResultSummary("gameover");
         this.gameoverOverlay.classList.remove("hidden");
         this.topHud.classList.add("hidden");
         this.quizPanel.classList.add("hidden");
@@ -633,44 +700,31 @@ class Game {
 
         if (choiceIdx === qData.a) {
             selectedBtn.classList.add("correct");
-            this.playSound("shoot");
             
             // Set double damage hit flag
             this.hitIsDouble = this.doubleDamage;
             
             this.pendingDmg = PLAYER_BASE_DMG * (this.doubleDamage ? 2 : 1);
+            this.showAnswerFeedback("correct", `✓ ตอบถูก! โจมตีศัตรู ${this.pendingDmg} หน่วย`);
             this.doubleDamage = false;
             this.badgeDoubleDamage.classList.add("hidden");
             
-            this.player.triggerAttack();
-            this.combatState = "player_attack";
-            this.hitApplied = false;
-
-            // Hide quiz during attack animation; keep mute reachable
-            this.quizPanel.classList.add("hidden");
+            this.pendingAttack = "player_attack";
         } else {
             selectedBtn.classList.add("wrong");
-            // Highlight the correct one
-            for (let i = 0; i < 4; i++) {
-                if (i === qData.a) {
-                    document.getElementById(`choice-${i}`).classList.add("correct");
-                }
-            }
             
             // Keep double-damage buff until the next correct answer (do not waste Cannonball on a wrong answer)
             
-            this.playSound("wrong");
             // Monster deals damage
             const dmgMap = { "small": 10, "big": 20, "boss": 30 };
             this.pendingDmg = dmgMap[this.monster.mType] || 10;
+            this.showAnswerFeedback("wrong", `✕ ตอบผิด ศัตรูโจมตีผู้เล่น ${this.pendingDmg} หน่วย`);
             
-            this.monster.triggerAttack();
-            this.combatState = "monster_attack";
-            this.hitApplied = false;
-
-            // Hide quiz during attack animation; keep mute reachable
-            this.quizPanel.classList.add("hidden");
+            this.pendingAttack = "monster_attack";
         }
+        // Keep the answer cards visible long enough to read their border colors.
+        this.combatState = "answer_reveal";
+        this.answerRevealTimer = 1.1;
     }
 
     update(dt) {
@@ -717,7 +771,23 @@ class Game {
         this.monsterHpBar.y = this.monster.yFloat - (mDrawH / 2) - 40;
 
         // Combat Animation State Machine
-        if (this.combatState === "player_attack") {
+        if (this.combatState === "answer_reveal") {
+            this.answerRevealTimer -= dt;
+            if (this.answerRevealTimer <= 0) {
+                this.combatState = this.pendingAttack;
+                this.pendingAttack = null;
+                this.hitApplied = false;
+                this.quizPanel.classList.add("hidden");
+                if (this.combatState === "player_attack") {
+                    this.playSound("shoot");
+                    this.player.triggerAttack();
+                } else {
+                    this.playSound("wrong");
+                    this.monster.triggerAttack();
+                }
+            }
+        }
+        else if (this.combatState === "player_attack") {
             // Apply hit impact when player weapon triggers swing mid-point
             if (this.player.hitTriggered && !this.hitApplied) {
                 this.playSound("hit");
@@ -725,12 +795,13 @@ class Game {
                 
                 if (this.hitIsDouble) {
                     this.spawnParticles({ x: this.monster.xFloat, y: this.monster.yFloat }, 45, null, "fire");
-                    this.screenShake = 15.0; // stronger shake for double damage!
+                    this.screenShake = this.reducedMotion ? 0 : 15.0; // stronger shake for double damage!
                 } else {
                     this.spawnParticles({ x: this.monster.xFloat, y: this.monster.yFloat }, 20, "#ff8c00", "normal");
                 }
                 
                 this.monster.hp -= this.pendingDmg;
+                this.syncCombatStatus(true);
                 this.dmgTexts.push(new DamageText(this.monster.xFloat, this.monster.yFloat - 60, this.pendingDmg, "#ffd700"));
                 
                 this.hitApplied = true;
@@ -757,10 +828,11 @@ class Game {
                 this.playSound("hit");
                 this.player.triggerHurt();
                 
-                this.screenShake = this.monster.mType === "boss" ? 10.0 : 5.0;
+                this.screenShake = this.reducedMotion ? 0 : (this.monster.mType === "boss" ? 10.0 : 5.0);
                 this.spawnParticles({ x: this.player.xFloat, y: this.player.yFloat }, 20, "#ff0000");
                 
                 this.player.hp -= this.pendingDmg;
+                this.syncCombatStatus(true);
                 this.dmgTexts.push(new DamageText(this.player.xFloat, this.player.yFloat - 60, this.pendingDmg, "#ff3b30"));
                 
                 this.hitApplied = true;
@@ -775,6 +847,7 @@ class Game {
                         this.quizPanel.classList.add("hidden");
                     } else {
                         this.state = STATE_GAME_OVER;
+                        this.updateResultSummary("gameover");
                         this.gameoverOverlay.classList.remove("hidden");
                         this.topHud.classList.add("hidden");
                         this.quizPanel.classList.add("hidden");
@@ -837,32 +910,14 @@ class Game {
         this.drawParallaxBackground();
         
         if (this.state === STATE_PLAYING) {
-            // Draw Wave & Question text centered at the top of the canvas (matching Python version)
-            this.ctx.save();
-            this.ctx.font = "bold 32px " + FONT_HEADER;
-            this.ctx.fillStyle = "#ffffff";
-            this.ctx.textAlign = "center";
-            this.ctx.shadowColor = "#000000";
-            this.ctx.shadowBlur = 4;
-            this.ctx.shadowOffsetX = 2;
-            this.ctx.shadowOffsetY = 2;
-            const subjName = window.SUBJECT_NAME || "คณิตศาสตร์";
-            const qNum = (typeof this.previewDisplayIndex === "number")
-                ? this.previewDisplayIndex + 1
-                : this.currentQIdx + 1;
-            const qTotal = (typeof this.previewDisplayTotal === "number")
-                ? this.previewDisplayTotal
-                : this.questionPool.length;
-            this.ctx.fillText(`วิชา: ${subjName}   คำถามที่: ${qNum}/${qTotal}`, WIDTH / 2, 45);
-            this.ctx.restore();
-
-            // 2. Draw Characters
+            // Draw characters beneath the HTML progress and controls.
             this.player.draw(this.ctx);
             this.monster.draw(this.ctx);
             
             // 3. Draw HP Bars
             this.playerHpBar.draw(this.ctx, this.player.hp, this.player.maxHp, 0.016);
             this.monsterHpBar.draw(this.ctx, this.monster.hp, this.monster.maxHp, 0.016);
+            this.syncCombatStatus();
             
             // 4. Draw combat particles
             this.particles.forEach(p => p.draw(this.ctx));
@@ -1309,6 +1364,51 @@ function syncShortestPathMinigameButton() {
     }
 }
 
+let scenarioReturnFocus = null;
+
+function setScenarioBackgroundInert(isInert) {
+    document.querySelectorAll("#ui-overlay > :not(#scenario-overlay)").forEach((element) => {
+        if (isInert) {
+            element.setAttribute("inert", "");
+            element.setAttribute("aria-hidden", "true");
+        } else {
+            element.removeAttribute("inert");
+            element.removeAttribute("aria-hidden");
+        }
+    });
+}
+
+function trapScenarioFocus(event) {
+    const overlay = document.getElementById("scenario-overlay");
+    if (!overlay || overlay.classList.contains("hidden")) return;
+
+    if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        closeScenarioOverlay();
+        return;
+    }
+
+    if (event.key !== "Tab") return;
+    const focusable = [...overlay.querySelectorAll(
+        'button:not([disabled]):not(.hidden), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+    )].filter((element) => element.getClientRects().length > 0);
+    if (!focusable.length) {
+        event.preventDefault();
+        return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+    }
+}
+
 function openScenarioOverlay() {
     const overlay = document.getElementById("scenario-overlay");
     const content = document.getElementById("scroll-content");
@@ -1325,7 +1425,13 @@ function openScenarioOverlay() {
         content.innerHTML = (typeof formatHtmlPreserveTags === "function")
             ? formatHtmlPreserveTags(gameInstance.currentScenario)
             : String(gameInstance.currentScenario || "").replace(/>\s+</g, "><").replace(/\n/g, "<br>");
+        scenarioReturnFocus = document.getElementById("btn-open-scenario") || document.activeElement;
         overlay.classList.remove("hidden");
+        setScenarioBackgroundInert(true);
+        if (overlay.dataset.focusTrapBound !== "1") {
+            overlay.addEventListener("keydown", trapScenarioFocus);
+            overlay.dataset.focusTrapBound = "1";
+        }
         syncAutoScenarioCheckbox();
         syncShortestPathMinigameButton();
         // Images inside scenario parchment should also zoom (not answer choices)
@@ -1343,6 +1449,10 @@ function openScenarioOverlay() {
                 console.warn("Math rendering error in overlay", e);
             }
         }
+        requestAnimationFrame(() => {
+            const closeButton = overlay.querySelector(".btn-close-scroll");
+            if (closeButton) closeButton.focus();
+        });
     }
 }
 
@@ -1354,6 +1464,11 @@ function closeScenarioOverlay() {
     if (overlay) {
         overlay.classList.add("hidden");
     }
+    setScenarioBackgroundInert(false);
+    if (scenarioReturnFocus && scenarioReturnFocus.isConnected && !scenarioReturnFocus.classList.contains("hidden")) {
+        scenarioReturnFocus.focus();
+    }
+    scenarioReturnFocus = null;
 }
 
 // Answer hotkeys: 1–4 / numpad 1–4 / A–D (when playing and not typing)
@@ -1398,15 +1513,14 @@ window.addEventListener("keydown", (e) => {
     }
 });
 
-// Dynamic root font size scaling for perfect responsiveness across computer & mobile screens
+// Keep game UI readable while still scaling spacing for smaller 16:9 canvases.
 function resizeGame() {
     const container = document.getElementById("game-container");
     if (!container) return;
     const width = container.clientWidth;
     // Base design width is 1280px. Standard font size is 16px.
-    // Scale font size proportionally: 16px * (width / 1280) = width / 80
-    // We cap it at minimum 9.5px to keep text legible on ultra-small screens
-    const baseFontSize = Math.max(9.5, width / 80);
+    // Text below 14px becomes difficult to read on phones and tablets.
+    const baseFontSize = Math.max(14, Math.min(16, width / 80));
     document.documentElement.style.fontSize = baseFontSize + "px";
 }
 
