@@ -141,24 +141,27 @@ const FALLBACK_MATH = [
     },
     {
         "q": "สถานการณ์ “ระยะทางที่สั้นที่สุด”\n<img src=\"../assets/images/questions/math/image14.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nจากแผนภาพที่กำหนดให้\n\nข้อ 12. ระยะทางที่สั้นที่สุดจากบ้านไปโรงเรียนตรงกับข้อใด",
-        "c": [
-            "10 กิโลเมตร",
-            "12 กิโลเมตร",
-            "14 กิโลเมตร",
-            "16 กิโลเมตร"
-        ],
+        "type": "input",
+        "unit": "กิโลเมตร",
+        "placeholder": "พิมพ์ระยะทาง (กิโลเมตร)...",
+        "targetNumber": 10,
+        "answers": ["10", "10 กิโลเมตร", "10 กม."],
+        "correctDisplay": "10",
+        "c": ["", "", "", ""],
         "a": 0,
         "img": "",
         "showImg": false
     },
     {
         "q": "สถานการณ์ “ระยะทางที่สั้นที่สุด”\n<img src=\"../assets/images/questions/math/image14.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nจากแผนภาพที่กำหนดให้\n\nข้อ 13. ถ้าครูท่านหนึ่งต้องเติมน้ำมันเพื่อไป – กลับระหว่างบ้านและโรงเรียนเป็นจำนวน 5 วัน ควรเติมน้ำมันอย่างน้อยกี่ลิตร (น้ำมัน 1 ลิตร ต่อระยะทาง 8 กิโลเมตร)",
-        "c": [
-            "5 ลิตร",
-            "10 ลิตร",
-            "15 ลิตร",
-            "20 ลิตร"
-        ],
+        "type": "input",
+        "unit": "ลิตร",
+        "placeholder": "พิมพ์จำนวนลิตร...",
+        "targetNumber": 12.5,
+        "targetNumbers": [12.5, 13],
+        "answers": ["12.5", "13", "12.5 ลิตร", "13 ลิตร"],
+        "correctDisplay": "12.5 หรือ 13",
+        "c": ["", "", "", ""],
         "a": 0,
         "img": "",
         "showImg": false
@@ -1518,8 +1521,8 @@ function checkTextAnswer(userInput, qData) {
     if (targets.length > 0) {
         // Remove common Thai filler words before/after
         let numText = raw
-            .replace(/(ตอบ|คือ|ประมาณ|เท่ากับ|จ่าย|ความเร็ว|ครับ|ค่ะ|คะ|นะ)/g, "")
-            .replace(/(เซด|กิโลเมตรต่อชั่วโมง|กม\.?\/ชม\.?|km\/h|kph|เซนต์)/gi, "")
+            .replace(/(ตอบ|คือ|ประมาณ|เท่ากับ|จ่าย|ความเร็ว|ระยะทาง|ระยะ|น้ำมัน|เติม|ควรเติม|อย่างน้อย|ครับ|ค่ะ|คะ|นะ)/g, "")
+            .replace(/(เซด|กิโลเมตรต่อชั่วโมง|กม\.?\/ชม\.?|km\/h|kph|กิโลเมตร|กม\.?|km|ลิตร|liters?|เซนต์)/gi, "")
             .trim();
 
         // Match float or integer
