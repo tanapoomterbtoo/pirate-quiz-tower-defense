@@ -149,8 +149,14 @@ class Game {
     updateResultSummary(kind) {
         const summary = document.getElementById(`${kind}-summary`);
         if (!summary) return;
-        const correct = this.answersLog.reduce((count, answer, index) =>
-            count + Number(answer === this.questionPool[index]?.a), 0);
+        const correct = this.answersLog.reduce((count, answer, index) => {
+            const q = this.questionPool[index];
+            if (!q) return count;
+            if (q.type === "input") {
+                return count + Number(typeof checkTextAnswer === "function" ? checkTextAnswer(answer, q) : false);
+            }
+            return count + Number(answer === q.a);
+        }, 0);
         summary.textContent = `ตอบถูก ${correct} ข้อ · ตอบผิด ${this.answersLog.length - correct} ข้อ · ทำแล้ว ${this.answersLog.length} จาก ${this.questionPool.length} ข้อ`;
     }
 
@@ -179,6 +185,10 @@ class Game {
         this.currentQIdx = 0;
         this.wave = 1;
         
+        if (typeof refreshExamQuestionsIfDynamic === "function") {
+            refreshExamQuestionsIfDynamic();
+        }
+
         this.questionPool = [...QUESTIONS];
         
         // Generate dynamic enemy sequence: 5 Easy and 5 Middle shuffled, with Boss at the end
@@ -458,33 +468,73 @@ class Game {
             quizBox.scrollTop = 0;
         }
 
-        // Render answers onto HTML buttons and detect if we need a 1-column layout
+        // Render answers onto HTML buttons or short-answer text input
         let isLongChoice = false;
         const grid = document.querySelector(".choices-grid");
-        
-        for (let i = 0; i < 4; i++) {
-            const btn = document.getElementById(`choice-${i}`);
-            const choiceHtml = qData.c[i] || "";
-            btn.innerHTML = choiceHtml;
-            btn.disabled = false;
-            btn.classList.remove("correct", "wrong");
-            // Answer-choice images must NOT open the zoom popup
-            if (typeof disableZoomOnChoiceImages === "function") {
-                disableZoomOnChoiceImages(btn);
-            }
-            
-            // Long / multi-line answers (e.g. math Q3 with <br>) use 1-column so text is not clipped
-            const plainLen = String(choiceHtml).replace(/<[^>]+>/g, "").length;
-            if (plainLen > 35 || /<br\s*\/?>/i.test(choiceHtml) || /<table/i.test(choiceHtml) || /<img/i.test(choiceHtml)) {
-                isLongChoice = true;
-            }
-        }
+        const inputContainer = document.getElementById("input-answer-container");
+        const textInput = document.getElementById("quiz-text-input");
+        const unitBadge = document.getElementById("quiz-input-unit");
+        const btnSubmitText = document.getElementById("btn-submit-text");
+        const hintBox = document.getElementById("quiz-input-hint");
 
-        if (grid) {
-            if (isLongChoice) {
-                grid.classList.add("long-choices");
-            } else {
-                grid.classList.remove("long-choices");
+        if (qData.type === "input") {
+            if (grid) grid.classList.add("hidden");
+            if (inputContainer) {
+                inputContainer.classList.remove("hidden");
+                if (textInput) {
+                    textInput.value = "";
+                    textInput.disabled = false;
+                    textInput.classList.remove("correct", "wrong");
+                    textInput.placeholder = qData.placeholder || "พิมพ์คำตอบที่นี่...";
+                }
+                if (unitBadge) {
+                    if (qData.unit) {
+                        unitBadge.textContent = qData.unit;
+                        unitBadge.classList.remove("hidden");
+                    } else {
+                        unitBadge.textContent = "";
+                        unitBadge.classList.add("hidden");
+                    }
+                }
+                if (btnSubmitText) {
+                    btnSubmitText.disabled = false;
+                }
+                if (hintBox) {
+                    hintBox.textContent = "";
+                    hintBox.classList.add("hidden");
+                }
+                setTimeout(() => {
+                    try { if (textInput) textInput.focus(); } catch (e) {}
+                }, 50);
+            }
+        } else {
+            if (inputContainer) inputContainer.classList.add("hidden");
+            if (grid) {
+                grid.classList.remove("hidden");
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`choice-${i}`);
+                    if (!btn) continue;
+                    const choiceHtml = (qData.c && qData.c[i]) || "";
+                    btn.innerHTML = choiceHtml;
+                    btn.disabled = false;
+                    btn.classList.remove("correct", "wrong");
+                    // Answer-choice images must NOT open the zoom popup
+                    if (typeof disableZoomOnChoiceImages === "function") {
+                        disableZoomOnChoiceImages(btn);
+                    }
+                    
+                    // Long / multi-line answers (e.g. math Q3 with <br>) use 1-column so text is not clipped
+                    const plainLen = String(choiceHtml).replace(/<[^>]+>/g, "").length;
+                    if (plainLen > 35 || /<br\s*\/?>/i.test(choiceHtml) || /<table/i.test(choiceHtml) || /<img/i.test(choiceHtml)) {
+                        isLongChoice = true;
+                    }
+                }
+
+                if (isLongChoice) {
+                    grid.classList.add("long-choices");
+                } else {
+                    grid.classList.remove("long-choices");
+                }
             }
         }
 
@@ -520,14 +570,18 @@ class Game {
                         {left: "$", right: "$", display: false}
                     ]
                 });
-                for (let i = 0; i < 4; i++) {
-                    const btn = document.getElementById(`choice-${i}`);
-                    renderMathInElement(btn, {
-                        delims: [
-                            {left: "$$", right: "$$", display: true},
-                            {left: "$", right: "$", display: false}
-                        ]
-                    });
+                if (qData.type !== "input") {
+                    for (let i = 0; i < 4; i++) {
+                        const btn = document.getElementById(`choice-${i}`);
+                        if (btn) {
+                            renderMathInElement(btn, {
+                                delims: [
+                                    {left: "$$", right: "$$", display: true},
+                                    {left: "$", right: "$", display: false}
+                                ]
+                            });
+                        }
+                    }
                 }
             } catch (e) {
                 console.warn("Math rendering failed", e);
@@ -594,8 +648,33 @@ class Game {
         const btn = this.itemButtons[name];
         
         if (name === "Telescope") {
-            const choices = [0, 1, 2, 3];
             const qData = this.questionPool[this.currentQIdx];
+            if (qData && qData.type === "input") {
+                const hintBox = document.getElementById("quiz-input-hint");
+                let hintMsg = "";
+                if (typeof qData.targetNumber === "number") {
+                    const val = qData.targetNumber;
+                    const margin = Math.max(5, Math.round(val * 0.15));
+                    const low = Math.max(0, Math.floor((val - margin) / 5) * 5);
+                    const high = Math.ceil((val + margin) / 5) * 5;
+                    const unitStr = qData.unit ? ` ${qData.unit}` : "";
+                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: ค่าตัวเลขคำตอบอยู่ระหว่าง ${low} ถึง ${high}${unitStr}`;
+                } else if (qData.correctDisplay) {
+                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: คำตอบขึ้นต้นด้วย "${qData.correctDisplay.substring(0, 2)}..."`;
+                } else {
+                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: ตรวจสอบตัวเลขและหน่วยให้ตรงกับโจทย์`;
+                }
+
+                if (hintBox) {
+                    hintBox.innerHTML = hintMsg;
+                    hintBox.classList.remove("hidden");
+                }
+                this.items["Telescope"].count -= 1;
+                this.updateItemUI();
+                return;
+            }
+
+            const choices = [0, 1, 2, 3];
             const wrongIndices = choices.filter(idx => idx !== qData.a);
             
             const activeWrongIndices = wrongIndices.filter(idx => {
@@ -725,6 +804,67 @@ class Game {
         // Keep the answer cards visible long enough to read their border colors.
         this.combatState = "answer_reveal";
         this.answerRevealTimer = 1.1;
+    }
+
+    submitCurrentTextAnswer() {
+        if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+        if (!this.questionPool || this.currentQIdx >= this.questionPool.length) return;
+
+        const qData = this.questionPool[this.currentQIdx];
+        if (!qData || qData.type !== "input") return;
+
+        const inputEl = document.getElementById("quiz-text-input");
+        const btnSubmit = document.getElementById("btn-submit-text");
+        const userText = inputEl ? inputEl.value.trim() : "";
+
+        if (!userText) {
+            if (inputEl) {
+                inputEl.focus();
+                inputEl.classList.add("wrong");
+                setTimeout(() => inputEl.classList.remove("wrong"), 400);
+            }
+            return;
+        }
+
+        if (inputEl) inputEl.disabled = true;
+        if (btnSubmit) btnSubmit.disabled = true;
+
+        if (this.answersLog) {
+            this.answersLog.push(userText);
+        }
+
+        const isCorrect = (typeof checkTextAnswer === "function")
+            ? checkTextAnswer(userText, qData)
+            : false;
+
+        const correctLabel = qData.correctDisplay
+            ? `${qData.correctDisplay} ${qData.unit || ""}`.trim()
+            : (qData.answers && qData.answers[0]) || "";
+
+        if (isCorrect) {
+            if (inputEl) {
+                inputEl.classList.remove("wrong");
+                inputEl.classList.add("correct");
+            }
+            this.hitIsDouble = this.doubleDamage;
+            this.pendingDmg = PLAYER_BASE_DMG * (this.doubleDamage ? 2 : 1);
+            this.showAnswerFeedback("correct", `✓ ตอบถูก! โจมตีศัตรู ${this.pendingDmg} หน่วย`);
+            this.doubleDamage = false;
+            this.badgeDoubleDamage.classList.add("hidden");
+            this.pendingAttack = "player_attack";
+        } else {
+            if (inputEl) {
+                inputEl.classList.remove("correct");
+                inputEl.classList.add("wrong");
+            }
+            const dmgMap = { "small": 10, "big": 20, "boss": 30 };
+            this.pendingDmg = dmgMap[this.monster.mType] || 10;
+            this.showAnswerFeedback("wrong", `✕ ตอบผิด! (เฉลยคือ: ${correctLabel}) ศัตรูโจมตีผู้เล่น ${this.pendingDmg} หน่วย`);
+            this.pendingAttack = "monster_attack";
+        }
+
+        this.combatState = "answer_reveal";
+        this.answerRevealTimer = 1.3;
     }
 
     update(dt) {
@@ -955,8 +1095,14 @@ class Game {
         let correctCount = 0;
         this.answersLog.forEach((ans, idx) => {
             const qData = this.questionPool[idx];
-            if (qData && ans === qData.a) {
-                correctCount++;
+            if (qData) {
+                if (qData.type === "input") {
+                    if (typeof checkTextAnswer === "function" && checkTextAnswer(ans, qData)) {
+                        correctCount++;
+                    }
+                } else if (ans === qData.a) {
+                    correctCount++;
+                }
             }
         });
 
@@ -1019,7 +1165,14 @@ function applyAdminPreviewPayload(p) {
         a: (typeof p.answerIndex === "number" && p.answerIndex >= 0) ? p.answerIndex : 0,
         img: p.img || "",
         showImg: p.showImg === true || p.showImg === "true",
-        scenarioId: hasScen ? PREVIEW_SCEN_ID : null
+        scenarioId: hasScen ? PREVIEW_SCEN_ID : null,
+        type: p.type || "choice",
+        unit: p.unit || "",
+        placeholder: p.placeholder || "พิมพ์คำตอบที่นี่...",
+        targetNumber: (typeof p.targetNumber === "number") ? p.targetNumber : null,
+        targetNumbers: Array.isArray(p.targetNumbers) ? p.targetNumbers : [],
+        answers: Array.isArray(p.answers) ? p.answers : [],
+        correctDisplay: p.correctDisplay || ""
     };
     while (qObj.c.length < 4) qObj.c.push("");
 
@@ -1032,7 +1185,14 @@ function applyAdminPreviewPayload(p) {
             a: qObj.a,
             img: qObj.img,
             showImg: qObj.showImg,
-            scenarioId: qObj.scenarioId
+            scenarioId: qObj.scenarioId,
+            type: qObj.type,
+            unit: qObj.unit,
+            placeholder: qObj.placeholder,
+            targetNumber: qObj.targetNumber,
+            targetNumbers: qObj.targetNumbers.slice(),
+            answers: qObj.answers.slice(),
+            correctDisplay: qObj.correctDisplay
         });
     }
 
@@ -1042,7 +1202,14 @@ function applyAdminPreviewPayload(p) {
         a: q.a,
         img: q.img,
         showImg: q.showImg,
-        scenarioId: q.scenarioId
+        scenarioId: q.scenarioId,
+        type: q.type,
+        unit: q.unit,
+        placeholder: q.placeholder,
+        targetNumber: q.targetNumber,
+        targetNumbers: q.targetNumbers ? q.targetNumbers.slice() : [],
+        answers: q.answers ? q.answers.slice() : [],
+        correctDisplay: q.correctDisplay
     }));
     gameInstance.currentQIdx = 0;
     gameInstance.combatState = "idle";
@@ -1219,6 +1386,21 @@ function selectChoice(idx) {
     }
     if (gameInstance) gameInstance.selectChoice(idx);
 }
+
+function submitCurrentTextAnswer() {
+    if (isAdminPreviewMode() && gameInstance) {
+        const inputEl = document.getElementById("quiz-text-input");
+        const qData = gameInstance.questionPool[gameInstance.currentQIdx] || {};
+        if (inputEl) {
+            const ok = (typeof checkTextAnswer === "function") ? checkTextAnswer(inputEl.value, qData) : false;
+            inputEl.classList.remove("correct", "wrong");
+            inputEl.classList.add(ok ? "correct" : "wrong");
+        }
+        return;
+    }
+    if (gameInstance) gameInstance.submitCurrentTextAnswer();
+}
+window.submitCurrentTextAnswer = submitCurrentTextAnswer;
 
 function useItem(name) {
     if (gameInstance) gameInstance.useItem(name);

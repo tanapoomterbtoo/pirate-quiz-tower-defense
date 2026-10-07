@@ -1046,10 +1046,282 @@ const FALLBACK_THAI = [
     }
 ];
 
+const FALLBACK_PISA = [
+    {
+        "q": "ข้อ 1. ทอมเป็นสมาชิกของร้านเช่าดีวีดีเมื่อปีที่แล้ว ปีที่แล้ว เขาจ่ายเงินไปทั้งหมด 52.50 เซด ซึ่งได้รวมค่าสมาชิกของเขาแล้ว ถ้าทอมไม่ได้เป็นสมาชิก แต่เช่าดีวีดีจำนวนเท่าเดิม เขาจะต้องจ่ายเงินกี่เซด",
+        "type": "input",
+        "unit": "เซด",
+        "placeholder": "กรอกจำนวนเซด...",
+        "targetNumber": 54,
+        "targetNumbers": [54, 54.4, 54.40],
+        "answers": ["54", "54 เซด", "54.4", "54.40", "54.4 เซด"],
+        "correctDisplay": "54 เซด",
+        "c": ["54 เซด"],
+        "a": 0,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-math-01"
+    },
+    {
+        "q": "ข้อ 2. อัตราเร็วสูงสุดของรถที่น้ำฝนขับในเช้าวันนั้น เป็นเท่าไร",
+        "type": "input",
+        "unit": "กิโลเมตรต่อชั่วโมง",
+        "placeholder": "กรอกอัตราเร็ว...",
+        "targetNumber": 60,
+        "targetNumbers": [60],
+        "answers": ["60", "60 กิโลเมตรต่อชั่วโมง", "60 กม./ชม.", "60 กม/ชม", "60 km/h"],
+        "correctDisplay": "60 กิโลเมตรต่อชั่วโมง",
+        "c": ["60 กิโลเมตรต่อชั่วโมง"],
+        "a": 0,
+        "img": "../assets/images/questions/math/pisa_driving.png",
+        "showImg": true,
+        "scenarioId": "pisa-math-02"
+    },
+    {
+        "q": "ข้อ 3. น้ำหนักของน้ำตาลที่ใช้ในสูตรคือเท่าใด?",
+        "c": ["200 กรัม", "250 กรัม", "300 กรัม", "350 กรัม"],
+        "a": 2,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-math-03"
+    },
+    {
+        "q": "ข้อ 4. รองเท้าราคา 600 บาท ลด 20% จะเหลือราคาเท่าไหร่?",
+        "c": ["480 บาท", "500 บาท", "520 บาท", "540 บาท"],
+        "a": 0,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-math-04"
+    },
+    {
+        "q": "ข้อ 5. ข้อผิดพลาดที่โธริสาทำคืออะไร?",
+        "c": [
+            "เธอบวกราคาของสินค้าชิ้นหนึ่งสองครั้ง",
+            "เธอลืมรวมราคาของชิ้นหนึ่งในสามชิ้น",
+            "เธอไม่ได้ใส่ตัวเลขหลักสุดท้ายของราคาชิ้นหนึ่ง",
+            "เธอลบราคาของชิ้นหนึ่งแทนที่จะบวก"
+        ],
+        "a": 1,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-math-05"
+    },
+    {
+        "q": "ข้อ 1. เหตุใดวิศวกรจึงออกแบบรางรถไฟให้มีช่องว่างระหว่างท่อนราง",
+        "c": [
+            "เพื่อลดน้ำหนักโดยรวมของรางรถไฟ",
+            "เพื่อให้เสียงล้อรถไฟกระทบรางเบาลง",
+            "เพื่อเป็นพื้นที่ให้รางขยายตัวเมื่ออุณหภูมิสูงขึ้นโดยไม่โก่งงอ",
+            "เพื่อสะดวกต่อการซ่อมบำรุงเปลี่ยนรางแต่ละท่อน"
+        ],
+        "a": 2,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-sci-01"
+    },
+    {
+        "q": "ข้อ 2. เหตุใดไข่จึงลอยขึ้นเมื่อเติมเกลือลงในน้ำมากขึ้นเรื่อย ๆ",
+        "c": [
+            "เกลือที่ละลายซึมเข้าไปในเปลือกไข่ ทำให้เปลือกไข่มีน้ำหนักเบาลง",
+            "เกลือที่ละลายอยู่ทำให้น้ำมีความหนาแน่นมากขึ้น จึงพยุงไข่ได้มากขึ้น",
+            "เกลือทำปฏิกิริยากับเปลือกไข่ เกิดฟองแก๊สเล็ก ๆ ช่วยพยุงไข่ให้ลอยขึ้น",
+            "เกลือที่ละลายอยู่ทำให้แรงตึงผิวของน้ำเพิ่มขึ้น จึงพยุงไข่ไว้ไม่ให้จมลง"
+        ],
+        "a": 1,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-sci-02"
+    },
+    {
+        "q": "ข้อ 3. คาร์บอนอะตอม (Carbon atom) ในน้ำตาลกลูโคสมาจากไหน",
+        "c": [
+            "มาจากน้ำ (H₂O) ที่รากดูดซึมขึ้นมา",
+            "มาจากก๊าซคาร์บอนไดออกไซด์ (CO₂) ในอากาศ",
+            "มาจากคลอโรฟิลล์ในใบพืชที่สลายตัว",
+            "มาจากแร่ธาตุในดินที่พืชนำมาใช้"
+        ],
+        "a": 1,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-sci-03"
+    },
+    {
+        "q": "ข้อ 4. ปรากฏการณ์ที่เกิดขึ้นในเวลา 22.00 น. เกิดจากสาเหตุใด",
+        "c": [
+            "พื้นน้ำคายความร้อนได้เร็วกว่าพื้นดิน ทำให้อากาศเหนือพื้นน้ำเย็นกว่าและจมตัวลง ลมจึงพัดจากฝั่งออกสู่ทะเล",
+            "ความกดอากาศเหนือพื้นดินต่ำกว่าความกดอากาศเหนือพื้นน้ำ อากาศจึงพัดจากทะเลเข้าหาฝั่ง",
+            "พื้นดินคายความร้อนได้เร็วกว่าพื้นน้ำ อากาศเหนือทะเลที่อุ่นกว่าจึงลอยตัวสูงขึ้น ลมจึงพัดจากฝั่งออกสู่ทะเล",
+            "อุณหภูมิเหนือพื้นดินสูงกว่าอุณหภูมิเหนือพื้นน้ำ ทำให้อากาศเหนือพื้นดินลอยตัวสูงขึ้น อากาศจึงพัดเข้าหาฝั่ง"
+        ],
+        "a": 2,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-sci-04"
+    },
+    {
+        "q": "ข้อ 5. ปรากฏการณ์ในกล่องใบที่ 1 เปรียบเสมือนกลไกการเกิดปรากฏการณ์เรือนกระจกของโลกตามข้อใด",
+        "c": [
+            "พลาสติกใสทำหน้าที่เหมือนชั้นบรรยากาศที่ยอมให้รังสีคลื่นสั้นผ่านเข้ามา แต่กักเก็บรังสีความร้อนเอาไว้ภายใน",
+            "พลาสติกใสทำหน้าที่เสมือนชั้นบรรยากาศ สะท้อนรังสีความร้อนจากดวงอาทิตย์ออกไปนอกกล่องทั้งหมด",
+            "อากาศภายในกล่องที่ปิดฝามิดชิดจะสร้างแก๊สออกซิเจนออกมาเพิ่มขึ้น ทำให้เกิดการสะสมความร้อน",
+            "แสงอาทิตย์ถูกพลาสติกดูดกลืนไว้แล้วเปลี่ยนเป็นพลังงานกล ทำให้กล่องร้อนขึ้น"
+        ],
+        "a": 0,
+        "img": "",
+        "showImg": false,
+        "scenarioId": "pisa-sci-05"
+    },
+    {
+        "q": "1. เมื่ออ่านบล็อกส่วนตัวเกี่ยวกับการรีวิวสถานที่ท่องเที่ยว สิ่งสำคัญที่ผู้อ่านต้องพึงระวังมากที่สุดคือข้อใด",
+        "c": [
+            "รูปแบบการใช้ภาษาที่เป็นกันเองและการสอดแทรกความรู้สึกส่วนตัว",
+            "เนื้อหาที่เป็นทางการเกินไปจนเข้าใจยาก",
+            "การใช้คำศัพท์เชิงวิชาการ",
+            "บล็อกส่วนตัวจะไม่มีภาพประกอบเลย"
+        ],
+        "a": 0,
+        "img": "",
+        "showImg": false,
+        "scenarioId": null
+    },
+    {
+        "q": "2. ข้อใดจัดเป็นลักษณะสำคัญของบทอ่านในสถานการณ์สาธารณะ",
+        "c": [
+            "เนื้อหาเขียนขึ้นเพื่อสื่อสารกับคนในครอบครัวเท่านั้น",
+            "เป็นเอกสารหรือประกาศที่มีเนื้อหาไม่เฉพาะเจาะจงบุคคลใดบุคคลหนึ่ง เช่น ข่าว ประกาศของทางการ",
+            "เป็นเอกสารลับสุดยอดที่ห้ามเผยแพร่",
+            "เป็นบทเรียนที่มีการเก็บคะแนนในห้องเรียน"
+        ],
+        "a": 1,
+        "img": "",
+        "showImg": false,
+        "scenarioId": null
+    },
+    {
+        "q": "3. พฤติกรรมการอ่านของบุคคลในข้อใดจัดเป็นการอ่านในสถานการณ์ทางการศึกษา",
+        "c": [
+            "มินอ่านข้อความโปรโมชันลดราคาในห้างสรรพสินค้า",
+            "ชินอ่านหนังสือจากแอปพลิเคชันเรียนออนไลน์เพื่อนำไปพัฒนาความรู้",
+            "ดินอ่านไลน์กลุ่มหมู่บ้านเรื่องการซ่อมท่อน้ำ",
+            "จินอ่านป้ายเตือนความปลอดภัยในโรงงาน"
+        ],
+        "a": 1,
+        "img": "",
+        "showImg": false,
+        "scenarioId": null
+    },
+    {
+        "q": "4. พฤติกรรมการอ่านของบุคคลในข้อใดจัดเป็นการอ่านในสถานการณ์ทางการงานอาชีพ",
+        "c": [
+            "อีฟอ่านนิทานก่อนนอนให้ลูกฟัง",
+            "น้ำสืบค้นสูตรอาหารจากอินเทอร์เน็ตทำกินเองที่บ้าน",
+            "เค้กทำข้อสอบวัดระดับภาษาเพื่อเรียนต่อต่างประเทศ",
+            "เวฟอ่านคำสั่งปฏิบัติงานที่กำหนดให้ทำในโรงพยาบาลที่ทำงานอยู่"
+        ],
+        "a": 3,
+        "img": "",
+        "showImg": false,
+        "scenarioId": null
+    },
+    {
+        "q": "5. ข้อใดกล่าวถึงประโยชน์ที่สำคัญที่สุดของการอ่านในสถานการณ์ทางการงานอาชีพ",
+        "c": [
+            "เพื่อความบันเทิงและผ่อนคลายอารมณ์",
+            "เพื่อความซาบซึ้งในวรรณศิลป์ของบทประพันธ์",
+            "เพื่อรับข้อมูลและปฏิบัติตามทันทีให้ภาระงานในบริบทงานบรรลุเป้าหมาย",
+            "เพื่อจำคำศัพท์ไปเขียนเรียงความเชิงวิชาการ"
+        ],
+        "a": 2,
+        "img": "",
+        "showImg": false,
+        "scenarioId": null
+    }
+];
+
+const FALLBACK_PISA_SCENARIOS = [
+    {
+        "id": "pisa-math-01",
+        "title": "สถานการณ์ การเช่าดีวีดี",
+        "body": "เจนทำงานอยู่ที่ร้านแห่งหนึ่งซึ่งให้เช่าดีวีดีและเกมคอมพิวเตอร์ที่ร้านแห่งนี้ คิดค่าสมาชิกรายปี 10 เซด<br>ค่าเช่าดีวีดีสำหรับผู้ที่เป็นสมาชิกถูกกว่าค่าเช่าสำหรับผู้ที่ไม่เป็นสมาชิก ดังแสดงในตารางต่อไปนี้:<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><th colspan=\"2\" style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;background:#141a2e;\">ค่าเช่าดีวีดีหนึ่งแผ่น</th></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;\">ผู้ที่ไม่เป็นสมาชิก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;\">ผู้ที่เป็นสมาชิก</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;\">3.20 เซด</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;\">2.50 เซด</td></tr></table>",
+        "images": [],
+        "order": 1
+    },
+    {
+        "id": "pisa-math-02",
+        "title": "สถานการณ์ ขับรถ",
+        "body": "เช้าวันหนึ่ง น้ำฝนออกไปขับรถเล่น ระหว่างทางแมวตัวหนึ่งวิ่งตัดหน้ารถ น้ำฝนต้องเหยียบเบรกอย่างกะทันหันเพื่อไม่ให้ชนแมว น้ำฝนตกใจมากจนมือสั่น จึงตัดสินใจขับรถกลับบ้าน<br><img src=\"../assets/images/questions/math/pisa_driving.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />",
+        "images": ["../assets/images/questions/math/pisa_driving.png"],
+        "order": 2
+    },
+    {
+        "id": "pisa-math-03",
+        "title": "สถานการณ์ การคำนวณน้ำหนักและสัดส่วนของส่วนผสมในสูตรอาหาร",
+        "body": "ร้านเบเกอรี่ร้านหนึ่งต้องการปรับสูตรขนมเค้ก โดยสูตรใหม่ระบุว่าส่วนผสมทั้งหมดควรมีน้ำหนักรวม 1,000 กรัม ซึ่งประกอบไปด้วยแป้ง น้ำตาล และเนย โดยแป้งต้องมีสัดส่วน 40% ของน้ำหนักทั้งหมด น้ำตาล 30% และเนย 30% เชฟต้องคำนวณว่าส่วนผสมแต่ละอย่างต้องใช้น้ำหนักเท่าไรเพื่อให้ได้เค้กตามสูตรที่กำหนด นอกจากนี้ หากเชฟต้องการทำเค้กเป็นสองเท่า เขาต้องเพิ่มน้ำหนักส่วนผสมแต่ละอย่างเท่าใดเพื่อให้ได้เค้ก 2 กิโลกรัม",
+        "images": [],
+        "order": 3
+    },
+    {
+        "id": "pisa-math-04",
+        "title": "สถานการณ์ การคำนวณเศษส่วน สัดส่วน และร้อยละในการซื้อของ",
+        "body": "สมชายไปซื้อของในห้างสรรพสินค้า โดยเขามีงบประมาณ 2,000 บาท เขาตัดสินใจซื้อเสื้อราคา 800 บาทและรองเท้าราคา 600 บาท โดยที่ร้านมีโปรโมชั่นลดราคาสำหรับสินค้าที่สองที่ซื้อในราคาลด 20% สมชายต้องคำนวณส่วนลดที่เขาจะได้รับ และดูว่ายอดรวมหลังจากลดราคาแล้วจะเป็นเท่าไหร่ นอกจากนี้ เขาต้องการทราบว่าเขาจะเหลือเงินเท่าไหร่จากงบประมาณที่เขามี",
+        "images": [],
+        "order": 4
+    },
+    {
+        "id": "pisa-math-05",
+        "title": "สถานการณ์ การคำนวณราคาของเครื่องเล่น MP3",
+        "body": "โธริสาไปซื้อเครื่องเล่น MP3 หูฟัง และลำโพง โดยเครื่องเล่น MP3 มีราคา 155 บาท หูฟังราคา 86 บาท และลำโพงราคา 79 บาท เธอใช้เครื่องคิดเลขคำนวณผลรวมของราคาสินค้าทั้งหมด แต่ผลลัพธ์ที่เธอได้คือ 248 ซึ่งไม่ถูกต้อง เธอจึงต้องหาข้อผิดพลาดที่เกิดขึ้นในการคำนวณ",
+        "images": [],
+        "order": 5
+    },
+    {
+        "id": "pisa-sci-01",
+        "title": "สถานการณ์ การออกแบบรางรถไฟ",
+        "body": "วิศวกรออกแบบรางรถไฟให้เว้นช่องว่างเล็ก ๆ ระหว่างท่อนราง และมักขึงสายไฟฟ้าแรงสูงระหว่างเสาไฟฟ้าให้หย่อนเล็กน้อยแทนที่จะขึงตึง",
+        "images": [],
+        "order": 6
+    },
+    {
+        "id": "pisa-sci-02",
+        "title": "สถานการณ์ การลอยของไข่ไก่ในน้ำเกลือ",
+        "body": "นักเรียนหย่อนไข่ไก่ลงในน้ำเปล่า พบว่าไข่จมลงสู่ก้นภาชนะ แต่เมื่อค่อย ๆ เติมเกลือลงในน้ำและคนให้ละลาย ไข่จะค่อย ๆ ลอยขึ้นจนลอยตัวอยู่กลางน้ำ และสุดท้ายลอยขึ้นที่ผิวน้ำเมื่อเติมเกลือมากพอ",
+        "images": [],
+        "order": 7
+    },
+    {
+        "id": "pisa-sci-03",
+        "title": "สถานการณ์ การสังเคราะห์ด้วยแสงของพืช",
+        "body": "ในการสร้างอาหารของพืช คลอโรฟิลล์ในใบพืชจะรับพลังงานแสงมาทำให้ก๊าซคาร์บอนไดออกไซด์และน้ำเกิดการเปลี่ยนแปลง มีปฏิกิริยาเคมีเกิดขึ้น ซึ่งในระหว่างปฏิกิริยานั้นจะเกิด น้ำตาลกลูโคส และ ก๊าซออกซิเจน",
+        "images": [],
+        "order": 8
+    },
+    {
+        "id": "pisa-sci-04",
+        "title": "สถานการณ์ ลมบกลมทะเล",
+        "body": "เต้ไปเที่ยวทะเลและสังเกตว่า ในช่วงเวลา 13.00 น. ลมพัดจากทะเลเข้าหาฝั่งอย่างต่อเนื่องจนทำให้ร่มชายหาดปลิว แต่เมื่อเขาออกมาเดินเล่นริมหาดเดิมอีกครั้งในเวลา 22.00 น. เขาพบว่าควันไฟจากเตาปิ้งย่างบนหาดพัดลอยเฉียงออกไปทางทะเล",
+        "images": [],
+        "order": 9
+    },
+    {
+        "id": "pisa-sci-05",
+        "title": "สถานการณ์ แบบจำลองปรากฏการณ์เรือนกระจก",
+        "body": "นักเรียนทำแบบจำลองโดยนำกล่องพลาสติกใส 2 ใบ วางไว้กลางแดด โดยกล่องใบที่ 1 ปิดฝามิดชิด ส่วนกล่องใบที่ 2 เจาะรูระบายอากาศขนาดใหญ่ไว้ที่ฝา เมื่อเวลาผ่านไป 30 นาที พบว่าอุณหภูมิอากาศภายในกล่องใบที่ 1 สูงกว่ากล่องใบที่ 2 อย่างชัดเจน",
+        "images": [],
+        "order": 10
+    }
+];
+
 const FALLBACK_EXAM = [
-    ...FALLBACK_MATH.slice(0, 10),
-    ...FALLBACK_SCIENCE.slice(0, 10),
-    ...FALLBACK_THAI.slice(0, 10)
+    // Wave 1: Math (5 PISA Math + 5 Math with continuous scenarios 1-3 & 14-15)
+    ...FALLBACK_PISA.slice(0, 5),
+    ...FALLBACK_MATH.slice(0, 3),
+    ...FALLBACK_MATH.slice(13, 15),
+    // Wave 2: Science (5 PISA Science + 5 Science)
+    ...FALLBACK_PISA.slice(5, 10),
+    ...FALLBACK_SCIENCE.slice(0, 5),
+    // Wave 3: Thai (5 PISA Thai + 5 Thai)
+    ...FALLBACK_PISA.slice(10, 15),
+    ...FALLBACK_THAI.slice(0, 5)
 ];
 
 // Helper to determine active subject config via URL params
@@ -1174,35 +1446,9 @@ function resolveScenarioForQuestion(qData) {
     };
 }
 
-// Asynchronously load questions + scenarios, falling back to local list on failure/CORS
-async function initQuestions() {
-    const qFile = subjectConfig.file; // e.g. math.json
-    const scenFile = `scenarios/${qFile}`;
-
-    try {
-        const [qRes, sRes] = await Promise.all([
-            fetch(`${ASSETS_PATH}/data/${qFile}`),
-            fetch(`${ASSETS_PATH}/data/${scenFile}`).catch(() => null)
-        ]);
-        if (!qRes || !qRes.ok) throw new Error("Network status not OK for questions");
-        QUESTIONS = await qRes.json();
-
-        if (sRes && sRes.ok) {
-            indexScenarios(await sRes.json());
-            console.log(`Loaded ${SCENARIOS.length} scenarios from ${scenFile}`);
-        } else {
-            indexScenarios([]);
-            console.warn(`No scenarios file at ${scenFile} (ok if subject has none)`);
-        }
-        console.log(`Successfully loaded questions for ${subjectConfig.name} from ${qFile}.`);
-    } catch (e) {
-        console.warn(`Could not fetch ${qFile} (CORS or missing file), using fallback data:`, e);
-        QUESTIONS = [...subjectConfig.fallback];
-        indexScenarios([]);
-    }
-
-    // Translate mock questions and choices to Thai at runtime
-    QUESTIONS = QUESTIONS.map((q) => {
+function normalizeQuestionList(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map((q) => {
         let newQ = q.q || "";
         if (newQ.includes("Mock")) {
             newQ = newQ.replace("Mock Math Question", "คำถามคณิตศาสตร์จำลองที่")
@@ -1232,10 +1478,282 @@ async function initQuestions() {
             c: newC,
             scenarioId: q.scenarioId || null,
             img: q.img || "",
-            showImg: !!q.showImg
+            showImg: !!q.showImg,
+            type: q.type || "choice",
+            unit: q.unit || "",
+            placeholder: q.placeholder || "",
+            targetNumber: (typeof q.targetNumber === "number") ? q.targetNumber : null,
+            targetNumbers: Array.isArray(q.targetNumbers) ? q.targetNumbers : [],
+            answers: Array.isArray(q.answers) ? q.answers : [],
+            correctDisplay: q.correctDisplay || ""
         };
     });
+}
 
+function checkTextAnswer(userInput, qData) {
+    if (!userInput || !qData) return false;
+    let raw = String(userInput).trim();
+
+    // 1. Convert Thai digits to Arabic digits (๐-๙ -> 0-9)
+    const thaiDigits = "๐๑๒๓๔๕๖๗๘๙";
+    raw = raw.replace(/[๐-๙]/g, d => thaiDigits.indexOf(d));
+
+    // 2. Direct string match against accepted answers list (case/space-insensitive)
+    const clean = raw.toLowerCase().replace(/\s+/g, "");
+    const accepted = Array.isArray(qData.answers) ? qData.answers : [];
+    for (const ans of accepted) {
+        const cleanAns = String(ans).toLowerCase().replace(/\s+/g, "");
+        if (clean === cleanAns) return true;
+    }
+
+    // 3. Numeric extraction & comparison if question expects a numeric answer
+    const targets = [];
+    if (typeof qData.targetNumber === "number") targets.push(qData.targetNumber);
+    if (Array.isArray(qData.targetNumbers)) {
+        qData.targetNumbers.forEach(t => {
+            if (typeof t === "number" && !targets.includes(t)) targets.push(t);
+        });
+    }
+
+    if (targets.length > 0) {
+        // Remove common Thai filler words before/after
+        let numText = raw
+            .replace(/(ตอบ|คือ|ประมาณ|เท่ากับ|จ่าย|ความเร็ว|ครับ|ค่ะ|คะ|นะ)/g, "")
+            .replace(/(เซด|กิโลเมตรต่อชั่วโมง|กม\.?\/ชม\.?|km\/h|kph|เซนต์)/gi, "")
+            .trim();
+
+        // Match float or integer
+        const numMatch = numText.match(/[-+]?\d*\.?\d+/);
+        if (numMatch) {
+            const val = parseFloat(numMatch[0]);
+            for (const t of targets) {
+                if (Math.abs(val - t) < 0.05) return true;
+            }
+        }
+    }
+
+    return false;
+}
+window.checkTextAnswer = checkTextAnswer;
+
+let RAW_EXAM_BANK = null;
+
+async function loadExamRawBank() {
+    if (RAW_EXAM_BANK) return RAW_EXAM_BANK;
+    try {
+        const [pisaQRes, pisaSRes, mathQRes, mathSRes, sciQRes, sciSRes, thaiQRes] = await Promise.all([
+            fetch(`${ASSETS_PATH}/data/pisa.json`),
+            fetch(`${ASSETS_PATH}/data/scenarios/pisa.json`).catch(() => null),
+            fetch(`${ASSETS_PATH}/data/math.json`),
+            fetch(`${ASSETS_PATH}/data/scenarios/math.json`).catch(() => null),
+            fetch(`${ASSETS_PATH}/data/science.json`),
+            fetch(`${ASSETS_PATH}/data/scenarios/science.json`).catch(() => null),
+            fetch(`${ASSETS_PATH}/data/thai.json`)
+        ]);
+
+        const pisaQ = (pisaQRes && pisaQRes.ok) ? await pisaQRes.json() : FALLBACK_PISA;
+        const pisaS = (pisaSRes && pisaSRes.ok) ? await pisaSRes.json() : FALLBACK_PISA_SCENARIOS;
+        const mathQ = (mathQRes && mathQRes.ok) ? await mathQRes.json() : FALLBACK_MATH;
+        const mathS = (mathSRes && mathSRes.ok) ? await mathSRes.json() : [];
+        const sciQ = (sciQRes && sciQRes.ok) ? await sciQRes.json() : FALLBACK_SCIENCE;
+        const sciS = (sciSRes && sciSRes.ok) ? await sciSRes.json() : [];
+        const thaiQ = (thaiQRes && thaiQRes.ok) ? await thaiQRes.json() : FALLBACK_THAI;
+
+        RAW_EXAM_BANK = {
+            pisaQ,
+            pisaS,
+            mathQ,
+            mathS,
+            sciQ,
+            sciS,
+            thaiQ
+        };
+    } catch (e) {
+        console.warn("Could not fetch raw exam files, using fallback data:", e);
+        RAW_EXAM_BANK = {
+            pisaQ: FALLBACK_PISA,
+            pisaS: FALLBACK_PISA_SCENARIOS,
+            mathQ: FALLBACK_MATH,
+            mathS: [],
+            sciQ: FALLBACK_SCIENCE,
+            sciS: [],
+            thaiQ: FALLBACK_THAI
+        };
+    }
+    return RAW_EXAM_BANK;
+}
+
+/**
+ * Cluster questions by scenarioId so continuous questions under the same scenario
+ * stay intact as an indivisible unit when shuffling.
+ */
+function clusterAndShuffleQuestions(questionList) {
+    const clusters = [];
+    const scenarioMap = new Map();
+
+    questionList.forEach((q) => {
+        const sid = q.scenarioId;
+        if (sid) {
+            if (scenarioMap.has(sid)) {
+                scenarioMap.get(sid).push(q);
+            } else {
+                const group = [q];
+                scenarioMap.set(sid, group);
+                clusters.push({ scenarioId: sid, items: group });
+            }
+        } else {
+            clusters.push({ scenarioId: null, items: [q] });
+        }
+    });
+
+    // Fisher-Yates shuffle on the clusters
+    for (let i = clusters.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [clusters[i], clusters[j]] = [clusters[j], clusters[i]];
+    }
+
+    const shuffled = [];
+    clusters.forEach((c) => {
+        shuffled.push(...c.items);
+    });
+
+    return shuffled;
+}
+window.clusterAndShuffleQuestions = clusterAndShuffleQuestions;
+
+function sampleExamFromBank(bank) {
+    const { pisaQ, pisaS, mathQ, mathS, sciQ, sciS, thaiQ } = bank;
+
+    // 15 fixed PISA questions: 5 Math, 5 Science, 5 Thai
+    const pisaMath = pisaQ.slice(0, 5);
+    const pisaSci = pisaQ.slice(5, 10);
+    const pisaThai = pisaQ.slice(10, 15);
+
+    // 5 sampled Math questions preserving scenario continuity
+    // Group Math questions by consecutive scenarioId
+    const mathGroups = [];
+    let currentGroup = null;
+    mathQ.forEach((q) => {
+        const sid = q.scenarioId || null;
+        if (!currentGroup || currentGroup.scenarioId !== sid) {
+            currentGroup = { scenarioId: sid, items: [] };
+            mathGroups.push(currentGroup);
+        }
+        currentGroup.items.push(q);
+    });
+
+    const groups3 = mathGroups.filter(g => g.items.length === 3);
+    const groups2 = mathGroups.filter(g => g.items.length === 2);
+
+    let sampledMath = [];
+    if (groups3.length > 0 && groups2.length > 0) {
+        const g3 = groups3[Math.floor(Math.random() * groups3.length)];
+        const g2 = groups2[Math.floor(Math.random() * groups2.length)];
+        sampledMath = [...g3.items, ...g2.items];
+    } else {
+        sampledMath = mathQ.slice(0, 5);
+    }
+
+    // 5 sampled Science questions (with their scenarios)
+    const sciShuffled = [...sciQ].sort(() => Math.random() - 0.5);
+    const sampledSci = sciShuffled.slice(0, 5);
+
+    // 5 sampled Thai questions
+    const thaiShuffled = [...thaiQ].sort(() => Math.random() - 0.5);
+    const sampledThai = thaiShuffled.slice(0, 5);
+
+    // Shuffle questions within each subject wave while keeping continuous scenarios intact
+    // Wave 1 (Math): 5 PISA Math + 5 Sampled Math = 10 questions shuffled
+    // Wave 2 (Science): 5 PISA Science + 5 Sampled Science = 10 questions shuffled
+    // Wave 3 (Thai): 5 PISA Thai + 5 Sampled Thai = 10 questions shuffled
+    const finalMath = clusterAndShuffleQuestions([...pisaMath, ...sampledMath]);
+    const finalSci = clusterAndShuffleQuestions([...pisaSci, ...sampledSci]);
+    const finalThai = clusterAndShuffleQuestions([...pisaThai, ...sampledThai]);
+
+    const combinedQuestions = [
+        ...finalMath,
+        ...finalSci,
+        ...finalThai
+    ];
+
+    // Build scenario index for needed scenarios
+    const allScenarios = [...(pisaS || []), ...(mathS || []), ...(sciS || [])];
+    const scenMap = {};
+    allScenarios.forEach((s) => {
+        if (s && s.id) scenMap[s.id] = s;
+    });
+
+    const neededScenarios = [];
+    const seenIds = new Set();
+    combinedQuestions.forEach((q) => {
+        if (q.scenarioId && scenMap[q.scenarioId] && !seenIds.has(q.scenarioId)) {
+            seenIds.add(q.scenarioId);
+            neededScenarios.push(scenMap[q.scenarioId]);
+        }
+    });
+
+    return {
+        questions: combinedQuestions,
+        scenarios: neededScenarios
+    };
+}
+
+async function initDynamicExam() {
+    const bank = await loadExamRawBank();
+    const result = sampleExamFromBank(bank);
+    indexScenarios(result.scenarios);
+    QUESTIONS = normalizeQuestionList(result.questions);
+    window.QUESTIONS = QUESTIONS;
+    console.log(`Generated dynamic exam: ${QUESTIONS.length} questions (15 fixed PISA + 15 sampled).`);
+}
+
+function refreshExamQuestionsIfDynamic() {
+    const isExamMode = subjectConfig.file === "exam.json";
+    const isAdmin = new URLSearchParams(window.location.search).get("adminPreview") === "1";
+    if (isExamMode && !isAdmin && RAW_EXAM_BANK) {
+        const result = sampleExamFromBank(RAW_EXAM_BANK);
+        indexScenarios(result.scenarios);
+        QUESTIONS = normalizeQuestionList(result.questions);
+        window.QUESTIONS = QUESTIONS;
+        console.log(`Refreshed dynamic exam questions for new session.`);
+    }
+}
+window.refreshExamQuestionsIfDynamic = refreshExamQuestionsIfDynamic;
+
+// Asynchronously load questions + scenarios, falling back to local list on failure/CORS
+async function initQuestions() {
+    const isAdmin = new URLSearchParams(window.location.search).get("adminPreview") === "1";
+    if (subjectConfig.file === "exam.json" && !isAdmin) {
+        await initDynamicExam();
+        return;
+    }
+
+    const qFile = subjectConfig.file; // e.g. math.json
+    const scenFile = `scenarios/${qFile}`;
+
+    try {
+        const [qRes, sRes] = await Promise.all([
+            fetch(`${ASSETS_PATH}/data/${qFile}`),
+            fetch(`${ASSETS_PATH}/data/${scenFile}`).catch(() => null)
+        ]);
+        if (!qRes || !qRes.ok) throw new Error("Network status not OK for questions");
+        QUESTIONS = await qRes.json();
+
+        if (sRes && sRes.ok) {
+            indexScenarios(await sRes.json());
+            console.log(`Loaded ${SCENARIOS.length} scenarios from ${scenFile}`);
+        } else {
+            indexScenarios([]);
+            console.warn(`No scenarios file at ${scenFile} (ok if subject has none)`);
+        }
+        console.log(`Successfully loaded questions for ${subjectConfig.name} from ${qFile}.`);
+    } catch (e) {
+        console.warn(`Could not fetch ${qFile} (CORS or missing file), using fallback data:`, e);
+        QUESTIONS = [...subjectConfig.fallback];
+        indexScenarios([]);
+    }
+
+    QUESTIONS = normalizeQuestionList(QUESTIONS);
     window.QUESTIONS = QUESTIONS;
 }
 

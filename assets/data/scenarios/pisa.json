@@ -37,22 +37,6 @@
     "order": 5
   },
   {
-    "id": "fitd-fitness",
-    "title": "FitD Fitness",
-    "body": "สถานการณ์ “FitD Fitness”\nฟิตเนสแห่งหนึ่ง มีรายละเอียดค่าบริการ ดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">รายการ</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">Plan A</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">Plan B</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ค่าสมัครสมาชิกรายปี</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">6,000 บาท</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ไม่เสียค่าสมาชิกรายปี</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ค่าเข้ารายเดือน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">1,500 บาท</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">2,700 บาท</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ค่าเทรนเนอร์</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สำหรับ 3 ชั่วโมงแรก คิดค่าบริการ 3,000 บาทโดยชั่วโมงต่อไปคิดค่าบริการ ชั่วโมงละ 500 บาท</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ชั่วโมงละ 750 บาท</td></tr></table>\nหมายเหตุ เศษของนาทีจะคิดเป็น 1 ชั่วโมง",
-    "images": [],
-    "order": 1
-  },
-  {
-    "id": "train",
-    "title": "รถไฟฟ้า",
-    "body": "สถานการณ์ “รถไฟฟ้า”\n<img src=\"../assets/images/questions/math/image15.jpeg\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nรถไฟฟ้าขบวนหนึ่งมีหน้าตัดเป็นรูปสี่เหลี่ยมมุมฉาก ที่มีความกว้าง 3 เมตร ความยาวขบวนละ60 เมตร และสูง 4 เมตร ซึ่งมีจำนวน 4 ตู้ต่อ 1 ขบวน",
-    "images": [
-      "../assets/images/questions/math/image15.jpeg"
-    ],
-    "order": 6
-  },
-  {
     "id": "pisa-sci-01",
     "title": "สถานการณ์ การออกแบบรางรถไฟ",
     "body": "วิศวกรออกแบบรางรถไฟให้เว้นช่องว่างเล็ก ๆ ระหว่างท่อนราง และมักขึงสายไฟฟ้าแรงสูงระหว่างเสาไฟฟ้าให้หย่อนเล็กน้อยแทนที่จะขึงตึง",
@@ -86,40 +70,5 @@
     "body": "นักเรียนทำแบบจำลองโดยนำกล่องพลาสติกใส 2 ใบ วางไว้กลางแดด โดยกล่องใบที่ 1 ปิดฝามิดชิด ส่วนกล่องใบที่ 2 เจาะรูระบายอากาศขนาดใหญ่ไว้ที่ฝา เมื่อเวลาผ่านไป 30 นาที พบว่าอุณหภูมิอากาศภายในกล่องใบที่ 1 สูงกว่ากล่องใบที่ 2 อย่างชัดเจน",
     "images": [],
     "order": 10
-  },
-  {
-    "id": "science-21",
-    "title": "สถานการณ์ 21",
-    "body": "ในประเทศไทย ลักษณะลมฟ้าอากาศในแต่ละช่วงปีได้รับอิทธิพลอย่างมากจากระบบมรสุมระดับภูมิภาค นักอุตุนิยมวิทยาได้บันทึกทิศทางลมหลักและสภาพอากาศเฉลี่ยของจังหวัดหนึ่งในภาคตะวันออกเฉียงเหนือไว้ดังตาราง\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงเดือน</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">สภาพอากาศและผลกระทบ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงที่ 1 (พ.ย.-ก.พ.)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">อากาศแห้ง ท้องฟ้าโปร่ง อุณหภูมิลดต่ำลง ปริมาณฝนน้อยกว่า 10 มม./เดือน</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ช่วงที่ 2 (พ.ค.-ต.ค.)</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เมฆมาก ฝนตกต่อเนื่อง คลื่นลมแรง<br>ปริมาณฝนเฉลี่ย &gt; 200 มม./เดือน</td></tr></table>",
-    "order": 21,
-    "images": []
-  },
-  {
-    "id": "science-18",
-    "title": "สถานการณ์ 18",
-    "body": "คนนำแอลกอฮอล์มาบริโภคในรูปของเบียร์ ไวน์ และสุรากลั่น การวิจัยแสดงว่าโรคที่เกี่ยวข้องกับการดื่มสุรา ทำให้ทั่วโลกมีผู้เสียชีวิตประมาณ 8,000 คนในแต่ละวัน และมีการทำนายว่าในทศวรรษหน้า โรคที่เกี่ยวข้องกับแอลกอฮอล์จะทำให้คนตายเพิ่มขึ้นเป็น 6% ของการตายทั้งหมดในโลก เครื่องดื่มแอลกอฮอล์มีสารที่ส่งผลกระทบต่อร่างกาย ส่วนที่เป็นอันตรายมากที่สุดเมื่อบริโภคเกินขนาดคือ เอทานอล (Ethanol) และสารอะเซทัลดีไฮด์ (Acetaldehyde)",
-    "order": 18,
-    "images": []
-  },
-  {
-    "id": "science-14",
-    "title": "สถานการณ์ 14",
-    "body": "การทำน้ำผลไม้หมัก (ไซเดอร์) คนที่ทำจะผสมผลไม้บด (ซึ่งมีน้ำตาลตามธรรมชาติ) น้ำ เกลือเล็กน้อย และยีสต์เข้าด้วยกันในขวดพลาสติก หลังจากผสมแล้วจะปิดฝาหลวมๆ และเก็บขวดทิ้งไว้หลายวันเพื่อให้เกิดการหมัก ในระหว่างหมักมีการเปลี่ยนแปลงทางเคมีเกิดขึ้นในขวด โดยยีสต์ (สิ่งมีชีวิตเซลล์เดียว) จะช่วยเปลี่ยนน้ำตาลในผลไม้ให้กลายเป็นก๊าซคาร์บอนไดออกไซด์และแอลกอฮอล์",
-    "order": 14,
-    "images": []
-  },
-  {
-    "id": "science-27",
-    "title": "สถานการณ์ 27",
-    "body": "ในปีหนึ่ง นักวิทยาศาสตร์ตรวจวัดความผิดปกติของอุณหภูมิน้ำทะเลบริเวณมหาสมุทรแปซิฟิกเขตศูนย์สูตร พบว่า ลมค้ามีกำลังอ่อนลงมาก ทำให้น้ำอุ่นไหลย้อนไปสะสมทางฝั่งตะวันออกของแปซิฟิก (ชายฝั่งเปรู/อเมริกาใต้) ส่งผลให้ฝั่งตะวันตก (เอเชีย) มีมวลอากาศจมตัวลง",
-    "order": 27,
-    "images": []
-  },
-  {
-    "id": "science-29",
-    "title": "สถานการณ์ 29",
-    "body": "ชาวบ้านในเมืองอุตสาหกรรมแห่งหนึ่งสังเกตเห็นว่า รูปปั้นหินปูน (แคลเซียมคาร์บอเนต) และหลังคาสังกะสีเกิดการกัดกร่อนชำรุดอย่างรวดเร็ว เมื่อนักวิทยาศาสตร์เก็บตัวอย่างน้ำฝนไปวัดค่าความเป็นกรด-เบส พบว่ามีค่า pH=4.2 เนื่องจากแก๊สซัลเฟอร์ไดออกไซด์จากโรงงาน",
-    "order": 29,
-    "images": []
   }
 ]
