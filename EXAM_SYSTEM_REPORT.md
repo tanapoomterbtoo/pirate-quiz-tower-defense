@@ -1,5 +1,11 @@
 # รายงานสรุปการพัฒนาระบบข้อสอบรวม (Exam Mode), ข้อสอบ PISA, และระบบตรวจข้อเขียนอัจฉริยะ (Smart Grading)
 
+> อัปเดต 9 ตุลาคม 2026: ส่วนด้านล่างเป็นรายงานการพัฒนารอบก่อน มีข้อค้นพบที่ได้รับการแก้ไขแล้ว ดูผลตรวจล่าสุดและข้อจำกัดใน [TEST_REPORT.md](TEST_REPORT.md)
+>
+> ปัจจุบัน Admin รักษาฟิลด์ข้อเขียน, ข้อสอบมี ID ถาวร, fallback สร้างจาก JSON พร้อมสถานการณ์, callback เพิ่ม `question_ids`, grading ปฏิเสธข้อความกำกวมและใช้ tolerance `< 0.05` แบบทศนิยมที่แน่นอน ไม่ตรวจความถูกต้องของหน่วยตามนโยบายเดิม รับดีวีดีทั้ง `54`/`54.4` และน้ำมัน `12.5`/`13` การสุ่มใหม่ไม่รับประกันว่าจะไม่ซ้ำรอบก่อน
+>
+> ผล “100%” เดิมครอบคลุมกรณีที่ทดสอบในรอบนั้น ไม่ใช่ทุก input หรือทุกอุปกรณ์ การตรวจ UI/UX รอบล่าสุดเป็นการตรวจโดยผู้พัฒนา ไม่ใช่ usability test กับผู้เรียน
+
 เอกสารฉบับนี้สรุป **สิ่งที่ได้ดำเนินการ (What was done)** และ **สิ่งที่ได้ค้นพบ/เรียนรู้จากฐานข้อมูลโจทย์ (Findings & Knowledge)** ทั้งหมดในโปรเจกต์ Pirate Quiz Tower Defense
 
 ---
@@ -78,7 +84,7 @@ flowchart TD
 #### ฟังก์ชันสำคัญ:
 - `clusterAndShuffleQuestions(questionList)`: จัดข้อสอบที่มี `scenarioId` เดียวกันเป็น Array ย่อย (Cluster) จากนั้นทำการสลับตำแหน่งด้วย Fisher-Yates แล้ว Flatten กลับเป็น Array เดียว ทำให้ข้อสอบในสถานการณ์เดียวกันไม่ถูกแยกจากกัน
 - `sampleExamFromBank(bank)`: ประมวลผลการสุ่มและจัดชุดข้อสอบรวม 30 ข้อตามเงื่อนไข
-- `refreshExamQuestionsIfDynamic()`: ทำการสุ่มข้อสอบชุดใหม่ทันทีเมื่อเริ่มเกมใหม่ (`restartGame()`) โดยไม่ซ้ำลำดับเดิม
+- `refreshExamQuestionsIfDynamic()`: ทำการสุ่มข้อสอบชุดใหม่ทันทีเมื่อเริ่มเกมใหม่ (`restartGame()`) โดยอาจสุ่มได้ลำดับเดิมโดยบังเอิญ
 
 ---
 
@@ -155,18 +161,18 @@ flowchart LR
 
 | ไฟล์ | สถานะ | หน้าที่และรายละเอียดการเปลี่ยนแปลง |
 |---|---|---|
-| [`assets/data/pisa.json`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/data/pisa.json) | สร้างใหม่ | ข้อสอบ PISA 15 ข้อคงที่ (คณิต 5 ข้อ, วิทย์ 5 ข้อ, การอ่าน 5 ข้อ) |
-| [`assets/data/scenarios/pisa.json`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/data/scenarios/pisa.json) | สร้างใหม่ | 10 สถานการณ์อ้างอิงสำหรับข้อสอบ PISA |
-| [`assets/images/questions/math/pisa_driving.png`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/images/questions/math/pisa_driving.png) | สร้างใหม่ | ภาพกราฟความเร็วรถแข่ง PISA สกัดจากไฟล์ docx |
-| [`assets/data/exam.json`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/data/exam.json) | แก้ไข | ชุดข้อสอบรวม 30 ข้อตั้งต้น (ใช้สำหรับ Fallback/Admin Preview) |
-| [`assets/data/scenarios/exam.json`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/data/scenarios/exam.json) | แก้ไข | รวมสถานการณ์สำหรับข้อสอบชุดตั้งต้น |
-| [`assets/data/math.json`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/assets/data/math.json) | แก้ไข | อัปเดตข้อ 12 และข้อ 13 (ระยะทางสั้นสุด/น้ำมัน) ให้เป็น `type: "input"` |
-| [`web/js/quiz.js`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/web/js/quiz.js) | แก้ไข | เพิ่ม Fallback Data, ตัวสุ่มชุดข้อสอบ `sampleExamFromBank`, ฟังก์ชันสลับข้อ `clusterAndShuffleQuestions`, และระบบตรวจข้อเขียน `checkTextAnswer` |
-| [`web/js/game.js`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/web/js/game.js) | แก้ไข | เพิ่ม `submitCurrentTextAnswer()`, สลับ UI ข้อเขียนใน `loadQuestion()`, ระบบใบ้ของกล้องส่องทางไกล, คิดคะแนนส่งกลับ |
-| [`web/index.html`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/web/index.html) | แก้ไข | เพิ่มมาร์กอัป `#input-answer-container` สำหรับช่องกรอกข้อเขียนและป้ายหน่วย |
-| [`web/style.css`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/web/style.css) | แก้ไข | สไตล์โจรสลัดสำหรับกล่องข้อความ, ปุ่มส่ง, และกล่องคำใบ้ |
-| [`web/admin.html`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/web/admin.html) | แก้ไข | เพิ่มตัวเลือกเปิดดู/แก้ไขชุดข้อสอบ PISA ใน Dropdown ของ Admin |
-| [`README.md`](file:///Users/tanapoomrueangphaisan/Documents/pirate-quiz-tower-defense/README.md) | แก้ไข | บันทึกคู่มือการใช้งานโหมดข้อสอบรวม, ระบบสุ่มสลับข้อ, และ Smart Grading |
+| [`assets/data/pisa.json`](assets/data/pisa.json) | สร้างใหม่ | ข้อสอบ PISA 15 ข้อคงที่ (คณิต 5 ข้อ, วิทย์ 5 ข้อ, การอ่าน 5 ข้อ) |
+| [`assets/data/scenarios/pisa.json`](assets/data/scenarios/pisa.json) | สร้างใหม่ | 10 สถานการณ์อ้างอิงสำหรับข้อสอบ PISA |
+| [`assets/images/questions/math/pisa_driving.png`](assets/images/questions/math/pisa_driving.png) | สร้างใหม่ | ภาพกราฟความเร็วรถแข่ง PISA สกัดจากไฟล์ docx |
+| [`assets/data/exam.json`](assets/data/exam.json) | แก้ไข | ชุดข้อสอบรวม 30 ข้อตั้งต้น (ใช้สำหรับ Fallback/Admin Preview) |
+| [`assets/data/scenarios/exam.json`](assets/data/scenarios/exam.json) | แก้ไข | รวมสถานการณ์สำหรับข้อสอบชุดตั้งต้น |
+| [`assets/data/math.json`](assets/data/math.json) | แก้ไข | อัปเดตข้อ 12 และข้อ 13 (ระยะทางสั้นสุด/น้ำมัน) ให้เป็น `type: "input"` |
+| [`web/js/quiz.js`](web/js/quiz.js) | แก้ไข | เพิ่ม Fallback Data, ตัวสุ่มชุดข้อสอบ `sampleExamFromBank`, ฟังก์ชันสลับข้อ `clusterAndShuffleQuestions`, และระบบตรวจข้อเขียน `checkTextAnswer` |
+| [`web/js/game.js`](web/js/game.js) | แก้ไข | เพิ่ม `submitCurrentTextAnswer()`, สลับ UI ข้อเขียนใน `loadQuestion()`, ระบบใบ้ของกล้องส่องทางไกล, คิดคะแนนส่งกลับ |
+| [`web/index.html`](web/index.html) | แก้ไข | เพิ่มมาร์กอัป `#input-answer-container` สำหรับช่องกรอกข้อเขียนและป้ายหน่วย |
+| [`web/style.css`](web/style.css) | แก้ไข | สไตล์โจรสลัดสำหรับกล่องข้อความ, ปุ่มส่ง, และกล่องคำใบ้ |
+| [`web/admin.html`](web/admin.html) | แก้ไข | เพิ่มตัวเลือกเปิดดู/แก้ไขชุดข้อสอบ PISA ใน Dropdown ของ Admin |
+| [`README.md`](README.md) | แก้ไข | บันทึกคู่มือการใช้งานโหมดข้อสอบรวม, ระบบสุ่มสลับข้อ, และ Smart Grading |
 
 ---
 

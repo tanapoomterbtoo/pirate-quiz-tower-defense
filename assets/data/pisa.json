@@ -27,7 +27,9 @@
       "54.40",
       "54.4 เซด"
     ],
-    "correctDisplay": "54 เซด"
+    "correctDisplay": "54",
+    "id": "pisa-001",
+    "subject": "math"
   },
   {
     "q": "ข้อ 2. อัตราเร็วสูงสุดของรถที่น้ำฝนขับในเช้าวันนั้น เป็นเท่าไร",
@@ -55,7 +57,9 @@
       "60 กม/ชม",
       "60 km/h"
     ],
-    "correctDisplay": "60 กิโลเมตรต่อชั่วโมง"
+    "correctDisplay": "60",
+    "id": "pisa-002",
+    "subject": "math"
   },
   {
     "q": "ข้อ 3. น้ำหนักของน้ำตาลที่ใช้ในสูตรคือเท่าใด?",
@@ -68,7 +72,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-math-03"
+    "scenarioId": "pisa-math-03",
+    "id": "pisa-003",
+    "subject": "math"
   },
   {
     "q": "ข้อ 4. รองเท้าราคา 600 บาท ลด 20% จะเหลือราคาเท่าไหร่?",
@@ -81,7 +87,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-math-04"
+    "scenarioId": "pisa-math-04",
+    "id": "pisa-004",
+    "subject": "math"
   },
   {
     "q": "ข้อ 5. ข้อผิดพลาดที่โธริสาทำคืออะไร?",
@@ -94,7 +102,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-math-05"
+    "scenarioId": "pisa-math-05",
+    "id": "pisa-005",
+    "subject": "math"
   },
   {
     "q": "ข้อ 1. เหตุใดวิศวกรจึงออกแบบรางรถไฟให้มีช่องว่างระหว่างท่อนราง",
@@ -107,7 +117,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-sci-01"
+    "scenarioId": "pisa-sci-01",
+    "id": "pisa-006",
+    "subject": "science"
   },
   {
     "q": "ข้อ 2. เหตุใดไข่จึงลอยขึ้นเมื่อเติมเกลือลงในน้ำมากขึ้นเรื่อย ๆ",
@@ -120,7 +132,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-sci-02"
+    "scenarioId": "pisa-sci-02",
+    "id": "pisa-007",
+    "subject": "science"
   },
   {
     "q": "ข้อ 3. คาร์บอนอะตอม (Carbon atom) ในน้ำตาลกลูโคสมาจากไหน",
@@ -133,7 +147,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-sci-03"
+    "scenarioId": "pisa-sci-03",
+    "id": "pisa-008",
+    "subject": "science"
   },
   {
     "q": "ข้อ 4. ปรากฏการณ์ที่เกิดขึ้นในเวลา 22.00 น. เกิดจากสาเหตุใด",
@@ -146,7 +162,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-sci-04"
+    "scenarioId": "pisa-sci-04",
+    "id": "pisa-009",
+    "subject": "science"
   },
   {
     "q": "ข้อ 5. ปรากฏการณ์ในกล่องใบที่ 1 เปรียบเสมือนกลไกการเกิดปรากฏการณ์เรือนกระจกของโลกตามข้อใด",
@@ -159,7 +177,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "pisa-sci-05"
+    "scenarioId": "pisa-sci-05",
+    "id": "pisa-010",
+    "subject": "science"
   },
   {
     "q": "1. เมื่ออ่านบล็อกส่วนตัวเกี่ยวกับการรีวิวสถานที่ท่องเที่ยว สิ่งสำคัญที่ผู้อ่านต้องพึงระวังมากที่สุดคือข้อใด",
@@ -172,7 +192,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": null
+    "scenarioId": null,
+    "id": "pisa-011",
+    "subject": "thai"
   },
   {
     "q": "2. ข้อใดจัดเป็นลักษณะสำคัญของบทอ่านในสถานการณ์สาธารณะ",
@@ -185,7 +207,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": null
+    "scenarioId": null,
+    "id": "pisa-012",
+    "subject": "thai"
   },
   {
     "q": "3. พฤติกรรมการอ่านของบุคคลในข้อใดจัดเป็นการอ่านในสถานการณ์ทางการศึกษา",
@@ -198,7 +222,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": null
+    "scenarioId": null,
+    "id": "pisa-013",
+    "subject": "thai"
   },
   {
     "q": "4. พฤติกรรมการอ่านของบุคคลในข้อใดจัดเป็นการอ่านในสถานการณ์ทางการงานอาชีพ",
@@ -211,7 +237,9 @@
     "a": 3,
     "img": "",
     "showImg": false,
-    "scenarioId": null
+    "scenarioId": null,
+    "id": "pisa-014",
+    "subject": "thai"
   },
   {
     "q": "5. ข้อใดกล่าวถึงประโยชน์ที่สำคัญที่สุดของการอ่านในสถานการณ์ทางการงานอาชีพ",
@@ -224,6 +252,8 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": null
+    "scenarioId": null,
+    "id": "pisa-015",
+    "subject": "thai"
   }
 ]

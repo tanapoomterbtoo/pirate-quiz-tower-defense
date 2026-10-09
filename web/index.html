@@ -11,11 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Kanit:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     
     <!-- KaTeX for beautiful math equations -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/contrib/auto-render.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=34">
+    <link rel="stylesheet" href="style.css?v=35">
     <style>
         /* Admin iframe preview: lock design canvas so parent can scale 1:1 with game */
         html.admin-preview, html.admin-preview body {
@@ -117,7 +117,7 @@
                         </button>
                     </div>
 
-                    <div id="answer-feedback" class="sr-only hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
+                    <div id="answer-feedback" class="answer-feedback hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
                     <div id="combat-status-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
                     <button id="btn-mute" class="btn btn-mute" onclick="toggleMute()" title="เปิด/ปิดเสียง" aria-label="ปิดเสียง" aria-pressed="false">
@@ -137,6 +137,7 @@
                             <li>ด้านคณิตศาสตร์ (Mathematical Literacy)</li>
                         </ul>
                         <p class="pass-rule">ผู้เรียนต้องทำแบบทดสอบให้ได้คะแนนมากกว่าร้อยละ 60 จึงจะผ่านภารกิจและได้รับเกียรติบัตร โดยสามารถใช้ไอเท็มตัวช่วยที่สะสมได้ระหว่างการเรียนเพื่อช่วยในการทำแบบทดสอบ</p>
+                        <p id="data-load-status" class="data-load-status hidden" role="status"></p>
                         <div id="score-info-box" class="score-info-box">
                             <div class="score-line">คะแนนที่ได้รับ: <span id="user-score-display">100</span></div>
                         </div>
@@ -154,7 +155,7 @@
                             <!-- Question Image Container -->
                             <div id="question-img-container" class="question-media hidden" style="margin-bottom: 0;">
                                 <button id="btn-toggle-img" class="btn btn-secondary btn-toggle-img" onclick="toggleQuestionImage()" style="margin: 0; padding: 4px 10px; font-size: 14px;">🖼️ แสดงภาพประกอบ</button>
-                                <img id="question-img" class="question-img hidden" src="" alt="โจทย์คำถาม" onclick="zoomQuestionImage()">
+                                <img id="question-img" class="question-img hidden" src="" alt="โจทย์คำถาม" role="button" tabindex="0" aria-label="ขยายภาพโจทย์" onclick="zoomQuestionImage()" onkeydown="if(event.key==='Enter' || event.key===' ') { event.preventDefault(); zoomQuestionImage(); }">
                             </div>
                         </div>
                         <h2 id="question-text">กำลังโหลดคำถาม...</h2>
@@ -168,11 +169,13 @@
 
                     <!-- Short-answer / Fill-in-the-blank Text Input Interface -->
                     <div id="input-answer-container" class="input-answer-container hidden">
+                        <label for="quiz-text-input" class="input-answer-label">พิมพ์คำตอบ แล้วกดส่งหรือ Enter</label>
                         <div class="input-answer-row">
-                            <input type="text" id="quiz-text-input" class="quiz-text-input" placeholder="พิมพ์คำตอบที่นี่..." autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') submitCurrentTextAnswer();" />
+                            <input type="text" id="quiz-text-input" class="quiz-text-input" placeholder="พิมพ์คำตอบที่นี่..." autocomplete="off" spellcheck="false" aria-describedby="quiz-input-unit quiz-input-error" onkeydown="if(event.key==='Enter' &amp;&amp; !event.isComposing &amp;&amp; this.dataset.composing!=='1') { event.preventDefault(); submitCurrentTextAnswer(); }" />
                             <span id="quiz-input-unit" class="quiz-input-unit hidden"></span>
                             <button type="button" id="btn-submit-text" class="btn btn-primary btn-submit-input" onclick="submitCurrentTextAnswer()">ส่งคำตอบ ↵</button>
                         </div>
+                        <p id="quiz-input-error" class="quiz-input-error hidden" role="alert"></p>
                         <div id="quiz-input-hint" class="quiz-input-hint hidden"></div>
                     </div>
                 </div>
@@ -256,20 +259,23 @@
             <div class="rotate-icon">📱🔄</div>
             <h2>กรุณาหมุนโทรศัพท์ของคุณ</h2>
             <p>เพื่อการเล่นและแสดงผลที่ดีที่สุด กรุณาเล่นในแนวนอน (Landscape Mode)</p>
+            <button type="button" class="btn btn-primary" onclick="document.documentElement.classList.add('portrait-play')">เล่นแนวตั้งต่อ</button>
         </div>
     </div>
 
     <!-- Image Zoom Modal -->
-    <div id="image-zoom-modal" class="zoom-modal" onclick="closeZoomModal()">
-        <span class="zoom-modal-close">&times;</span>
+    <div id="image-zoom-modal" class="zoom-modal" role="dialog" aria-modal="true" aria-label="ภาพขยาย" onclick="closeZoomModal()">
+        <button type="button" id="btn-close-zoom" class="zoom-modal-close" aria-label="ปิดภาพขยาย">&times;</button>
         <img id="zoom-modal-img" class="zoom-modal-img" src="" alt="ขยายรูป">
     </div>
 
     <!-- Scripts -->
     <script src="js/config.js?v=22"></script>
-    <script src="js/quiz.js?v=25"></script>
+    <script src="js/exam-core.js?v=1"></script>
+    <script src="js/fallback-data.js?v=1"></script>
+    <script src="js/quiz.js?v=26"></script>
     <script src="js/entities.js?v=27"></script>
-    <script src="js/minigame-shortest-path.js?v=32"></script>
-    <script src="js/game.js?v=33"></script>
+    <script src="js/minigame-shortest-path.js?v=33"></script>
+    <script src="js/game.js?v=34"></script>
 </body>
 </html>

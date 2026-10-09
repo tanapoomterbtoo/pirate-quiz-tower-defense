@@ -114,6 +114,7 @@ class Game {
         this.answerFeedback.classList.remove("hidden", "is-correct", "is-wrong");
         this.answerFeedback.classList.add(type === "correct" ? "is-correct" : "is-wrong");
         this.answerFeedback.textContent = message;
+        this.topHud?.classList.add("feedback-active");
     }
 
     clearAnswerFeedback() {
@@ -121,6 +122,7 @@ class Game {
         this.answerFeedback.classList.add("hidden");
         this.answerFeedback.classList.remove("is-correct", "is-wrong");
         this.answerFeedback.textContent = "";
+        this.topHud?.classList.remove("feedback-active");
     }
 
     syncCombatStatus(force = false) {
@@ -141,7 +143,10 @@ class Game {
         const total = this.previewDisplayTotal || this.questionPool.length;
         const index = this.previewDisplayIndex ?? this.currentQIdx;
         const number = Math.min(index + 1, total);
-        if (subject) subject.textContent = window.SUBJECT_NAME || "คณิตศาสตร์";
+        const subjectNames = {math: "คณิตศาสตร์", science: "วิทยาศาสตร์", thai: "ภาษาไทย"};
+        const currentSubject = subjectNames[this.questionPool[this.currentQIdx]?.subject];
+        const title = window.SUBJECT_NAME || "คณิตศาสตร์";
+        if (subject) subject.textContent = title === "สอบรวม" && currentSubject ? `${title} · ${currentSubject}` : title;
         if (question) question.textContent = `ข้อ ${number} จาก ${total}`;
         if (fill) fill.style.width = `${total ? (index / total) * 100 : 0}%`;
     }
@@ -149,14 +154,7 @@ class Game {
     updateResultSummary(kind) {
         const summary = document.getElementById(`${kind}-summary`);
         if (!summary) return;
-        const correct = this.answersLog.reduce((count, answer, index) => {
-            const q = this.questionPool[index];
-            if (!q) return count;
-            if (q.type === "input") {
-                return count + Number(typeof checkTextAnswer === "function" ? checkTextAnswer(answer, q) : false);
-            }
-            return count + Number(answer === q.a);
-        }, 0);
+        const correct = ExamCore.countCorrect(this.answersLog, this.questionPool);
         summary.textContent = `ตอบถูก ${correct} ข้อ · ตอบผิด ${this.answersLog.length - correct} ข้อ · ทำแล้ว ${this.answersLog.length} จาก ${this.questionPool.length} ข้อ`;
     }
 
@@ -178,6 +176,11 @@ class Game {
     }
 
     resetGame() {
+        clearInterval(this.bossFlashInterval);
+        clearTimeout(this.bossWarningTimeout);
+        this.bossFlashInterval = null;
+        this.bossWarningTimeout = null;
+        document.getElementById("boss-warning-overlay")?.classList.add("hidden");
         this.player = new PiratePlayer(250, FLOOR_Y);
         this.playerHpBar = new HealthBar(175, 300, 150, 20); // y coordinates updated relative to player height dynamically in update
         this.lastSeenScenario = "";
@@ -254,6 +257,9 @@ class Game {
         this.screenShake = 0.0;
         this.bossWarningTriggered = false;
         this.answersLog = [];
+        this.inputHintUsed = false;
+        closeScenarioOverlay();
+        closeZoomModal();
         this.clearAnswerFeedback();
         
         // Hide revive overlay if showing
@@ -319,15 +325,18 @@ class Game {
             
             // Play pulsing siren sounds
             let flashCount = 0;
-            const flashInterval = setInterval(() => {
+            clearInterval(this.bossFlashInterval);
+            clearTimeout(this.bossWarningTimeout);
+            this.bossFlashInterval = setInterval(() => {
                 this.screenShake = this.reducedMotion ? 0 : 8.0;
                 this.playSound("shoot");
                 flashCount++;
-                if (flashCount >= 4) clearInterval(flashInterval);
+                if (flashCount >= 4) { clearInterval(this.bossFlashInterval); this.bossFlashInterval = null; }
             }, 600);
 
-            setTimeout(() => {
+            this.bossWarningTimeout = setTimeout(() => {
                 warningEl.classList.add("hidden");
+                this.bossWarningTimeout = null;
             }, 3000);
         }
     }
@@ -354,6 +363,9 @@ class Game {
 
     loadQuestion() {
         this.clearAnswerFeedback();
+        this.inputHintUsed = false;
+        const inputError = document.getElementById("quiz-input-error");
+        if (inputError) { inputError.textContent = ""; inputError.classList.add("hidden"); }
         if (this.currentQIdx >= this.questionPool.length) {
             this.state = STATE_VICTORY;
             this.updateResultSummary("victory");
@@ -385,7 +397,7 @@ class Game {
 
         const qData = this.questionPool[this.currentQIdx];
         this.currentQText = qData.q;
-        this.correctAns = qData.c[qData.a];
+        this.correctAns = qData.type === "input" ? ExamCore.correctLabel(qData) : qData.c[qData.a];
 
         // Resolve scenario from system registry (scenarioId) or legacy embedded text
         const resolved = (typeof resolveScenarioForQuestion === "function")
@@ -440,7 +452,7 @@ class Game {
                     this.lastSeenScenario = scenarioKey;
                     setTimeout(() => {
                         if (typeof openScenarioOverlay === "function") {
-                            openScenarioOverlay();
+                            if (this.questionPool[this.currentQIdx] === qData && this.state === STATE_PLAYING && this.combatState === "idle") openScenarioOverlay();
                         }
                     }, 100);
                 } else if (!autoOpen) {
@@ -483,6 +495,8 @@ class Game {
                 inputContainer.classList.remove("hidden");
                 if (textInput) {
                     textInput.value = "";
+                    delete textInput.dataset.composing;
+                    textInput.removeAttribute("aria-invalid");
                     textInput.disabled = false;
                     textInput.classList.remove("correct", "wrong");
                     textInput.placeholder = qData.placeholder || "พิมพ์คำตอบที่นี่...";
@@ -503,8 +517,9 @@ class Game {
                     hintBox.textContent = "";
                     hintBox.classList.add("hidden");
                 }
+                const focusBeforeSchedule = document.activeElement;
                 setTimeout(() => {
-                    try { if (textInput) textInput.focus(); } catch (e) {}
+                    try { if (!isAdminPreviewMode() && document.activeElement === focusBeforeSchedule && textInput && this.questionPool[this.currentQIdx] === qData && !isAnswerOverlayOpen() && this.state === STATE_PLAYING && this.combatState === "idle") textInput.focus({ preventScroll: true }); } catch (e) {}
                 }, 50);
             }
         } else {
@@ -546,6 +561,7 @@ class Game {
 
         const quizPanel = document.getElementById("quiz-panel");
         if (quizPanel) {
+            quizPanel.classList.toggle("input-question", qData.type === "input");
             if (isLongQuestion) {
                 quizPanel.classList.add("split-layout");
             } else {
@@ -565,7 +581,7 @@ class Game {
         if (window.renderMathInElement) {
             try {
                 renderMathInElement(this.questionText, {
-                    delims: [
+                    delimiters: [
                         {left: "$$", right: "$$", display: true},
                         {left: "$", right: "$", display: false}
                     ]
@@ -575,7 +591,7 @@ class Game {
                         const btn = document.getElementById(`choice-${i}`);
                         if (btn) {
                             renderMathInElement(btn, {
-                                delims: [
+                                delimiters: [
                                     {left: "$$", right: "$$", display: true},
                                     {left: "$", right: "$", display: false}
                                 ]
@@ -587,6 +603,8 @@ class Game {
                 console.warn("Math rendering failed", e);
             }
         }
+
+        this.updateItemUI();
 
         // Show double damage indicator
         if (this.doubleDamage) {
@@ -624,7 +642,14 @@ class Game {
 
         if (this.itemButtons["Telescope"]) {
             this.itemButtons["Telescope"].disabled = (this.items["Telescope"].count <= 0);
-            this.itemButtons["Telescope"].setAttribute("aria-label", `กล้องส่องทางไกล ตัดตัวเลือกที่ผิด 2 ข้อ เหลือ ${this.items["Telescope"].count}`);
+            const isInput = this.questionPool[this.currentQIdx]?.type === "input";
+            const description = isInput ? "แสดงคำใบ้คำตอบ" : "ตัดตัวเลือกที่ผิด 2 ข้อ";
+            this.itemButtons["Telescope"].setAttribute("aria-label", `กล้องส่องทางไกล ${description} เหลือ ${this.items["Telescope"].count}`);
+            this.itemButtons["Telescope"].title = `กล้องส่องทางไกล — ${description}`;
+            const detail = this.itemButtons["Telescope"].querySelector(".item-desc");
+            const mobile = this.itemButtons["Telescope"].querySelector(".item-mobile-label");
+            if (detail) detail.textContent = description;
+            if (mobile) mobile.textContent = isInput ? "ใบ้คำตอบ" : "ตัด 2 ข้อ";
         }
         if (this.itemButtons["Repair Kit"]) {
             this.itemButtons["Repair Kit"].disabled = (this.items["Repair Kit"].count <= 0);
@@ -642,7 +667,7 @@ class Game {
     }
 
     useItem(name) {
-        if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+        if (this.state !== STATE_PLAYING || this.combatState !== "idle" || isAnswerOverlayOpen()) return;
         if (this.items[name].count <= 0) return;
 
         const btn = this.itemButtons[name];
@@ -651,24 +676,12 @@ class Game {
             const qData = this.questionPool[this.currentQIdx];
             if (qData && qData.type === "input") {
                 const hintBox = document.getElementById("quiz-input-hint");
-                let hintMsg = "";
-                if (typeof qData.targetNumber === "number") {
-                    const val = qData.targetNumber;
-                    const margin = Math.max(5, Math.round(val * 0.15));
-                    const low = Math.max(0, Math.floor((val - margin) / 5) * 5);
-                    const high = Math.ceil((val + margin) / 5) * 5;
-                    const unitStr = qData.unit ? ` ${qData.unit}` : "";
-                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: ค่าตัวเลขคำตอบอยู่ระหว่าง ${low} ถึง ${high}${unitStr}`;
-                } else if (qData.correctDisplay) {
-                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: คำตอบขึ้นต้นด้วย "${qData.correctDisplay.substring(0, 2)}..."`;
-                } else {
-                    hintMsg = `🔭 กล้องส่องทางไกลใบ้: ตรวจสอบตัวเลขและหน่วยให้ตรงกับโจทย์`;
-                }
-
-                if (hintBox) {
-                    hintBox.innerHTML = hintMsg;
-                    hintBox.classList.remove("hidden");
-                }
+                if (this.inputHintUsed) return;
+                const hintMsg = ExamCore.inputHint(qData);
+                if (!hintBox) return;
+                hintBox.textContent = hintMsg;
+                hintBox.classList.remove("hidden");
+                this.inputHintUsed = true;
                 this.items["Telescope"].count -= 1;
                 this.updateItemUI();
                 return;
@@ -684,6 +697,7 @@ class Game {
             
             this.shuffleArray(activeWrongIndices);
             const toDisable = activeWrongIndices.slice(0, 2);
+            if (!toDisable.length) return;
             toDisable.forEach(idx => {
                 const choiceBtn = document.getElementById(`choice-${idx}`);
                 if (choiceBtn) choiceBtn.disabled = true;
@@ -721,6 +735,7 @@ class Game {
     }
 
     useRevive() {
+        if (this.reviveOverlay.classList.contains("hidden")) return;
         if (this.items["Revive"].count <= 0) return;
         
         this.items["Revive"].count -= 1;
@@ -758,8 +773,11 @@ class Game {
 
 
     selectChoice(choiceIdx) {
-        if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+        if (this.state !== STATE_PLAYING || this.combatState !== "idle" || isAnswerOverlayOpen()) return;
         if (!this.questionPool || this.currentQIdx >= this.questionPool.length) return;
+
+        const question = this.questionPool[this.currentQIdx];
+        if (question.type === "input" || !Number.isInteger(choiceIdx) || choiceIdx < 0 || choiceIdx > 3 || this.answersLog.length !== this.currentQIdx) return;
 
         const selectedBtn = document.getElementById(`choice-${choiceIdx}`);
         // Ignore clicks on disabled options (e.g. eliminated by Telescope)
@@ -777,7 +795,7 @@ class Game {
             document.getElementById(`choice-${i}`).disabled = true;
         }
 
-        if (choiceIdx === qData.a) {
+        if (ExamCore.isCorrect(choiceIdx, qData)) {
             selectedBtn.classList.add("correct");
             
             // Set double damage hit flag
@@ -807,24 +825,25 @@ class Game {
     }
 
     submitCurrentTextAnswer() {
-        if (this.state !== STATE_PLAYING || this.combatState !== "idle") return;
+        if (this.state !== STATE_PLAYING || this.combatState !== "idle" || isAnswerOverlayOpen()) return;
         if (!this.questionPool || this.currentQIdx >= this.questionPool.length) return;
 
         const qData = this.questionPool[this.currentQIdx];
-        if (!qData || qData.type !== "input") return;
+        if (!qData || qData.type !== "input" || this.answersLog.length !== this.currentQIdx) return;
 
         const inputEl = document.getElementById("quiz-text-input");
         const btnSubmit = document.getElementById("btn-submit-text");
+        if (inputEl?.dataset.composing === "1") return;
         const userText = inputEl ? inputEl.value.trim() : "";
+        const errorEl = document.getElementById("quiz-input-error");
 
-        if (!userText) {
-            if (inputEl) {
-                inputEl.focus();
-                inputEl.classList.add("wrong");
-                setTimeout(() => inputEl.classList.remove("wrong"), 400);
-            }
+        if (!userText || userText.length > 512) {
+            if (errorEl) { errorEl.textContent = !userText ? "กรุณาพิมพ์คำตอบก่อนส่ง" : "คำตอบยาวเกินไป กรุณาใช้ไม่เกิน 512 ตัวอักษร"; errorEl.classList.remove("hidden"); }
+            if (inputEl) { inputEl.focus(); inputEl.setAttribute("aria-invalid", "true"); }
             return;
         }
+        if (errorEl) errorEl.classList.add("hidden");
+        if (inputEl) inputEl.removeAttribute("aria-invalid");
 
         if (inputEl) inputEl.disabled = true;
         if (btnSubmit) btnSubmit.disabled = true;
@@ -833,13 +852,8 @@ class Game {
             this.answersLog.push(userText);
         }
 
-        const isCorrect = (typeof checkTextAnswer === "function")
-            ? checkTextAnswer(userText, qData)
-            : false;
-
-        const correctLabel = qData.correctDisplay
-            ? `${qData.correctDisplay} ${qData.unit || ""}`.trim()
-            : (qData.answers && qData.answers[0]) || "";
+        const isCorrect = ExamCore.isCorrect(userText, qData);
+        const correctLabel = ExamCore.correctLabel(qData);
 
         if (isCorrect) {
             if (inputEl) {
@@ -1091,42 +1105,29 @@ class Game {
             return;
         }
         
-        // Calculate correct answers count
-        let correctCount = 0;
-        this.answersLog.forEach((ans, idx) => {
-            const qData = this.questionPool[idx];
-            if (qData) {
-                if (qData.type === "input") {
-                    if (typeof checkTextAnswer === "function" && checkTextAnswer(ans, qData)) {
-                        correctCount++;
-                    }
-                } else if (ans === qData.a) {
-                    correctCount++;
-                }
-            }
-        });
-
-        let redirectTarget;
+        if (![STATE_VICTORY, STATE_GAME_OVER].includes(this.state)) return;
         try {
-            redirectTarget = new URL(callbackUrl, window.location.origin);
-        } catch(e) {
-            console.error("Invalid callback URL", e);
-            alert("ลิงก์ส่งผลสอบกลับระบบหลักไม่ถูกต้อง");
-            return;
+            window.location.href = ExamCore.resultUrl(callbackUrl, window.location.href, {
+                studentId: window.STUDENT_ID, token: window.EXAM_TOKEN,
+                answers: this.answersLog, questions: this.questionPool,
+                status: this.state === STATE_VICTORY ? "victory" : "gameover"
+            });
+        } catch (error) {
+            console.error("Invalid exam result", error);
+            alert(error.message || "ลิงก์ส่งผลสอบกลับระบบหลักไม่ถูกต้อง");
         }
-
-        redirectTarget.searchParams.set("student_id", window.STUDENT_ID);
-        redirectTarget.searchParams.set("token", window.EXAM_TOKEN);
-        redirectTarget.searchParams.set("score", correctCount);
-        redirectTarget.searchParams.set("answers", JSON.stringify(this.answersLog));
-        redirectTarget.searchParams.set("status", this.state === STATE_VICTORY ? "victory" : "gameover");
-
-        window.location.href = redirectTarget.toString();
     }
 }
 
 // Global functions linked to HTML click handlers
 let gameInstance = null;
+
+function isAnswerOverlayOpen() {
+    return ["scenario-overlay", "revive-overlay"].some(id => {
+        const el = document.getElementById(id);
+        return el && !el.classList.contains("hidden");
+    }) || document.getElementById("image-zoom-modal")?.classList.contains("active") || (typeof isShortestPathMiniGameOpen === "function" && isShortestPathMiniGameOpen());
+}
 
 function isAdminPreviewMode() {
     try {
@@ -1142,7 +1143,7 @@ function isAdminPreviewMode() {
 function applyAdminPreviewPayload(p) {
     if (!isAdminPreviewMode() || !gameInstance || !p) return;
 
-    const PREVIEW_SCEN_ID = "__admin_preview_scenario__";
+    const PREVIEW_SCEN_ID = p.scenarioId || "__admin_preview_scenario__";
     const hasScen = !!(p.scenario && String(p.scenario).trim());
 
     // Register / clear temporary scenario used only for this preview frame
@@ -1160,6 +1161,8 @@ function applyAdminPreviewPayload(p) {
     }
 
     const qObj = {
+        ...(p.questionData || {}),
+        id: p.id,
         q: p.question || "",
         c: Array.isArray(p.choices) ? p.choices.slice(0, 4) : ["", "", "", ""],
         a: (typeof p.answerIndex === "number" && p.answerIndex >= 0) ? p.answerIndex : 0,
@@ -1180,6 +1183,7 @@ function applyAdminPreviewPayload(p) {
     QUESTIONS.length = 0;
     for (let i = 0; i < 40; i++) {
         QUESTIONS.push({
+            ...qObj,
             q: qObj.q,
             c: qObj.c.slice(),
             a: qObj.a,
@@ -1197,6 +1201,7 @@ function applyAdminPreviewPayload(p) {
     }
 
     gameInstance.questionPool = QUESTIONS.map((q) => ({
+        ...q,
         q: q.q,
         c: q.c.slice(),
         a: q.a,
@@ -1274,6 +1279,11 @@ function applyAdminPreviewPayload(p) {
 }
 
 async function initWebGame() {
+    const answerInput = document.getElementById("quiz-text-input");
+    if (answerInput) {
+        answerInput.addEventListener("compositionstart", () => answerInput.dataset.composing = "1");
+        answerInput.addEventListener("compositionend", () => delete answerInput.dataset.composing);
+    }
     const btnStart = document.getElementById("btn-start");
     const adminPreview = isAdminPreviewMode();
     if (adminPreview) {
@@ -1291,15 +1301,14 @@ async function initWebGame() {
         const assetsToPreload = [
             `${IMG_PATH}/backgrounds/bg_deck_Math.png`,
             `${IMG_PATH}/backgrounds/bg_sky_Morning.png`,
-            `${IMG_PATH}/characters/player_idle.png`,
-            `${IMG_PATH}/characters/kraken_idle.png`
+            `${IMG_PATH}/questions/math/pisa_driving.png`
         ];
         
         await Promise.all(assetsToPreload.map(src => {
             return new Promise(resolve => {
                 const img = new Image();
-                img.onload = resolve;
-                img.onerror = resolve; // Continue on error to avoid soft lock
+                const timer = setTimeout(resolve, 5000);
+                img.onload = img.onerror = () => { clearTimeout(timer); resolve(); };
                 img.src = src;
             });
         }));
@@ -1337,15 +1346,15 @@ async function initWebGame() {
             } catch (e) { /* ignore */ }
 
             window.addEventListener("message", (e) => {
-                if (!e.data || e.data.type !== "admin-preview-update") return;
+                if (window.parent === window || e.source !== window.parent || e.origin !== window.location.origin || !e.data || e.data.type !== "admin-preview-update") return;
                 applyAdminPreviewPayload(e.data.payload || {});
             });
             try {
-                window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, "*");
+                window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, window.location.origin);
             } catch (e) { /* ignore */ }
             // Retry handshake (parent may bind late)
             setTimeout(() => {
-                try { window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, "*"); } catch (e) {}
+                try { window.parent && window.parent.postMessage({ type: "admin-preview-ready" }, window.location.origin); } catch (e) {}
             }, 300);
         }
     } catch (e) {
@@ -1374,6 +1383,7 @@ function restartGame() {
 }
 
 function selectChoice(idx) {
+    if (isAnswerOverlayOpen() || gameInstance?.questionPool[gameInstance.currentQIdx]?.type === "input") return;
     // In admin preview, only show selection highlight — no combat / question advance
     if (isAdminPreviewMode() && gameInstance) {
         for (let i = 0; i < 4; i++) {
@@ -1388,6 +1398,7 @@ function selectChoice(idx) {
 }
 
 function submitCurrentTextAnswer() {
+    if (isAnswerOverlayOpen() || document.getElementById("quiz-text-input")?.dataset.composing === "1") return;
     if (isAdminPreviewMode() && gameInstance) {
         const inputEl = document.getElementById("quiz-text-input");
         const qData = gameInstance.questionPool[gameInstance.currentQIdx] || {};
@@ -1424,12 +1435,16 @@ function submitExamResults() {
     if (gameInstance) gameInstance.submitExamResults();
 }
 
+let zoomReturnFocus = null;
 function openImageZoomModal(src) {
     const modal = document.getElementById("image-zoom-modal");
     const modalImg = document.getElementById("zoom-modal-img");
     if (!modal || !modalImg || !src) return;
     modalImg.src = src;
+    zoomReturnFocus = document.activeElement;
     modal.classList.add("active");
+    document.getElementById("game-wrapper")?.setAttribute("inert", "");
+    document.getElementById("btn-close-zoom")?.focus();
 }
 
 function zoomQuestionImage() {
@@ -1459,6 +1474,14 @@ function bindZoomableQuestionImages(rootEl) {
         if (img.closest(".btn-choice, .choices-grid")) return;
         img.classList.add("zoomable-q-img");
         img.style.cursor = "zoom-in";
+        img.tabIndex = 0;
+        img.setAttribute("role", "button");
+        img.setAttribute("aria-label", `ขยายภาพ ${img.alt || "ประกอบโจทย์"}`);
+        img.onkeydown = (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault(); e.stopPropagation(); zoomQuestionImageFrom(img);
+            }
+        };
         // Prefer property handler so we don't stack multiple listeners on re-render
         img.onclick = (e) => {
             e.preventDefault();
@@ -1482,7 +1505,11 @@ function disableZoomOnChoiceImages(rootEl) {
 function closeZoomModal() {
     const modal = document.getElementById("image-zoom-modal");
     if (modal) {
+        const wasOpen = modal.classList.contains("active");
         modal.classList.remove("active");
+        document.getElementById("game-wrapper")?.removeAttribute("inert");
+        if (wasOpen && (!isAdminPreviewMode() || document.hasFocus()) && zoomReturnFocus?.isConnected) zoomReturnFocus.focus();
+        zoomReturnFocus = null;
     }
 }
 
@@ -1502,7 +1529,7 @@ function isAutoScenarioEnabled() {
         // Default ON when key is missing
         return localStorage.getItem(AUTO_SCENARIO_KEY) !== "0";
     } catch (e) {
-        return true;
+        return false;
     }
 }
 
@@ -1622,7 +1649,7 @@ function openScenarioOverlay() {
         if (window.renderMathInElement) {
             try {
                 renderMathInElement(content, {
-                    delims: [
+                    delimiters: [
                         {left: "$$", right: "$$", display: true},
                         {left: "$", right: "$", display: false}
                     ]
@@ -1633,7 +1660,7 @@ function openScenarioOverlay() {
         }
         requestAnimationFrame(() => {
             const closeButton = overlay.querySelector(".btn-close-scroll");
-            if (closeButton) closeButton.focus();
+            if (closeButton && (!isAdminPreviewMode() || document.hasFocus())) closeButton.focus();
         });
     }
 }
@@ -1647,7 +1674,7 @@ function closeScenarioOverlay() {
         overlay.classList.add("hidden");
     }
     setScenarioBackgroundInert(false);
-    if (scenarioReturnFocus && scenarioReturnFocus.isConnected && !scenarioReturnFocus.classList.contains("hidden")) {
+    if ((!isAdminPreviewMode() || document.hasFocus()) && scenarioReturnFocus && scenarioReturnFocus.isConnected && !scenarioReturnFocus.classList.contains("hidden")) {
         scenarioReturnFocus.focus();
     }
     scenarioReturnFocus = null;
@@ -1655,6 +1682,11 @@ function closeScenarioOverlay() {
 
 // Answer hotkeys: 1–4 / numpad 1–4 / A–D (when playing and not typing)
 window.addEventListener("keydown", (e) => {
+    if (document.getElementById("image-zoom-modal")?.classList.contains("active")) {
+        if (e.key === "Escape") { e.preventDefault(); closeZoomModal(); }
+        else if (e.key === "Tab") { e.preventDefault(); document.getElementById("btn-close-zoom")?.focus(); }
+        return;
+    }
     if (!gameInstance || gameInstance.state !== STATE_PLAYING) return;
     if (gameInstance.combatState !== "idle") return;
 
@@ -1689,6 +1721,7 @@ window.addEventListener("keydown", (e) => {
         Numpad1: 0, Numpad2: 1, Numpad3: 2, Numpad4: 3,
         KeyA: 0, KeyB: 1, KeyC: 2, KeyD: 3
     };
+    if (gameInstance.questionPool[gameInstance.currentQIdx]?.type === "input" || isAnswerOverlayOpen() || e.isComposing) return;
     if (e.code in map && typeof selectChoice === "function") {
         e.preventDefault();
         selectChoice(map[e.code]);

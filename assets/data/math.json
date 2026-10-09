@@ -10,7 +10,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "fitd-fitness"
+    "scenarioId": "fitd-fitness",
+    "id": "math-001",
+    "subject": "math"
   },
   {
     "q": "ข้อ 2. ถ้าวินไม่ต้องการสมัครสมาชิกรายปี แล้ววินควรใช้บริการอย่างมากกี่เดือน จึงจะคุ้มค่า",
@@ -23,7 +25,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "fitd-fitness"
+    "scenarioId": "fitd-fitness",
+    "id": "math-002",
+    "subject": "math"
   },
   {
     "q": "ข้อ 3. การบริการของเทรนเนอร์ทั้ง 2 PLAN มีความเหมาะสมกับจำนวนชั่วโมงให้บริการ ตรงกับข้อใด",
@@ -36,7 +40,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "fitd-fitness"
+    "scenarioId": "fitd-fitness",
+    "id": "math-003",
+    "subject": "math"
   },
   {
     "q": "ข้อ 4. นักวิจัยคนใดเขียนรายงานสรุปจำนวนแบคทีเรียในชั่วโมงที่ 4 ไม่ถูกต้อง",
@@ -49,7 +55,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "bacteria"
+    "scenarioId": "bacteria",
+    "id": "math-004",
+    "subject": "math"
   },
   {
     "q": "ข้อ 5. หากแบคทีเรียทั้ง 3 สายพันธุ์มีลักษณะการแพร่พันธุ์ที่คงตามรูปแบบข้างต้นต่อไปเรื่อย ๆ แล้วต้องใช้เวลาอย่างน้อยกี่ชั่วโมงแบคทีเรียทุกสายพันธุ์จึงจะมีจำนวนเกิน 5,000 เซลล์",
@@ -62,7 +70,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "bacteria"
+    "scenarioId": "bacteria",
+    "id": "math-005",
+    "subject": "math"
   },
   {
     "q": "ข้อ 6. หากเริ่มเพาะแบคทีเรียแต่ละสายพันธุ์จำนวน 400 เซลล์ที่เวลาต่างกัน ดังนี้\n- แบคทีเรียสายพันธุ์ A เริ่มเพาะเมื่อ 12:00\n- แบคทีเรียสายพันธุ์ B เริ่มเพาะเมื่อ 13:00\n- แบคทีเรียสายพันธุ์ C เริ่มเพาะเมื่อ 15:00\nถ้าต้องการใช้แบคทีเรียในการศึกษาอย่างน้อยสายพันธุ์ละ 10,000 เซลล์ ณ เวลาดังข้อใดจะมีจำนวนแบคทีเรียในแต่ละสายพันธุ์เพียงพอสำหรับศึกษาตามที่ระบุ",
@@ -75,7 +85,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "bacteria"
+    "scenarioId": "bacteria",
+    "id": "math-006",
+    "subject": "math"
   },
   {
     "q": "ข้อ 7. ถ้าคุณเต้ต้องการปูกระเบื้องพื้นที่บริเวณสีขาว ต้องใช้กระเบื้องอย่างน้อยกี่แผ่น หากกระเบื้องมีขนาด50 เซนติเมตร x 50 เซนติเมตร",
@@ -88,7 +100,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "gelato"
+    "scenarioId": "gelato",
+    "id": "math-007",
+    "subject": "math"
   },
   {
     "q": "ข้อ 8. จากแบบการวางโต๊ะเดิมในร้านมีลักษณะ ดังรูป\n<img src=\"../assets/images/questions/math/image3.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nถ้าคุณเต้ต้องการจัดผังการวางโต๊ะใหม่ โดยมีเงื่อนไข ดังนี้\n - มีโต๊ะคู่เหลือเพียงคู่เดียว ส่วนที่เหลือแยกเป็นโต๊ะเดี่ยว\n - โต๊ะเดี่ยวแต่ละตัวต้องอยู่ห่างจากโต๊ะตัวอื่น อย่างน้อย 1.5 เมตร\nแล้วคุณเต้ต้องจัดโต๊ะตามขั้นตอนในข้อใดต่อไปนี้ จึงจะสอดคล้องกับเงื่อนไขข้างต้น",
@@ -101,7 +115,9 @@
     "a": 2,
     "img": "../assets/images/questions/math/image3.png",
     "showImg": false,
-    "scenarioId": "gelato"
+    "scenarioId": "gelato",
+    "id": "math-008",
+    "subject": "math"
   },
   {
     "q": "ข้อ 9. จากภาพมุมมอง 3 มิติ ของเคาน์เตอร์ ที่กำหนดให้\n<img src=\"../assets/images/questions/math/image5.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\nข้อใดแสดงภาพมุมมองต่าง ๆ ได้ถูกต้อง",
@@ -114,7 +130,9 @@
     "a": 0,
     "img": "../assets/images/questions/math/image5.png",
     "showImg": false,
-    "scenarioId": "gelato"
+    "scenarioId": "gelato",
+    "id": "math-009",
+    "subject": "math"
   },
   {
     "q": "ข้อ 10. ถ้าสมชายติดตั้งแผงโซลาร์เซลล์บนหลังคาบ้านให้ได้จำนวนมากที่สุด ตามเงื่อนไขที่วิศวกรกำหนด นายสมชายจะต้องใช้เวลาประมาณกี่เดือน จึงจะประหยัดค่าไฟฟ้าสะสมได้เท่ากับเงินที่จ่ายสำหรับการติดตั้งแผงโซลาร์เซลล์\n<img src=\"../assets/images/questions/math/image12.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />",
@@ -127,7 +145,9 @@
     "a": 1,
     "img": "../assets/images/questions/math/image12.png",
     "showImg": false,
-    "scenarioId": "solar"
+    "scenarioId": "solar",
+    "id": "math-010",
+    "subject": "math"
   },
   {
     "q": "ข้อ 11. นายสมชายต้องการซื้อที่ดินเพื่อปลูกบ้าน โดยต้องการที่ดินที่มีพื้นที่ใช้สอยมากที่สุด ถ้านายหน้าขายที่ดินแห่งหนึ่งได้ทำการเสนอขายที่ดิน 3 แปลง ในราคาเดียวกัน ซึ่งจัดทำแผนผังที่ดินโดยใช้มาตราส่วนเดียวกับแผนผังหลังคา และที่ดินแต่ละแปลงมีรูปร่างดังนี้\n<img src=\"../assets/images/questions/math/image13.png\" style=\"max-width:100%;max-height:280px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:6px;border:2px solid #7c673d;cursor:zoom-in;\" />\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">A</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">B</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">C</td></tr></table>\nกำหนดให้ แต่ละช่องเป็นสี่เหลี่ยมจัตุรัสยาวด้านละ 1 เซนติเมตร\nแล้วนายสมชายควรซื้อที่ดินแปลงใดมากที่สุด เพราะเหตุใด",
@@ -140,7 +160,9 @@
     "a": 0,
     "img": "../assets/images/questions/math/image13.png",
     "showImg": false,
-    "scenarioId": "solar"
+    "scenarioId": "solar",
+    "id": "math-011",
+    "subject": "math"
   },
   {
     "q": "ข้อ 12. ระยะทางที่สั้นที่สุดจากบ้านไปโรงเรียนตรงกับข้อใด",
@@ -148,13 +170,24 @@
     "unit": "กิโลเมตร",
     "placeholder": "พิมพ์ระยะทาง (กิโลเมตร)...",
     "targetNumber": 10,
-    "answers": ["10", "10 กิโลเมตร", "10 กม."],
+    "answers": [
+      "10",
+      "10 กิโลเมตร",
+      "10 กม."
+    ],
     "correctDisplay": "10",
-    "c": ["", "", "", ""],
+    "c": [
+      "",
+      "",
+      "",
+      ""
+    ],
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "shortest-path"
+    "scenarioId": "shortest-path",
+    "id": "math-012",
+    "subject": "math"
   },
   {
     "q": "ข้อ 13. ถ้าครูท่านหนึ่งต้องเติมน้ำมันเพื่อไป – กลับระหว่างบ้านและโรงเรียนเป็นจำนวน 5 วัน ควรเติมน้ำมันอย่างน้อยกี่ลิตร (น้ำมัน 1 ลิตร ต่อระยะทาง 8 กิโลเมตร)",
@@ -162,14 +195,29 @@
     "unit": "ลิตร",
     "placeholder": "พิมพ์จำนวนลิตร...",
     "targetNumber": 12.5,
-    "targetNumbers": [12.5, 13],
-    "answers": ["12.5", "13", "12.5 ลิตร", "13 ลิตร"],
+    "targetNumbers": [
+      12.5,
+      13
+    ],
+    "answers": [
+      "12.5",
+      "13",
+      "12.5 ลิตร",
+      "13 ลิตร"
+    ],
     "correctDisplay": "12.5 หรือ 13",
-    "c": ["", "", "", ""],
+    "c": [
+      "",
+      "",
+      "",
+      ""
+    ],
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "shortest-path"
+    "scenarioId": "shortest-path",
+    "id": "math-013",
+    "subject": "math"
   },
   {
     "q": "ข้อ 14. จากปริมาตรอากาศต่อ 1 คน อยู่ที่ประมาณ 6 ลิตรต่อนาที ถ้ารถไฟฟ้าใช้ระยะเวลาเดินทางจากต้นทางไปยังปลายทาง 30 นาที แล้วปริมาตรอากาศในรถไฟฟ้า 1 ตู้ จะเพียงพอต่อผู้โดยสารมากที่สุดกี่คน",
@@ -182,7 +230,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "train"
+    "scenarioId": "train",
+    "id": "math-014",
+    "subject": "math"
   },
   {
     "q": "ข้อ 15. ถ้านักเรียนและเพื่อนอีก 5 คน เดินทางโดยรถไฟฟ้าขบวนนี้ แต่ที่ว่างเหลืออยู่เพียง 3 ตู้ ตู้ละ 2 คน\nแล้วจะมีวิธีการจับคู่ทั้งหมดกี่วิธี",
@@ -195,7 +245,9 @@
     "a": 3,
     "img": "",
     "showImg": false,
-    "scenarioId": "train"
+    "scenarioId": "train",
+    "id": "math-015",
+    "subject": "math"
   },
   {
     "q": "ข้อ 16. ถ้ากิจกรรมพิเศษ World Boss: Ancient Dragon จะเปิดให้เข้าร่วมอีก 20 วัน แล้วผู้เล่นคนใดสามารถเตรียมอุปกรณ์ได้ครบตามที่กำหนด",
@@ -208,7 +260,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "boss-quest"
+    "scenarioId": "boss-quest",
+    "id": "math-016",
+    "subject": "math"
   },
   {
     "q": "ข้อ 17. นนท์เป็นผู้เล่นใหม่เลือกเล่นอาชีพ Mage ซึ่งเหลือเวลาอีก 15 วันเท่านั้น ถ้านนท์ได้คริสตัลจากภารกิจรายวัน 300 เม็ด แล้วนนท์ควรเติมเงินอย่างน้อยที่สุดกี่บาท จึงสามารถเข้าร่วมล่าบอสระดับตำนานได้",
@@ -221,7 +275,9 @@
     "a": 3,
     "img": "",
     "showImg": false,
-    "scenarioId": "boss-quest"
+    "scenarioId": "boss-quest",
+    "id": "math-017",
+    "subject": "math"
   },
   {
     "q": "ข้อ 18. ปองควรเลือกดาบราชันสงครามในข้อใด ถ้าปองโจมตีทั้งหมด 70 ครั้ง แล้วจะโจมตีพลาดน้อยที่สุด",
@@ -234,7 +290,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "boss-quest"
+    "scenarioId": "boss-quest",
+    "id": "math-018",
+    "subject": "math"
   },
   {
     "q": "ข้อ 19. ถ้าแพลตฟอร์มซื้อขายออนไลน์ ShopStar จัดประกวด \"ShopStar Excellence Award\"เพื่อมอบรางวัลให้กับร้านค้าที่ให้บริการได้ยอดเยี่ยมที่สุดแห่งปี และมีการพัฒนาคุณภาพการบริการอย่างต่อเนื่อง โดยร้านค้าที่มีสิทธิ์เข้าชิงรางวัลนี้ต้องได้รับตรา ShopStar Silver หรือ ShopStar Gold แล้วร้านค้าใดควรได้รับรางวัล \"ShopStar Excellence Award\" และมีคะแนนรีวิวสุทธิเฉลี่ยต่อเดือนเท่าใด\n(คะแนนรีวิวสุทธิ = ผลรวมของคะแนนโพสต์รีวิวทั้งหมด)",
@@ -247,7 +305,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "product-review"
+    "scenarioId": "product-review",
+    "id": "math-019",
+    "subject": "math"
   },
   {
     "q": "ข้อ 20. ร้านเค้ก Sweet Bloom ทำการเชิญชวนให้ลูกค้าเข้าร่วมกิจกรรม \"Review & Save\" ซึ่งเป็นกิจกรรมสำหรับลูกค้าที่รีวิวสินค้าเพื่อสะสม Review Point แลกรับส่วนลดในการซื้อครั้งถัดไป โดยทุก ๆ 100 Review Point สามารถแลกเป็น ส่วนลด 20 บาท ซึ่งให้ Review Point จากการรีวิวสินค้า ดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">กิจกรรม</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">Review Point</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ส่งรีวิวสินค้า</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"รสชาติดี\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"ตรงปก\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"บรรจุภัณฑ์ดี\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ติดแท็ก \"จัดส่งรวดเร็ว\"</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">5</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แนบรูปภาพ</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">10</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">แนบวิดีโอ</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">20</td></tr></table>\nวินต้องการซื้อเค้กวันเกิดราคา 460 บาท และมี Review Point สะสมอยู่แล้ว 320 คะแนน ถ้าวินมีเงิน 400 บาท และรีวิวสินค้า ทุกครั้ง ครบทุกกิจกรรม ตามตารางข้างต้น แล้ววินต้องรีวิวสินค้า อย่างน้อยกี่ครั้ง จึงจะสามารถใช้ส่วนลดซื้อเค้กได้โดยไม่ต้องเพิ่มเงินสด",
@@ -260,7 +320,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "product-review"
+    "scenarioId": "product-review",
+    "id": "math-020",
+    "subject": "math"
   },
   {
     "q": "ข้อ 21. ร้าน Sweet Bloom ขายเค้ก 3 ขนาด ดังนี้\n<table style=\"width:100%;border-collapse:collapse;margin:8px 0;\"><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ขนาดเค้ก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เส้นผ่านศูนย์กลาง</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ราคาปกติ</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">เล็ก</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">12 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">379 บาท</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">กลาง</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">18 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">629 บาท</td></tr><tr><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">ใหญ่</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">24 เซนติเมตร</td><td style=\"border:1px solid #7c673d;padding:6px 8px;text-align:center;vertical-align:middle;\">899 บาท</td></tr></table>\nหมายเหตุเค้กทุกขนาดมี ความสูงเท่ากัน\nบาสต้องการซื้อเค้กขนาดใหญ่ จากร้าน Sweet Bloom แต่ทางร้านแจ้งว่าเค้กขนาดใหญ่หมด ทางร้าน Sweet Bloom จึงเสนอทางเลือกเป็น “เค้กขนาดกลาง 1 ก้อน และเค้กขนาดเล็ก 1 ก้อน”ถ้าบาสต้องการได้รับปริมาณเค้กมากที่สุด โดยไม่ต้องจ่ายเงินเพิ่ม บาสควรตัดสินใจอย่างไร",
@@ -273,7 +335,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "product-review"
+    "scenarioId": "product-review",
+    "id": "math-021",
+    "subject": "math"
   },
   {
     "q": "ข้อ 22. ถ้านักเรียนได้รับผลประเมินจาก สถาบัน A ว่าสอบติด และจากสถาบัน B ว่าสอบไม่ติดแล้วนักเรียนควรเชื่อสถาบันใด",
@@ -286,7 +350,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "tutoring-institute"
+    "scenarioId": "tutoring-institute",
+    "id": "math-022",
+    "subject": "math"
   },
   {
     "q": "ข้อ 23. ถ้าสถาบัน A ต้องการสร้างแผนภูมิวงกลมแสดงสัดส่วนนักเรียนที่ได้รับผลประเมินว่าสอบติดและสอบไม่ติดเทียบกับการสอบติดจริงและสอบไม่ติดจริง แล้วแผนภูมิวงกลมในข้อใดถูกต้อง",
@@ -299,7 +365,9 @@
     "a": 0,
     "img": "",
     "showImg": false,
-    "scenarioId": "tutoring-institute"
+    "scenarioId": "tutoring-institute",
+    "id": "math-023",
+    "subject": "math"
   },
   {
     "q": "ข้อ 24. วินเข้าร่วมงานมหกรรมของเล่น และพบว่าในตู้หมุนกาชาปองเหลือไข่กาชาปองอยู่เพียง 10 ลูกแต่ยังไม่มีผู้ใดได้รับฟิกเกอร์ทองคำ ถ้าวินมีเงิน 50 บาท วินควรเลือกช่องทางใดจึงจะมีโอกาสได้รับฟิกเกอร์ทองคำมากที่สุด และสมเหตุสมผลที่สุด",
@@ -312,7 +380,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "gacha"
+    "scenarioId": "gacha",
+    "id": "math-024",
+    "subject": "math"
   },
   {
     "q": "ข้อ 25. ถ้านัทกล่าวกับนักเรียนว่า “เลือกหมุนผ่านระบบออนไลน์ดีกว่า เพราะหมุนครบ 100 ครั้ง เท่ากับว่ามีโอกาสได้รับฟิกเกอร์ทองคำครบ 100% แน่นอน และเสียเงินเพียง 4,000 บาท” แล้วนักเรียนเห็นด้วยหรือไม่",
@@ -325,7 +395,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "gacha"
+    "scenarioId": "gacha",
+    "id": "math-025",
+    "subject": "math"
   },
   {
     "q": "ข้อ 26. หากตู้หมุนไข่กาชาปองหน้างานมีไข่สีต่าง ๆ ได้แก่ สีขาว สีเขียว สีเหลือง และสีแดงถ้าเกรทสุ่มไข่กาชาปองมา 2 ลูก โดยอาจได้ไข่สีเดียวกันหรือต่างกันได้ ซึ่งจากการจดบันทึกสีที่เกรทเคยสุ่มได้มาเป็นดังนี้ ขาวกับขาว, ขาวกับเขียว, ขาวกับแดง, เขียวกับเหลือง, เขียวกับแดง แล้วยังมีวิธีสุ่มสีไข่กาชาปองอีกกี่วิธีที่เกรทยังไม่เคยได้รับ",
@@ -338,7 +410,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "gacha"
+    "scenarioId": "gacha",
+    "id": "math-026",
+    "subject": "math"
   },
   {
     "q": "ข้อ 27. ถ้าไข่กาชาปองสีต่าง ๆ มีจำนวนดังนี้ สีขาว 50 ลูก สีเขียว 30 ลูก สีเหลือง 10 ลูก และสีแดง 10 ลูก โดยฟิกเกอร์ทองคำอยู่ในไข่กาชาปองสีแดงเท่านั้น แล้วคนใดมีโอกาสสุ่มได้ฟิกเกอร์ทองคำมากที่สุด",
@@ -351,7 +425,9 @@
     "a": 3,
     "img": "",
     "showImg": false,
-    "scenarioId": "gacha"
+    "scenarioId": "gacha",
+    "id": "math-027",
+    "subject": "math"
   },
   {
     "q": "ข้อ 28. ประเทศใดเสี่ยงต่อการเกิดภัยพิบัติมากที่สุด",
@@ -364,7 +440,9 @@
     "a": 2,
     "img": "",
     "showImg": false,
-    "scenarioId": "cell-broadcast"
+    "scenarioId": "cell-broadcast",
+    "id": "math-028",
+    "subject": "math"
   },
   {
     "q": "ข้อ 29. ค่าเฉลี่ยของเปอร์เซ็นต์จำนวนการเตือนภัยเกี่ยวกับสถานการณ์แผ่นดินไหวที่ส่งให้ประชาชนครบทุกคนของทั้ง 4 ประเทศตรงกับข้อใด",
@@ -377,7 +455,9 @@
     "a": 1,
     "img": "",
     "showImg": false,
-    "scenarioId": "cell-broadcast"
+    "scenarioId": "cell-broadcast",
+    "id": "math-029",
+    "subject": "math"
   },
   {
     "q": "ข้อ 30. ถ้าต้องการเพิ่มเปอร์เซ็นต์จำนวนการเตือนภัยเกี่ยวกับสถานการณ์แผ่นดินไหวที่ส่งให้ประชาชนครบทุกคนของทั้ง 4 ประเทศเป็น 90% ควรเพิ่มจำนวนการเตือนภัยที่ถูกต้องรวมกันประมาณกี่ครั้ง",
@@ -390,6 +470,8 @@
     "a": 3,
     "img": "",
     "showImg": false,
-    "scenarioId": "cell-broadcast"
+    "scenarioId": "cell-broadcast",
+    "id": "math-030",
+    "subject": "math"
   }
 ]

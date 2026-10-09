@@ -1,0 +1,14 @@
+{
+  "name": "pirate-quiz-tower-defense",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/unit/*.test.cjs",
+    "test:e2e": "playwright test",
+    "fallback:generate": "node scripts/generate-fallback.cjs",
+    "fallback:check": "node scripts/generate-fallback.cjs --check"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "katex": "0.18.2"
+  }
+}

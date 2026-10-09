@@ -1,0 +1,2 @@
+/* Screenshot-only: hide moving canvases without masking the DOM above them. */
+canvas { visibility: hidden !important; }

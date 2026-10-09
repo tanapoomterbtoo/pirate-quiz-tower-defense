@@ -10,9 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- KaTeX for math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/contrib/auto-render.min.js"></script>
 
     <style>
         :root {
@@ -1005,6 +1005,16 @@
         .mockup-screen {
             pointer-events: auto !important; /* allow clicking scenario button in preview */
         }
+        #input-grading-fields { border: 1px solid var(--color-border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+        #input-accepted-answers { min-height: 140px; }
+        #input-grading-fields .form-group { min-width: 0; margin-bottom: 16px; }
+        .question-meta-row { flex-wrap: wrap; }
+        .question-meta-row .form-group { flex: 1 1 160px; min-width: 0; }
+        #input-grading-fields .form-row { align-items: flex-end; gap: 16px; }
+        #form-editor > div:last-child { flex-wrap: wrap; gap: 10px; }
+        #save-status-text { flex-basis: 100%; order: -1; }
+        button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #ffd875; outline-offset: 3px; }
+        @media (max-width: 900px) { .main-container { display: flex; flex-direction: column; } .sidebar, .editor, .preview-panel { width: 100%; min-width: 0; } .sidebar { max-height: 220px; } .form-row { flex-wrap: wrap; } header, .header-actions { flex-wrap: wrap; } }
     </style>
 </head>
 <body>
@@ -1023,7 +1033,7 @@
             <input type="file" id="import-file-input" style="display: none;" accept=".json" onchange="handleFileImport(event)">
             <button class="btn btn-secondary" onclick="exportJSONFile()">ดาวน์โหลดข้อสอบ</button>
             <button class="btn btn-secondary" onclick="exportScenariosFile()">ดาวน์โหลดสถานการณ์</button>
-            <button class="btn" style="background: linear-gradient(135deg, #27ae60 0%, #1e824c 100%); border-color: #2ecc71;" onclick="saveToLocalFile()">💾 บันทึกทับไฟล์</button>
+            <button class="btn" style="background: linear-gradient(135deg, #27ae60 0%, #1e824c 100%); border-color: #2ecc71;" id="btn-save-files" onclick="saveToLocalFile()">💾 บันทึกทับไฟล์</button>
         </div>
     </header>
 
@@ -1077,6 +1087,25 @@
                 <div class="hint-text">แก้เนื้อหาสถานการณ์ที่แท็บ “สถานการณ์” (แก้ครั้งเดียว ใช้หลายข้อ)</div>
             </div>
 
+            <div class="form-row question-meta-row">
+                <div class="form-group"><label for="input-question-id">รหัสข้อสอบ (คงเดิมเมื่อแก้ไข)</label><input id="input-question-id" type="text" readonly></div>
+                <div class="form-group"><label for="input-question-type">ประเภทคำตอบ</label><select id="input-question-type" onchange="updateCurrentQuestionData()"><option value="choice">ปรนัย 4 ตัวเลือก</option><option value="input">ข้อเขียน</option></select></div>
+                <div class="form-group"><label for="input-question-subject">หมวดวิชา</label><select id="input-question-subject" onchange="updateCurrentQuestionData()"><option value="math">คณิตศาสตร์</option><option value="science">วิทยาศาสตร์</option><option value="thai">ภาษาไทย</option></select></div>
+            </div>
+            <div id="input-grading-fields" class="panel-hidden">
+                <div class="form-row">
+                    <div class="form-group"><label for="input-answer-unit">หน่วย</label><input id="input-answer-unit" type="text" oninput="updateCurrentQuestionData()"></div>
+                    <div class="form-group"><label for="input-answer-placeholder">ข้อความช่วยกรอก</label><input id="input-answer-placeholder" type="text" oninput="updateCurrentQuestionData()"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="input-target-number">ค่าเป้าหมายหลัก (เว้นว่างได้)</label><input id="input-target-number" type="text" inputmode="decimal" oninput="updateCurrentQuestionData()"></div>
+                    <div class="form-group"><label for="input-target-numbers">ค่าเป้าหมายเพิ่มเติม (คั่นด้วยคอมมา)</label><input id="input-target-numbers" type="text" oninput="updateCurrentQuestionData()"></div>
+                </div>
+                <div class="form-group"><label for="input-accepted-answers">คำตอบที่ยอมรับ (หนึ่งคำตอบต่อบรรทัด)</label><textarea id="input-accepted-answers" oninput="updateCurrentQuestionData()"></textarea></div>
+                <div class="form-group"><label for="input-correct-display">เฉลยที่แสดง (ไม่ต้องพิมพ์หน่วยซ้ำ)</label><input id="input-correct-display" type="text" oninput="updateCurrentQuestionData()"></div>
+                <p class="hint-text">ตัวเลขคลาดเคลื่อนได้น้อยกว่า 0.05 รองรับเลขไทยและคำประกอบ โดยไม่ตรวจความถูกต้องของหน่วย</p>
+            </div>
+            <p id="admin-validation-error" role="alert" class="panel-hidden" style="color:#ffb4b4;"></p>
             <!-- Question Input -->
             <div class="form-row">
                 <div class="form-group" style="flex: 2;">
@@ -1110,7 +1139,7 @@
             </div>
 
             <!-- Choices inputs with integrated correct answer selection -->
-            <div class="form-group">
+            <div class="form-group" id="choice-editor-fields">
                 <label>ตัวเลือกคำตอบ & ทำการเฉลยข้อที่ถูกต้อง *</label>
                 <div class="choices-container">
                     <div class="choice-input-wrapper">
@@ -1151,7 +1180,7 @@
             <!-- Question controls -->
             <div style="margin-top: 0.5rem; border-top: 1px solid rgba(124, 103, 61, 0.2); padding-top: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
                 <button class="btn btn-secondary" onclick="addQuestionAtEnd()">+ เพิ่มคำถามข้อถัดไป</button>
-                <div style="font-size: 0.85rem; color: #2ecc71;" id="save-status-text">💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)</div>
+                <div style="font-size: 0.85rem; color: #2ecc71;" id="save-status-text">💾 มีการแก้ไขที่ยังไม่บันทึก</div>
                 <button class="btn" style="background: linear-gradient(135deg, #c0392b 0%, #7f1d1d 100%); border-color: #ff8a80; padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteCurrentQuestion()">ลบข้อสอบนี้</button>
             </div>
         </div>
@@ -1241,6 +1270,7 @@
         <h2>วางไฟล์ JSON ข้อสอบลงตรงนี้ 📂</h2>
     </div>
 
+    <script src="js/exam-core.js?v=1"></script>
     <script>
         let loadedQuestions = [];
         let loadedScenarios = [];
@@ -1251,6 +1281,35 @@
         let fileHandle = null;
         let scenarioFileHandle = null;
         let hasUnsavedChanges = false;
+        let questionRevision = 0, scenarioRevision = 0, savedQuestionRevision = 0, savedScenarioRevision = 0;
+        let saveInProgress = false, loadInProgress = false;
+        let currentSubject = "math", loadSequence = 0;
+        function syncDirtyState() {
+            hasUnsavedChanges = questionRevision !== savedQuestionRevision || scenarioRevision !== savedScenarioRevision;
+            const badge = document.getElementById("save-status-text");
+            if (badge) badge.textContent = hasUnsavedChanges ? "💾 มีการแก้ไขที่ยังไม่บันทึก" : "✓ ข้อมูลตรงกับไฟล์ที่โหลด/บันทึก";
+        }
+        function markDirty(kind = "questions") {
+            if (kind === "scenarios") scenarioRevision++; else questionRevision++;
+            syncDirtyState();
+        }
+        function resetDirtyState() { savedQuestionRevision = questionRevision; savedScenarioRevision = scenarioRevision; syncDirtyState(); }
+        function newQuestionId() {
+            const prefix = currentSubject;
+            // Do not reuse deleted IDs: imported IDs remain stable, new IDs are globally fresh.
+            return `${prefix}-${crypto.randomUUID()}`;
+        }
+        function syncQuestionTypeFields(type) {
+            document.getElementById("input-grading-fields").classList.toggle("panel-hidden", type !== "input");
+            document.getElementById("choice-editor-fields").classList.toggle("panel-hidden", type === "input");
+        }
+        function normalizeImportedQuestions(list) {
+            if (!Array.isArray(list)) throw new Error("ข้อสอบต้องเป็น array");
+            const subject = currentSubject;
+            const result = list.map((q, i) => ExamCore.normalizeQuestion({...q, id: q?.id || `${subject}-${crypto.randomUUID()}`, subject: q?.subject || (subject === "pisa" ? ["math", "science", "thai"][Math.min(2, Math.floor(i / 5))] : subject === "exam" ? ["math", "science", "thai"][Math.min(2, Math.floor(i / 10))] : subject)}));
+            ExamCore.validateQuestions(result);
+            return result;
+        }
         
         window.addEventListener('beforeunload', function (e) {
             if (hasUnsavedChanges) {
@@ -1316,39 +1375,35 @@
         }
 
         async function loadSelectedSubject() {
-            fileHandle = null;
-            scenarioFileHandle = null;
-            const subject = document.getElementById("subject-select").value;
+            const selected = document.getElementById("subject-select");
+            if (saveInProgress) { selected.value = currentSubject; alert("กำลังบันทึกไฟล์ กรุณารอให้เสร็จก่อนเปลี่ยนคลัง"); return; }
+            if (hasUnsavedChanges && !confirm("มีข้อมูลที่ยังไม่บันทึก ต้องการเปลี่ยนคลังและทิ้งการแก้ไขหรือไม่?")) { ++loadSequence; loadInProgress = false; selected.value = currentSubject; updatePreview(); return; }
+            const sequence = ++loadSequence;
+            const qRevision = questionRevision, sRevision = scenarioRevision;
+            loadInProgress = true;
+            const subject = selected.value;
             const fileUrl = `${ASSETS_PATH}/data/${subject}.json`;
             const scenUrl = `${ASSETS_PATH}/data/scenarios/${subject}.json`;
             try {
                 const [qRes, sRes] = await Promise.all([
-                    fetch(fileUrl),
-                    fetch(scenUrl).catch(() => null)
+                    fetch(fileUrl, {cache: "no-store"}),
+                    fetch(scenUrl, {cache: "no-store"}).catch(() => null)
                 ]);
                 if (!qRes.ok) throw new Error("ไม่สามารถเชื่อมต่อไฟล์ข้อสอบได้");
-                loadedQuestions = await qRes.json();
-                if (sRes && sRes.ok) {
-                    loadedScenarios = await sRes.json();
-                } else {
-                    loadedScenarios = [];
+                const [incomingQuestions, incomingScenarios] = await Promise.all([
+                    qRes.json(), sRes && sRes.ok ? sRes.json() : Promise.resolve([])
+                ]);
+                if (sequence !== loadSequence) return;
+                if (qRevision !== questionRevision || sRevision !== scenarioRevision) {
+                    selected.value = currentSubject; updatePreview();
+                    alert("ยกเลิกการเปลี่ยนคลังเพื่อรักษาข้อมูลที่แก้ระหว่างโหลด กรุณาบันทึกก่อนเปลี่ยนคลังอีกครั้ง"); return;
                 }
-                // normalize
-                loadedQuestions = loadedQuestions.map(q => ({
-                    q: q.q || '',
-                    c: q.c || ['', '', '', ''],
-                    a: typeof q.a === 'number' ? q.a : 0,
-                    img: q.img || '',
-                    showImg: !!q.showImg,
-                    scenarioId: q.scenarioId || null
-                }));
-                loadedScenarios = (loadedScenarios || []).map((s, i) => ({
-                    id: s.id || `scen-${i+1}`,
-                    title: s.title || s.id || `สถานการณ์ ${i+1}`,
-                    body: s.body || '',
-                    images: Array.isArray(s.images) ? s.images : [],
-                    order: s.order || (i + 1)
-                }));
+                const normalized = incomingQuestions.map(q => ExamCore.normalizeQuestion(q));
+                ExamCore.validateQuestions(normalized, incomingScenarios);
+                currentSubject = subject; selected.value = subject;
+                fileHandle = null; scenarioFileHandle = null;
+                loadedQuestions = normalized;
+                loadedScenarios = incomingScenarios.map((s, i) => ({...s, order: s.order ?? i + 1}));
                 selectedIdx = 0;
                 selectedScenarioIdx = 0;
                 rebuildScenarioSelect();
@@ -1356,28 +1411,16 @@
                 renderScenarioSidebar();
                 setAdminMode('questions');
                 loadQuestionIntoEditor(0);
-                hasUnsavedChanges = false;
+                currentSubject = subject;
+                resetDirtyState();
             } catch (e) {
-                console.warn("Fetch failed, creating empty template", e);
-                loadedQuestions = Array.from({length: 30}, (_, i) => ({
-                    q: `คำถามจำลองที่ ${i+1}? (กรุณาแก้ไขข้อความที่นี่)`,
-                    img: "",
-                    c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
-                    a: 0,
-                    scenarioId: null,
-                    showImg: false
-                }));
-                loadedScenarios = [];
-                selectedIdx = 0;
-                rebuildScenarioSelect();
-                renderSidebarList();
-                renderScenarioSidebar();
-                setAdminMode('questions');
-                loadQuestionIntoEditor(0);
-            }
+                if (sequence !== loadSequence) return;
+                document.getElementById("subject-select").value = currentSubject;
+                updatePreview();
+                alert("โหลดคลังไม่สำเร็จ: " + e.message + " — กรุณาตรวจไฟล์ก่อนแก้ไข");
+            } finally { if (sequence === loadSequence) loadInProgress = false; }
         }
 
-        // Keep track of the last focused text field to insert LaTeX symbols at the cursor
         function setupInputFocusTracker() {
             const inputs = ['input-q-text', 'input-q-img', 'input-choice-0', 'input-choice-1', 'input-choice-2', 'input-choice-3', 'input-scen-body', 'input-scen-title'];
             inputs.forEach(id => {
@@ -1438,7 +1481,7 @@
         }
 
         function updateCurrentScenarioData() {
-            hasUnsavedChanges = true;
+            markDirty("scenarios");
             const s = loadedScenarios[selectedScenarioIdx];
             if (!s) return;
             const oldId = s.id;
@@ -1451,11 +1494,12 @@
             s.images = imgRaw.split(',').map(x => x.trim()).filter(Boolean);
             // cascade rename scenarioId on questions
             if (oldId && s.id && oldId !== s.id) {
+                if (loadedQuestions.some(q => q.scenarioId === oldId)) markDirty();
                 loadedQuestions.forEach(q => {
                     if (q.scenarioId === oldId) q.scenarioId = s.id;
                 });
             }
-            document.getElementById('save-status-text').innerText = '💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)';
+            document.getElementById('save-status-text').innerText = '💾 มีการแก้ไขที่ยังไม่บันทึก';
             rebuildScenarioSelect();
             renderScenarioSidebar();
             window.mockCurrentScenario = s.body || '';
@@ -1473,7 +1517,7 @@
                 images: [],
                 order: loadedScenarios.length + 1
             });
-            hasUnsavedChanges = true;
+            markDirty("scenarios");
             rebuildScenarioSelect();
             renderScenarioSidebar();
             selectScenario(loadedScenarios.length - 1);
@@ -1490,7 +1534,8 @@
             });
             loadedScenarios.splice(selectedScenarioIdx, 1);
             selectedScenarioIdx = Math.max(0, selectedScenarioIdx - 1);
-            hasUnsavedChanges = true;
+            markDirty("scenarios");
+            if (used) markDirty();
             rebuildScenarioSelect();
             renderScenarioSidebar();
             if (loadedScenarios.length) loadScenarioIntoEditor(selectedScenarioIdx);
@@ -1570,6 +1615,17 @@
             
             document.getElementById("form-editor").style.display = "flex";
             document.getElementById("editor-question-number-title").innerText = `กำลังแก้ไขคำถามข้อที่ ${idx + 1}`;
+            document.getElementById("input-question-id").value = q.id || "";
+            document.getElementById("input-question-type").value = q.type || "choice";
+            document.getElementById("input-question-subject").value = q.subject || "math";
+            syncQuestionTypeFields(q.type || "choice");
+            document.getElementById("input-answer-unit").value = q.unit || "";
+            document.getElementById("input-answer-placeholder").value = q.placeholder || "";
+            document.getElementById("input-target-number").value = q.targetNumber ?? "";
+            document.getElementById("input-target-numbers").value = (q.targetNumbers || []).join(", ");
+            document.getElementById("input-accepted-answers").value = (q.answers || []).join("\n");
+            document.getElementById("input-correct-display").value = q.correctDisplay || "";
+            document.getElementById("admin-validation-error").classList.add("panel-hidden");
             document.getElementById("input-q-text").value = q.q || "";
             document.getElementById("input-q-img").value = q.img || "";
             rebuildScenarioSelect();
@@ -1600,7 +1656,7 @@
         }
 
         function updateCurrentQuestionData() {
-            hasUnsavedChanges = true;
+            markDirty();
             if (!loadedQuestions[selectedIdx]) return;
 
             const text = document.getElementById("input-q-text").value;
@@ -1628,19 +1684,31 @@
             const scenSel = document.getElementById("input-scenario-id");
             loadedQuestions[selectedIdx].scenarioId = (scenSel && scenSel.value) ? scenSel.value : null;
 
+            const question = loadedQuestions[selectedIdx];
+            question.type = document.getElementById("input-question-type").value;
+            question.subject = document.getElementById("input-question-subject").value;
+            syncQuestionTypeFields(question.type);
+            question.unit = document.getElementById("input-answer-unit").value;
+            question.placeholder = document.getElementById("input-answer-placeholder").value;
+            const primary = document.getElementById("input-target-number").value.trim();
+            question.targetNumber = primary === "" ? null : Number(ExamCore.text(primary));
+            const targets = document.getElementById("input-target-numbers").value.trim();
+            question.targetNumbers = targets ? targets.split(",").map(t => t.trim() ? Number(ExamCore.text(t)) : NaN) : [];
+            question.answers = document.getElementById("input-accepted-answers").value.split("\n").map(a => a.trim()).filter(Boolean);
+            question.correctDisplay = document.getElementById("input-correct-display").value;
+
             // Sync sidebar text
             const listItems = document.querySelectorAll(".question-item");
             if (listItems[selectedIdx]) {
                 const preview = sidebarPreviewText(text);
                 listItems[selectedIdx].innerText = `${selectedIdx + 1}. ${preview || "(ยังไม่มีข้อความโจทย์)"}`;
                 listItems[selectedIdx].title = preview;
-                hasUnsavedChanges = false;
             }
 
             // Show save status badge briefly
             const saveBadge = document.getElementById("save-status-text");
             saveBadge.style.opacity = 1;
-            saveBadge.innerText = "💾 แก้ไขในหน่วยความจำ (ยังไม่เซฟ)";
+            saveBadge.innerText = "💾 มีการแก้ไขที่ยังไม่บันทึก";
 
             updatePreview();
         }
@@ -1668,7 +1736,7 @@
             if (window.renderMathInElement) {
                 try {
                     renderMathInElement(body, {
-                        delims: [
+                        delimiters: [
                             {left: "$$", right: "$$", display: true},
                             {left: "$", right: "$", display: false}
                         ]
@@ -1682,7 +1750,7 @@
 
         function getAdminPreviewSrc() {
             const subjectEl = document.getElementById("subject-select");
-            const subject = subjectEl ? subjectEl.value : "math";
+            const subject = currentSubject === "pisa" ? "exam" : currentSubject;
             const scene = getSceneFromUrl();
             const q = new URLSearchParams();
             q.set("adminPreview", "1");
@@ -1712,7 +1780,7 @@
 
         function buildPreviewPayload(extra) {
             const subjectEl = document.getElementById("subject-select");
-            const subject = subjectEl ? subjectEl.value : "math";
+            const subject = currentSubject === "pisa" ? "exam" : currentSubject;
             const scene = getSceneFromUrl();
 
             if (adminMode === "scenarios") {
@@ -1762,6 +1830,11 @@
                 index: selectedIdx,
                 total: loadedQuestions.length,
                 question,
+                questionData: structuredClone(q),
+                id: q.id, type: q.type || "choice", unit: q.unit,
+                placeholder: q.placeholder, targetNumber: q.targetNumber,
+                targetNumbers: q.targetNumbers, answers: q.answers, correctDisplay: q.correctDisplay,
+                scenarioId: q.scenarioId,
                 choices: q.c || ["", "", "", ""],
                 answerIndex: q.a,
                 scenario,
@@ -1778,7 +1851,7 @@
                 const f = document.getElementById(id);
                 if (f && f.contentWindow) {
                     try {
-                        f.contentWindow.postMessage({ type: "admin-preview-update", payload }, "*");
+                        f.contentWindow.postMessage({ type: "admin-preview-update", payload }, window.location.origin);
                     } catch (e) {
                         console.warn("preview postMessage failed", e);
                     }
@@ -1871,12 +1944,13 @@
         }
 
         window.addEventListener("message", (e) => {
-            if (!e.data || e.data.type !== "admin-preview-ready") return;
+            const frames = ["game-preview-frame", "game-preview-frame-lg"].map(id => document.getElementById(id)?.contentWindow);
+            if (e.origin !== window.location.origin || !frames.includes(e.source) || !e.data || e.data.type !== "admin-preview-ready") return;
             if (lastPreviewPayload) {
                 try {
                     e.source && e.source.postMessage(
                         { type: "admin-preview-update", payload: lastPreviewPayload },
-                        "*"
+                        window.location.origin
                     );
                 } catch (err) { /* ignore */ }
             } else {
@@ -1909,13 +1983,14 @@
 
         // Add / Delete Questions
         function addQuestionAtEnd() {
-            const subject = document.getElementById("subject-select").value;
+            const subject = ["math", "science", "thai"].includes(currentSubject) ? currentSubject : loadedQuestions[selectedIdx]?.subject || "math";
             const subjectNames = { "math": "คณิตศาสตร์", "science": "วิทยาศาสตร์", "thai": "ภาษาไทย", "exam": "ข้อสอบรวม" };
             const subjName = subjectNames[subject] || "คณิตศาสตร์";
             const lastScen = loadedQuestions.length
                 ? loadedQuestions[loadedQuestions.length - 1].scenarioId
                 : null;
             loadedQuestions.push({
+                id: newQuestionId(), subject, type: "choice",
                 q: `ข้อ ${loadedQuestions.length + 1}. โจทย์วิชา${subjName} (แก้ไขโจทย์ที่นี่)`,
                 img: "",
                 c: ["ตัวเลือก ก", "ตัวเลือก ข", "ตัวเลือก ค", "ตัวเลือก ง"],
@@ -1923,7 +1998,7 @@
                 scenarioId: lastScen || null,
                 showImg: false
             });
-            hasUnsavedChanges = true;
+            markDirty();
             renderSidebarList();
             selectQuestion(loadedQuestions.length - 1);
         }
@@ -1935,6 +2010,7 @@
             }
             if (confirm(`คุณต้องการลบคำถามข้อที่ ${selectedIdx + 1} ใช่หรือไม่?`)) {
                 loadedQuestions.splice(selectedIdx, 1);
+                markDirty();
                 selectedIdx = Math.max(0, selectedIdx - 1);
                 renderSidebarList();
                 selectQuestion(selectedIdx);
@@ -1943,59 +2019,34 @@
 
         // Validate Data before Export/Save
         function validateQuestions() {
-            if (loadedQuestions.length !== 30) {
-                if (!confirm(`แจ้งเตือน: จำนวนข้อสอบปัจจุบันมี ${loadedQuestions.length} ข้อ (แนะนำ 30 ข้อ) ต้องการดำเนินการต่อหรือไม่?`)) return false;
-            }
-            
-            for (let i = 0; i < loadedQuestions.length; i++) {
-                const q = loadedQuestions[i];
-                if (!q.q || q.q.trim() === "") {
-                    alert(`ข้อผิดพลาด: คำถามข้อที่ ${i+1} ว่างเปล่า กรุณาแก้ไขก่อนเซฟ!`);
-                    return false;
+            const errorEl = document.getElementById("admin-validation-error");
+            try {
+                ExamCore.validateQuestions(loadedQuestions, loadedScenarios);
+                const invalidSubject = loadedQuestions.findIndex(q => !["math", "science", "thai"].includes(q.subject) || (["math", "science", "thai"].includes(currentSubject) && q.subject !== currentSubject));
+                if (invalidSubject >= 0) { const error = new Error("หมวดวิชาต้องตรงกับคลังที่เลือก"); error.questionIndex = invalidSubject; throw error; }
+                const subject = currentSubject;
+                if (subject === "pisa" && (loadedQuestions.length !== 15 || ["math", "science", "thai"].some(s => loadedQuestions.filter(q => q.subject === s).length !== 5))) throw new Error("PISA ต้องมี 15 ข้อ วิชาละ 5 ข้อ");
+                errorEl.classList.add("panel-hidden");
+                return true;
+            } catch (error) {
+                if (Number.isInteger(error.questionIndex)) selectQuestion(error.questionIndex);
+                errorEl.textContent = error.message;
+                errorEl.classList.remove("panel-hidden");
+                const q = loadedQuestions[selectedIdx];
+                let focus = q?.type === "input" ? "input-accepted-answers" : "input-q-text";
+                if (!q?.q?.trim()) focus = "input-q-text";
+                else if (q.type === "input" && q.targetNumber != null && !Number.isFinite(q.targetNumber)) focus = "input-target-number";
+                else if (q.type === "input" && q.targetNumbers?.some(n => !Number.isFinite(n))) focus = "input-target-numbers";
+                else if (q.scenarioId && !getScenarioById(q.scenarioId)) focus = "input-scenario-id";
+                else if (q.type === "choice") {
+                    const emptyChoice = q.c?.findIndex(c => !c?.trim());
+                    if (emptyChoice >= 0) focus = `input-choice-${emptyChoice}`;
                 }
-                for (let j = 0; j < 4; j++) {
-                    if (!q.c[j] || q.c[j].trim() === "") {
-                        alert(`ข้อผิดพลาด: ตัวเลือกที่ ${j+1} ของคำถามข้อที่ ${i+1} ว่างเปล่า กรุณาแก้ไขก่อนเซฟ!`);
-                        return false;
-                    }
-                }
-                if (q.a === undefined || q.a === null || q.a < 0 || q.a > 3) {
-                    alert(`ข้อผิดพลาด: ข้อที่ ${i+1} ยังไม่ได้กำหนดเฉลยที่ถูกต้อง!`);
-                    return false;
-                }
-                if (q.scenarioId && !getScenarioById(q.scenarioId)) {
-                    alert(`ข้อผิดพลาด: ข้อที่ ${i+1} อ้าง scenarioId "${q.scenarioId}" ที่ไม่มีในระบบ`);
-                    return false;
-                }
-                
-                // Check for Mock/Placeholder in Question
-                if (q.q.includes("Mock") || q.q.includes("คำถามจำลอง") || q.q.includes("รบกวนสร้างแผนที่") || q.q.includes("draft")) {
-                    if (!confirm(`แจ้งเตือน: คำถามข้อที่ ${i+1} ดูเหมือนจะเป็นข้อมูลจำลอง (Mock/Draft) ต้องการดำเนินการต่อหรือไม่?`)) return false;
-                }
-                
-                // Check for generic A B C D / ก ข ค ง only options
-                const genericOptions = ["ก", "ข", "ค", "ง", "A", "B", "C", "D"];
-                const isGenericChoice = q.c.every(c => genericOptions.includes(String(c).trim()));
-                if (isGenericChoice) {
-                    if (!confirm(`แจ้งเตือน: ตัวเลือกของคำถามข้อที่ ${i+1} ดูเหมือนจะเป็นข้อมูลจำลอง (ก,ข,ค,ง) ต้องการดำเนินการต่อหรือไม่?`)) return false;
-                }
-            }
-            // scenario uniqueness
-            const ids = loadedScenarios.map(s => s.id);
-            if (new Set(ids).size !== ids.length) {
-                alert('รหัสสถานการณ์ (id) ซ้ำกัน กรุณาแก้ก่อนเซฟ');
+                if (error.message.startsWith("PISA") || error.message.startsWith("หมวดวิชา")) focus = "input-question-subject";
+                document.getElementById(focus)?.focus();
+                alert(error.message);
                 return false;
             }
-            for (const s of loadedScenarios) {
-                if (!s.id || !s.id.trim()) {
-                    alert('มีสถานการณ์ที่ยังไม่มี id');
-                    return false;
-                }
-                if (!s.body || !String(s.body).trim()) {
-                    if (!confirm(`สถานการณ์ "${s.title || s.id}" เนื้อหาว่าง ดำเนินการต่อหรือไม่?`)) return false;
-                }
-            }
-            return true;
         }
 
         function downloadJson(filename, data) {
@@ -2014,17 +2065,45 @@
         // Export/Import Files
         function exportJSONFile() {
             if (!validateQuestions()) return;
-            const subj = document.getElementById("subject-select").value;
+            const subj = currentSubject;
             downloadJson(`${subj}.json`, loadedQuestions);
-            hasUnsavedChanges = false;
+            savedQuestionRevision = questionRevision; syncDirtyState();
         }
 
         function exportScenariosFile() {
             if (!validateQuestions()) return;
-            const subj = document.getElementById("subject-select").value;
+            const subj = currentSubject;
             downloadJson(`${subj}.scenarios.json`, loadedScenarios);
+            savedScenarioRevision = scenarioRevision; syncDirtyState();
             // also suggest placing as scenarios/{subject}.json
             alert(`ดาวน์โหลดแล้ว: ${subj}.scenarios.json\nให้นำไปวางแทนที่ assets/data/scenarios/${subj}.json`);
+        }
+
+        function applyImportedData(parsed, filename = "") {
+            if (!Array.isArray(parsed)) throw new Error("ต้องเป็น JSON Array ของข้อสอบหรือสถานการณ์");
+            const isScenario = parsed.length
+                ? parsed[0] && "body" in parsed[0] && !("q" in parsed[0])
+                : adminMode === "scenarios" || filename.includes(".scenarios.");
+            if (isScenario) {
+                ExamCore.validateScenarios(parsed);
+                loadedScenarios = parsed.map((s, i) => ({...s, order: s.order ?? i + 1}));
+                selectedScenarioIdx = 0;
+                markDirty("scenarios");
+                rebuildScenarioSelect();
+                renderSidebarList();
+                renderScenarioSidebar();
+                setAdminMode("scenarios");
+                if (!loadedScenarios.length) document.getElementById("scenario-editor").classList.add("panel-hidden");
+                updatePreview();
+                return `${loadedScenarios.length} สถานการณ์`;
+            }
+            const questions = normalizeImportedQuestions(parsed);
+            loadedQuestions = questions;
+            selectedIdx = 0;
+            markDirty();
+            renderSidebarList();
+            setAdminMode("questions");
+            return `${loadedQuestions.length} ข้อ`;
         }
 
         function handleFileImport(event) {
@@ -2033,19 +2112,11 @@
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (Array.isArray(parsed)) {
-                        loadedQuestions = parsed;
-                        selectedIdx = 0;
-                        renderSidebarList();
-                        loadQuestionIntoEditor(0);
-                        alert(`โหลดข้อมูลสำเร็จ! ทั้งหมด ${loadedQuestions.length} ข้อ`);
-                    } else {
-                        alert("รูปแบบไฟล์ไม่ถูกต้อง: ต้องเป็นไฟล์ JSON Array ของข้อสอบ");
-                    }
+                    const description = applyImportedData(JSON.parse(e.target.result), file.name);
+                    alert(`โหลดข้อมูลสำเร็จ! ทั้งหมด ${description}`);
                 } catch (err) {
                     alert(`ไม่สามารถอ่านไฟล์ได้: ${err.message}`);
-                }
+                } finally { event.target.value = ""; }
             };
             reader.readAsText(file);
         }
@@ -2076,14 +2147,8 @@
                     const reader = new FileReader();
                     reader.onload = (event) => {
                         try {
-                            const parsed = JSON.parse(event.target.result);
-                            if (Array.isArray(parsed)) {
-                                loadedQuestions = parsed;
-                                selectedIdx = 0;
-                                renderSidebarList();
-                                loadQuestionIntoEditor(0);
-                                alert(`ลากและโหลดข้อมูลไฟล์สำเร็จ! ทั้งหมด ${loadedQuestions.length} ข้อ`);
-                            }
+                            const description = applyImportedData(JSON.parse(event.target.result), file.name);
+                            alert(`ลากและโหลดข้อมูลไฟล์สำเร็จ! ทั้งหมด ${description}`);
                         } catch (err) {
                             alert("ไฟล์มีข้อผิดพลาด: " + err.message);
                         }
@@ -2115,17 +2180,24 @@
 
         // Direct File System Saving using modern File System Access API
         async function saveToLocalFile() {
-            if (!validateQuestions()) return;
+            if (loadInProgress) { alert("กำลังโหลดคลัง กรุณารอให้เสร็จก่อนบันทึก"); return; }
+            if (saveInProgress || !validateQuestions()) return;
+            saveInProgress = true;
+            const saveButton = document.getElementById("btn-save-files");
+            if (saveButton) saveButton.disabled = true;
             try {
-                const subject = document.getElementById("subject-select").value;
+                const subject = currentSubject;
+                const qRevision = questionRevision, sRevision = scenarioRevision;
+                const questionsSnapshot = structuredClone(loadedQuestions), scenariosSnapshot = structuredClone(loadedScenarios);
                 // Save questions then scenarios
-                const okQ = await saveJsonWithPicker('q', `${subject}.json`, loadedQuestions);
+                const okQ = await saveJsonWithPicker('q', `${subject}.json`, questionsSnapshot);
                 if (!okQ) return;
+                savedQuestionRevision = qRevision; syncDirtyState();
                 // แนะนำ path: assets/data/scenarios/{subject}.json
-                const okS = await saveJsonWithPicker('s', `${subject}.json`, loadedScenarios);
+                const okS = await saveJsonWithPicker('s', `${subject}.scenarios.json`, scenariosSnapshot);
                 if (okS) {
                     alert(`บันทึกข้อสอบและสถานการณ์แล้ว\n• ข้อสอบ → assets/data/${subject}.json\n• สถานการณ์ → assets/data/scenarios/${subject}.json`);
-                    hasUnsavedChanges = false;
+                    savedScenarioRevision = sRevision; syncDirtyState();
                 }
             } catch (err) {
                 console.error(err);
@@ -2134,6 +2206,9 @@
                 }
                 fileHandle = null;
                 scenarioFileHandle = null;
+            } finally {
+                saveInProgress = false;
+                if (saveButton) saveButton.disabled = false;
             }
         }
     </script>

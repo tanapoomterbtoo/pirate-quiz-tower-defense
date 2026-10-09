@@ -1352,7 +1352,8 @@ canvas {
 }
 
 .rotate-content {
-    animation: rotatePulse 1.8s infinite ease-in-out;
+    /* Keep the continue button stationary; the phone icon still animates. */
+    animation: none;
 }
 
 .rotate-icon {
@@ -3048,3 +3049,42 @@ body, #game-wrapper { background: #070d18; color: var(--text-main); }
     display: inline-block;
     align-self: flex-start;
 }
+
+/* Input answers retain the pirate palette while wrapping on narrow panels. */
+.input-answer-label { color: #ffe3a0; font-size: 1rem; line-height: 1.5; font-weight: 600; }
+.input-answer-row { flex-wrap: wrap; }
+.quiz-text-input { flex: 1 1 180px; min-height: 48px; box-sizing: border-box; }
+.quiz-text-input::placeholder { color: #bdc7d8; opacity: 1; }
+.quiz-input-unit { white-space: normal; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; }
+.quiz-input-error { margin: 0; padding: 8px 12px; color: #ffd2d2; background: #4a2025; border-left: 3px solid #ff9999; line-height: 1.5; }
+.quiz-input-hint { max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; line-height: 1.6; }
+.data-load-status { color: #ffdfa0; background: #292013; border: 1px solid #9b753a; padding: 8px 12px; max-height: 90px; overflow: auto; font-size: 14px; }
+button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #ffe09a; outline-offset: 3px; }
+@media (max-width: 700px) {
+    .input-answer-row { gap: 8px; }
+    .quiz-text-input { flex-basis: 100%; }
+    .quiz-input-unit { flex: 1 1 100px; }
+    .btn-submit-input { flex: 1 1 130px; padding: 0.65rem 1rem; }
+}
+.zoom-modal-close { background: transparent; border: 1px solid #f4c95d; border-radius: 8px; min-width: 48px; min-height: 48px; cursor: pointer; }
+.portrait-play #rotate-device-overlay { display: none; }
+.rotate-content .btn { margin-top: 20px; }
+@media (max-width: 1024px) and (orientation: portrait) {
+    #game-container { width: 100%; height: 100%; max-width: none; max-height: none; aspect-ratio: auto; border-radius: 0; }
+    canvas#gameCanvas { object-fit: cover; }
+    #quiz-panel, #quiz-panel.has-long-choices, #quiz-panel.split-layout { max-height: 66%; padding: 12px; display: flex; flex-direction: column; }
+    #quiz-panel .quiz-box, #quiz-panel .choices-grid { width: 100%; max-width: 100%; }
+    .game-progress { left: 12px; right: 65px; padding: 8px 10px; }
+    .item-toolbar { left: 12px; right: 12px; }
+    .answer-feedback { top: 140px; max-width: calc(100% - 24px); width: max-content; border-radius: 12px; }
+    .overlay-content { max-height: 92%; overflow-y: auto; }
+}
+.zoom-modal:not(.active) { visibility: hidden; }
+#quiz-panel.input-question.split-layout { display: flex; flex-direction: column; }
+#quiz-panel.input-question .quiz-box { width: 100%; max-width: 100%; flex: none; height: auto; }
+#quiz-panel.input-question.split-layout #question-text { flex: none; max-height: 26vh; }
+/* During answer reveal, feedback replaces unavailable items instead of covering them. */
+#top-hud.feedback-active .inventory { visibility: hidden; }
+.answer-feedback { top: 88px; max-width: calc(100% - 48px); }
+@media (max-height: 500px) and (orientation: landscape) { .answer-feedback { top: 62px; } }
+@media (max-width: 1024px) and (orientation: portrait) { .answer-feedback { top: 70px; max-width: calc(100% - 24px); } }

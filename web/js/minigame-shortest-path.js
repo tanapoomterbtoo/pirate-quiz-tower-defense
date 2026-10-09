@@ -358,6 +358,7 @@
             const el = document.createElement("div");
             el.id = "shortest-path-minigame";
             el.className = "sp-minigame hidden";
+            el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); el.setAttribute("aria-label", "ระยะทางที่สั้นที่สุด");
             el.innerHTML = `
                 <div class="sp-shell sp-shell-split">
                     <header class="sp-header">
@@ -422,7 +423,12 @@
 
         async open() {
             this.ensureDom();
+            const token = this.openToken = (this.openToken || 0) + 1;
+            this.returnFocus = document.activeElement;
             this.overlay.classList.remove("hidden");
+            if (typeof setScenarioBackgroundInert === "function") setScenarioBackgroundInert(true);
+            if (typeof isAdminPreviewMode !== "function" || !isAdminPreviewMode() || document.hasFocus()) this.overlay.querySelector("#sp-close")?.focus();
+            window.addEventListener("keydown", this._onKeyDown, true);
             this.finished = false;
             if (this.btnFinish) this.btnFinish.classList.add("hidden");
 
@@ -438,6 +444,7 @@
 
             // layout หลังแสดง DOM หนึ่งเฟรม เพื่อได้ขนาดจริง
             requestAnimationFrame(() => {
+                if (token !== this.openToken || !this.isOpen()) return;
                 this._layoutCanvas();
                 this.reset();
                 this.running = true;
@@ -450,6 +457,11 @@
         }
 
         close() {
+            this.openToken = (this.openToken || 0) + 1;
+            const wasOpen = this.isOpen();
+            if (typeof setScenarioBackgroundInert === "function") setScenarioBackgroundInert(false);
+            if (wasOpen && this.returnFocus?.isConnected && (typeof isAdminPreviewMode !== "function" || !isAdminPreviewMode() || document.hasFocus())) this.returnFocus.focus();
+            this.returnFocus = null;
             this.running = false;
             cancelAnimationFrame(this.raf);
             window.removeEventListener("keydown", this._onKeyDown, true);
@@ -563,11 +575,18 @@
         }
 
         _onKeyDown(e) {
-            if (!this.running) return;
+            if (!this.isOpen()) return;
             if (e.code === "Escape") {
                 e.preventDefault();
                 e.stopPropagation();
                 this.closeAndContinue();
+                return;
+            }
+            if (e.key === "Tab") {
+                const nodes = [...this.overlay.querySelectorAll("button:not([disabled])")].filter(el => el.getClientRects().length);
+                const first = nodes[0], last = nodes[nodes.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
                 return;
             }
             if (this.animating || this.finished) return;
